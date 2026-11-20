@@ -1,0 +1,2221 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OE I – 1. kolokvij</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --panel2:#eef1f5; --ink:#1b2430; --muted:#5b6675; --line:#d5dbe3;
+  --accent:#2457c5; --accent-ink:#ffffff; --accent-soft:#e3ebfb;
+  --pos:#c62828; --neg:#1f5fd1; --aux:#7a8696; --field:#2e7d32;
+  --ok:#1b7f3b; --ok-bg:#e4f4e9; --bad:#c62828; --bad-bg:#fbe7e7;
+  --warn-bg:#fff5cc; --warn-line:#e0b400; --warn-ink:#5b4500;
+  --orange:#c25e00; --orange-bg:#fdebd9; --badge-bg:#e3ebfb; --badge-ink:#1d4396;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --panel:#1a2029; --panel2:#232b36; --ink:#e6eaf0; --muted:#9aa5b4; --line:#323c4a;
+    --accent:#6f9cff; --accent-ink:#0d1420; --accent-soft:#1f2c47;
+    --pos:#ff7a72; --neg:#7fb0ff; --aux:#8994a3; --field:#7ccf83;
+    --ok:#6fd38f; --ok-bg:#17301f; --bad:#ff7a72; --bad-bg:#3a1c1c;
+    --warn-bg:#3a3110; --warn-line:#c9a227; --warn-ink:#f5e3a1;
+    --orange:#ffab5e; --orange-bg:#3b2612; --badge-bg:#1f2c47; --badge-ink:#b9cdfa;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --panel:#1a2029; --panel2:#232b36; --ink:#e6eaf0; --muted:#9aa5b4; --line:#323c4a;
+  --accent:#6f9cff; --accent-ink:#0d1420; --accent-soft:#1f2c47;
+  --pos:#ff7a72; --neg:#7fb0ff; --aux:#8994a3; --field:#7ccf83;
+  --ok:#6fd38f; --ok-bg:#17301f; --bad:#ff7a72; --bad-bg:#3a1c1c;
+  --warn-bg:#3a3110; --warn-line:#c9a227; --warn-ink:#f5e3a1;
+  --orange:#ffab5e; --orange-bg:#3b2612; --badge-bg:#1f2c47; --badge-ink:#b9cdfa;
+  --shadow:0 1px 3px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+button{min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:default}
+input[type=text],input[type=date],input:not([type]),select{min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);width:100%}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent);flex:none}
+
+/* layout */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.top .ttl{font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#menuBtn{display:none}
+.wrap{display:flex;max-width:1400px;margin:0 auto}
+nav#side{width:270px;flex:none;position:sticky;top:61px;height:calc(100vh - 61px);overflow:auto;padding:12px 10px 40px;border-right:1px solid var(--line)}
+nav#side a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--ink)}
+nav#side a:hover{background:var(--panel2)}
+nav#side a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+nav#side .sec{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:14px 10px 4px}
+nav#side .tick{margin-left:auto;color:var(--ok);font-weight:700}
+nav#side .tn{display:inline-block;min-width:22px;text-align:center;font-weight:700;color:var(--muted)}
+main{flex:1;min-width:0;padding:20px 24px 80px}
+.page{display:none;max-width:980px}
+.page.show{display:block}
+@media (max-width:900px){
+  #menuBtn{display:inline-flex}
+  nav#side{position:fixed;left:0;top:61px;z-index:30;background:var(--panel);height:calc(100vh - 61px);transform:translateX(-105%);transition:transform .2s;box-shadow:var(--shadow);width:290px}
+  nav#side.open{transform:none}
+  main{padding:16px 16px 80px}
+}
+
+h1{font-size:28px;line-height:1.25;margin:6px 0 4px}
+h2{font-size:21px;margin:30px 0 10px;padding-bottom:4px;border-bottom:2px solid var(--line)}
+h3{font-size:18px;margin:18px 0 8px}
+.meta{color:var(--muted);margin:0 0 10px}
+.tnum{display:inline-block;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:0 10px;margin-right:8px;font-size:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;box-shadow:var(--shadow)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+
+/* tabela */
+table{border-collapse:collapse;width:100%;background:var(--panel);border-radius:12px;overflow:hidden}
+th,td{padding:10px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--panel2);font-size:15px}
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--accent-soft)}
+
+/* značke formularja */
+.fgrid{display:grid;gap:10px}
+.f{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 14px 10px}
+.badge{display:inline-block;font-size:14px;padding:3px 10px;border-radius:999px;background:var(--badge-bg);color:var(--badge-ink);font-weight:600}
+.badge.miss{background:var(--orange-bg);color:var(--orange)}
+.badge::before{content:"📄 "}
+.badge.miss::before{content:"✎ "}
+
+/* postopek, primeri */
+ol.proc li{margin:6px 0}
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0;box-shadow:var(--shadow)}
+.exhead{font-weight:700;color:var(--accent);margin-bottom:6px}
+.task{background:var(--panel2);border-radius:10px;padding:10px 14px;font-style:normal}
+.sk{display:block;margin:12px auto;max-width:100%;height:auto}
+.skcap{text-align:center;font-size:14px;color:var(--muted);margin-top:-6px}
+ol.steps{padding-left:24px;margin:12px 0}
+ol.steps li{margin:10px 0}
+ol.steps li.hid{display:none}
+.why{color:var(--muted);font-size:15.5px;margin-top:3px;border-left:3px solid var(--accent-soft);padding-left:10px}
+.why b{color:var(--ink)}
+.revbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.ans{font-weight:700}
+.warn{background:var(--warn-bg);border:2px solid var(--warn-line);color:var(--warn-ink);border-radius:12px;padding:10px 14px;margin:10px 0}
+.warn b{color:inherit}
+.note{background:var(--panel2);border-radius:10px;padding:8px 12px;margin:8px 0;font-size:15px}
+.traps{background:var(--bad-bg);border:2px solid var(--bad);border-radius:14px;padding:6px 16px}
+.traps h3{color:var(--bad);margin-top:8px}
+ul.vaje li{margin:4px 0}
+.own{display:inline-block;font-size:13px;background:var(--orange-bg);color:var(--orange);border-radius:6px;padding:1px 8px;font-weight:700}
+.know{display:flex;gap:12px;align-items:center;margin:28px 0 10px;padding:14px 16px;border:2px dashed var(--line);border-radius:14px;font-weight:700;cursor:pointer;min-height:56px}
+.know:has(input:checked){border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.typenav{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
+.typenav a{display:inline-flex;align-items:center;min-height:44px;padding:6px 12px;border-radius:10px;background:var(--panel);border:1px solid var(--line);text-decoration:none;font-size:15px}
+.recipe li{margin:8px 0}
+.errbox{background:var(--bad-bg);border:2px solid var(--bad);border-radius:14px;padding:6px 18px}
+.errbox h2{border:none;color:var(--bad)}
+.errbox li{margin:6px 0}
+
+/* kalkulator */
+.calc{background:var(--panel);border:2px solid var(--accent-soft);border-radius:14px;padding:12px 16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{min-height:44px;font-size:15px}
+.tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.cf label{display:block;font-size:15px;margin-bottom:3px}
+.cf .conv{font-size:14px;color:var(--muted);min-height:22px;margin-top:3px}
+.cf .conv.err{color:var(--bad);font-weight:600}
+.cf .conv.nt{color:var(--orange)}
+.cout{margin-top:12px}
+.cout .rowres{padding:6px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.cout .main{font-weight:700}
+.check{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px;align-items:start}
+.fb{border-radius:10px;padding:8px 12px;margin-top:8px;font-weight:600}
+.fb.ok{background:var(--ok-bg);color:var(--ok)}
+.fb.sign,.fb.pow{background:var(--warn-bg);color:var(--warn-ink)}
+.fb.bad{background:var(--bad-bg);color:var(--bad)}
+.fb.info{background:var(--panel2);color:var(--ink);font-weight:400}
+
+/* skice */
+svg text{fill:var(--ink);font-size:15px;font-family:"Times New Roman",Times,serif}
+svg text.it{font-style:italic}
+svg text.sm{font-size:13px}
+.s-ln{stroke:var(--ink);stroke-width:2;fill:none}
+.s-th{stroke:var(--ink);stroke-width:1.2;fill:none}
+.s-aux{stroke:var(--aux);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+.s-fld{stroke:var(--field);stroke-width:1.6;fill:none}
+.s-pos{fill:var(--pos)} .s-neg{fill:var(--neg)}
+.s-posl{stroke:var(--pos);stroke-width:2;fill:none} .s-negl{stroke:var(--neg);stroke-width:2;fill:none}
+.s-fill{fill:var(--panel2);stroke:var(--ink);stroke-width:1.5}
+.s-hatch{stroke:var(--aux);stroke-width:1}
+.s-acc{stroke:var(--accent);stroke-width:2;fill:none}
+.s-accf{fill:var(--accent)}
+.s-pt{fill:var(--ink)}
+svg text.pos{fill:var(--pos)} svg text.neg{fill:var(--neg)} svg text.acc{fill:var(--accent)} svg text.fld{fill:var(--field)}
+
+/* kviz, plan */
+.qbtns{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:12px 0}
+.qbtns button{text-align:left}
+.qbtns button.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.qbtns button.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.progress{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;margin:8px 0}
+.progress>div{height:100%;background:var(--accent)}
+.plan li{list-style:none;margin:8px 0}
+.plan label{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);cursor:pointer}
+.plan label:has(input:checked){opacity:.6}
+.plan .d{font-weight:700;min-width:96px;color:var(--accent)}
+.plan .merged{font-size:13px;color:var(--orange);font-weight:700}
+.settings{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.settings label{font-size:15px;color:var(--muted)}
+.big{font-size:22px;font-weight:700}
+.timer{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}
+.timer.late{color:var(--bad)}
+.drill{display:grid;grid-template-columns:1fr minmax(120px,200px) auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+@media (max-width:600px){.drill{grid-template-columns:1fr 1fr}.drill .fbx{grid-column:1/-1}}
+.chip{display:inline-block;padding:1px 8px;border-radius:6px;background:var(--panel2);font-size:14px}
+</style>
+</head>
+<body>
+<header class="top">
+  <button id="menuBtn" aria-label="Meni">☰ Meni</button>
+  <div class="ttl">OE I – 1. kolokvij: vodič po tipih nalog</div>
+  <button id="themeBtn" title="Preklopi temo">🌓 <span id="themeLbl">Sistem</span></button>
+</header>
+<div class="wrap">
+<nav id="side"></nav>
+<main id="main">
+
+<!-- ================= PREGLED ================= -->
+<section class="page" id="pregled">
+  <h1>Pregled</h1>
+  <p class="meta">Vodič za 1. kolokvij iz Osnov elektrotehnike I (VS, FE UL). Samo tipi nalog, recepti, rešeni primeri s kolokvijev 2021–2025, pasti in kalkulator za preverjanje.</p>
+
+  <h2>Kako izgleda kolokvij</h2>
+  <ul>
+    <li>Vsak 1. kolokvij 2021–2025 ima <b>5 kratkih računskih nalog</b>. Vsaka naloga je ena formula + malo algebre; izpeljave niso potrebne.</li>
+    <li>Vseh 25 nalog pade v <b>10 tipov</b>. Naloge se ponavljajo: 2021/1 in 2024/1 sta enaki, 2022/3 in 2025/4 imata iste številke, 2022/2 je dobesedno vaja 10.1 iz avditornih vaj, 2022/3 je skoraj vaja 10.10.</li>
+    <li>Kolokviji so bili: 14. 12. 2021, 14. 12. 2022, 15. 12. 2023, 9. 12. 2024, 1. 12. 2025.</li>
+    <li>Snov (konča se tik pred dielektrikom): naboj in tok, Coulombova sila, električno polje (točka, premica, obroč, ravnina), Gaussov stavek, delo, potencial, napetost, dipol, prevodnik v polju, zrcaljenje. <b>Ni</b> dielektrikov, kondenzatorjev (kapacitivnosti), vezij, upornosti.</li>
+  </ul>
+  <div class="card">
+    <h3 style="margin-top:0">Moji podatki o kolokviju</h3>
+    <p class="small muted">Točkovanje, trajanje in pripomočki v gradivu niso navedeni – izpolni sam (shrani se v brskalnik).</p>
+    <div class="settings">
+      <div><label for="setDate">Datum kolokvija</label><input type="date" id="setDate"><div class="small" id="setDateOut"></div></div>
+      <div><label for="setDur">Trajanje (min)</label><input type="text" id="setDur" inputmode="numeric" placeholder="ni podatka"></div>
+      <div><label for="setPts">Točke na nalogo</label><input type="text" id="setPts" placeholder="ni podatka"></div>
+      <div><label for="setForm">Formular dovoljen? (preveri pri asistentu)</label>
+        <select id="setForm"><option value="">ni podatka</option><option>da</option><option>ne</option></select></div>
+    </div>
+  </div>
+
+  <h2>Tipi nalog (po pogostosti)</h2>
+  <p class="small muted">Klikni vrstico, da odpreš tip. »23/5« pomeni kolokvij 2023, naloga 5.</p>
+  <div class="tscroll"><table id="typeTable"><thead><tr><th>Tip</th><th>Kolikokrat (2021–2025)</th><th>Naloge</th><th>Ključna formula</th><th>✓</th></tr></thead><tbody></tbody></table></div>
+
+  <h2>Recept za vsako nalogo</h2>
+  <ol class="recipe card" style="padding-left:36px">
+    <li><b>Izpiši podatke in jih takoj pretvori v osnovne enote</b> (\(\mathrm m\), \(\mathrm C\), \(\mathrm V\), \(\mathrm{kg}\)). Šele potem računaj.</li>
+    <li><b>Prepoznaj objekt</b> (točka, žica, plošča, krogla/oblak, obroč, koaks, vodnik nad zemljo, dipol) in <b>kaj iščeš</b> (\(E, V, U, Q, q, \sigma, \rho, A, F, M\)).</li>
+    <li><b>Na formularju poišči okvir za ta objekt</b> – tam sta ponavadi \(E\) in \(V\). Če formule ni (Coulomb, \(E\) znotraj oblaka, sila zrcaljenja), jo dobiš iz \(\vec F=Q\vec E\), Gaussa ali \(\sigma=\varepsilon_0E_n\).</li>
+    <li><b>Formula s simboli, izrazi neznanko, šele nato vstavi številke.</b></li>
+    <li><b>Preveri enoto in predznak</b> (je naboj negativen? je delo pozitivno ali negativno? je ekvipotencialna ploskev na smiselnem mestu?).</li>
+  </ol>
+
+  <div class="errbox" style="margin-top:24px"><h2>Najpogostejše napake</h2><ul class="errlist"></ul></div>
+</section>
+
+<!-- ================= OSNOVE ================= -->
+<section class="page" id="osnove">
+  <h1>Osnove, ki jih rabiš povsod</h1>
+
+  <h2>Konstante</h2>
+  <div class="card" id="constBox"></div>
+
+  <h2>Predpone</h2>
+  <div class="tscroll"><table>
+    <thead><tr><th>Predpona</th><th>\(\mathrm p\)</th><th>\(\mathrm n\)</th><th>\(\mu\)</th><th>\(\mathrm m\)</th><th>\(\mathrm k\)</th><th>\(\mathrm M\)</th></tr></thead>
+    <tbody><tr><td>Faktor</td><td>\(10^{-12}\)</td><td>\(10^{-9}\)</td><td>\(10^{-6}\)</td><td>\(10^{-3}\)</td><td>\(10^{3}\)</td><td>\(10^{6}\)</td></tr></tbody>
+  </table></div>
+  <p><b>Dolžine vedno v metre:</b> \(1\ \mathrm{cm}=10^{-2}\ \mathrm m\), \(1\ \mathrm{mm}=10^{-3}\ \mathrm m\), \(1\ \mathrm{dm}=0{,}1\ \mathrm m\), \(1\ \mathrm{cm^2}=10^{-4}\ \mathrm{m^2}\), \(1\ \mathrm{cm^3}=10^{-6}\ \mathrm{m^3}\).</p>
+  <p class="note">Predpona se potencira skupaj z enoto: \(\mathrm{cm^2}=(10^{-2}\ \mathrm m)^2=10^{-4}\ \mathrm{m^2}\). Pri \(\mathrm{\mu C/m^2}\) pa se predpona nanaša samo na števec: \(10\ \mu\mathrm{C/m^2}=10^{-5}\ \mathrm{C/m^2}\).</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Mini vaja: pretvori</h3>
+    <p class="small muted">Vpiši število v osnovni enoti (npr. <code>0,1</code>, <code>1e-4</code> ali <code>10^-4</code>). Preverim takoj.</p>
+    <div id="drill"></div>
+    <div class="row" style="margin-top:10px"><button id="drillNew">Novih 10</button><span id="drillScore" class="big"></span></div>
+  </div>
+
+  <h2>Označbe za naboj</h2>
+  <div class="tscroll"><table>
+    <thead><tr><th>Oznaka</th><th>Pomen</th><th>Enota</th><th>Kje ga srečaš</th></tr></thead>
+    <tbody>
+      <tr><td>\(Q\)</td><td>točkast ali celoten naboj</td><td>\(\mathrm C\)</td><td>točka, obroč, krogla</td></tr>
+      <tr><td>\(q\)</td><td>linijska gostota</td><td>\(\mathrm{C/m}\)</td><td>žica, premica, koaks, dvovod</td></tr>
+      <tr><td>\(\sigma\)</td><td>ploskovna gostota</td><td>\(\mathrm{C/m^2}\)</td><td>plošča, površina prevodnika</td></tr>
+      <tr><td>\(\rho\)</td><td>prostorska gostota</td><td>\(\mathrm{C/m^3}\)</td><td>oblak naboja</td></tr>
+    </tbody>
+  </table></div>
+  <div class="warn"><b>Pozor:</b> \(\rho\) pomeni tudi <b>radialno razdaljo od osi</b> (koaks, premica: \(\rho_1, \rho_2\)). Iz konteksta: če ima enoto \(\mathrm{C/m^3}\), je gostota; če \(\mathrm{m}\), je razdalja.</div>
+
+  <h2>Pretvorbe</h2>
+  <p>\(Q=q\,l\) · \(Q=\sigma A\) · \(Q=\rho V\) · prostornina krogle \(V=\frac43\pi r^3\) · obseg obroča \(2\pi a\).</p>
+
+  <h2>Ključne zveze</h2>
+  <div class="fgrid">
+    <div class="f">\[U_{AB}=V_A-V_B=\int_A^B\vec E\cdot d\vec l\]<span class="badge">Formular: »Potencialna energija, potencial in napetost«</span></div>
+    <div class="f">\[A=Q\,U_{AB}=Q\,(V_A-V_B)\]<p class="small muted" style="margin:0 0 6px">delo polja pri premiku \(Q\) iz \(A\) v \(B\)</p><span class="badge miss">Ni dobesedno na formularju – dobiš iz \(W_{ep}=QV\)</span></div>
+    <div class="f">\[W_{ep}=Q\,V\]<span class="badge">Formular: »Potencialna energija, potencial in napetost«</span></div>
+    <div class="f">\[\sigma=\varepsilon_0E_n\]<p class="small muted" style="margin:0 0 6px">polje tik ob površini, normala kaže <b>iz</b> prevodnika</p><span class="badge">Formular: »Prevodnik«</span></div>
+    <div class="f">\[\vec F=Q\vec E\]<span class="badge">Formular: »Lorentzova sila« pri \(\vec w=0\)</span></div>
+    <div class="f">\[i=-\frac{dQ_{\text{not}}}{dt}\]<span class="badge">Formular: »Tok«</span></div>
+  </div>
+
+  <h2>Kje je kaj na formularju FormuleOE1</h2>
+  <p>Diferenciali dolžin · Naboj · Tok · Influenčna konstanta · Lorentzova sila · Lastnosti električne poljske jakosti (Gauss) · Potencialna energija, potencial in napetost · Prevodnik · Dielektrik · Električni dipol · Mejni pogoji · Energija · Kondenzator · (vezja) · <b>Točkasti naboj · Naelektren obroč · Linijski naboj · Ploščni kondenzator · Koaksialni kabel · Krogelni kondenzator · Simetrični dvovod · Nadzemni vodnik · Raznoimenska točkasta naboja</b>.</p>
+  <p class="note">Odebeljeni okvirji so »objekti« – tam sta za vsak objekt zapisana \(E\) in \(V\).</p>
+</section>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-pt"/></marker>
+  <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-accf"/></marker>
+  <marker id="arrF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--field)"/></marker>
+  <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-pos"/></marker>
+  <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" class="s-hatch"/></pattern>
+</defs></svg>
+
+<!-- ================= TIP 1 ================= -->
+<section class="page" id="tip1" data-type="1">
+  <div class="typenav"></div>
+  <h1><span class="tnum">1</span>Naboj in tok</h1>
+  <p class="meta">4× · naloge 2021/1, 2022/1, 2024/1, 2025/1</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»število elektronov vsako sekundo«, tok kot funkcija časa \(i(t)\), »koliko naboja je na telesu ob času …«, gostota naboja na žici in dolžina odseka.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Tok je hitrost, s katero se naboj na telesu spreminja. Če poznaš tok, naboj dobiš z integralom; če poznaš število elektronov na sekundo, je tok kar naboj, ki preteče v eni sekundi. Minus v kontinuitetni enačbi pomeni: \(i\) je tok, ki <b>odteka</b> s telesa – če naboj na telesu pada, je \(i\) pozitiven.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[i=-\frac{dQ_{\text{telo}}}{dt}\]<span class="badge">Formular: »Tok«</span></div>
+    <div class="f">\[Q_{\text{telo}}(t)=Q(0)-\int_0^t i(t)\,dt\]<span class="badge">Formular: »Tok« (integrirana oblika)</span></div>
+    <div class="f">\[Q=n\,e_0\qquad Q=q\,l\]<span class="badge">Formular: »Naboj« (\(Q=\int q\,dl\), osnovni naboj \(e_0\))</span></div>
+    <div class="f">\[\int_0^t e^{-kt}\,dt=\frac{1-e^{-kt}}{k}\]<span class="badge miss">Ni na formularju – matematika (integral eksponenta)</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>Konstanten tok (»vsako sekundo«): \(I=\dfrac{|\Delta Q|}{\Delta t}=\dfrac{n\,|e_0|}{1\ \mathrm s}\).</li>
+    <li>Tok kot funkcija časa: najprej neto tok, ki <b>odteka</b> (\(i=i_{\text{odteka}}-i_{\text{priteka}}\)), nato integriraj od 0 do \(t\) in dodaj minus.</li>
+    <li>Gostota na žici: \(Q=q\,l\).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2022, naloga 1</div>
+    <div class="task">Na prevodno telo priteka naboj s tokom \(i_1(t)=2e^{-100t/\mathrm s}\ \mathrm A\) in odteka s tokom \(i_2(t)=1{,}4e^{-100t/\mathrm s}\ \mathrm A\). Koliko naboja je na telesu ob času \(t_1=10\ \mathrm{ms}\), če je ob času \(0\ \mathrm s\) naboj na telesu enak \(0\ \mathrm C\)?</div>
+    <ol class="steps">
+      <li><div>Neto tok, ki odteka: \(i=i_2-i_1=-0{,}6\,e^{-100t}\ \mathrm A\). Negativen → naboj se na telesu nabira.</div>
+        <div class="why"><b>Zakaj:</b> kontinuitetna enačba \(i=-\frac{dQ}{dt}\) pozna en sam tok – tistega, ki odteka. Pritekanje je odtekanje z minusom, zato oba toka združiš v en neto tok.</div></li>
+      <li><div>\(Q(t)=-\int_0^t i\,dt=0{,}6\cdot\dfrac{1-e^{-100t}}{100}\ \mathrm C=6\,(1-e^{-100t})\ \mathrm{mC}\).</div>
+        <div class="why"><b>Zakaj:</b> naboj je integral toka; minus pride iz \(i=-\frac{dQ}{dt}\), začetni naboj \(Q(0)=0\). Pri integralu eksponenta deliš s \(k=100\ \mathrm{s^{-1}}\).</div></li>
+      <li><div>\(t_1=0{,}01\ \mathrm s\Rightarrow e^{-1}=0{,}368\Rightarrow Q(t_1)=6\cdot0{,}632\ \mathrm{mC}=\) <span class="ans">\(3{,}79\ \mathrm{mC}\)</span> (uradno zaokroženo \(3{,}8\ \mathrm{mC}\)).</div>
+        <div class="why"><b>Zakaj:</b> čas vedno v sekundah: \(10\ \mathrm{ms}=0{,}01\ \mathrm s\), zato je eksponent točno \(-1\). Pozitiven rezultat se ujema s korakom 1: naboj se nabira.</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2021, naloga 1 = kolokvij 2024, naloga 1</div>
+    <div class="task">Na telo priteče vsako sekundo \(n=7{,}5\cdot10^{18}\) elektronov. Kolikšen je električni tok s telesa? Osnovni naboj elektrona je \(Q_0=-1{,}6\cdot10^{-19}\ \mathrm C\).</div>
+    <ol class="steps">
+      <li><div>V eni sekundi priteče naboj \(\Delta Q=n\,Q_0=7{,}5\cdot10^{18}\cdot(-1{,}6\cdot10^{-19})\ \mathrm C=-1{,}2\ \mathrm C\).</div>
+        <div class="why"><b>Zakaj:</b> naboj je število delcev × naboj enega delca. Elektron je negativen, zato se naboj telesa zmanjša.</div></li>
+      <li><div>\(i=-\dfrac{\Delta Q}{\Delta t}=-\dfrac{-1{,}2\ \mathrm C}{1\ \mathrm s}=\) <span class="ans">\(1{,}2\ \mathrm A\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> tok »s telesa« je tok, ki odteka. Pritekanje negativnega naboja je isto kot odtekanje pozitivnega → tok je pozitiven.</div></li>
+    </ol>
+  </div>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2025, naloga 1</div>
+    <div class="task">Ravna žica je enakomerno naelektrena z nabojem gostote \(300\ \mu\mathrm{C/m}\). Kolikšna je množina naboja na odseku žice dolžine \(14\ \mathrm m\)?</div>
+    <ol class="steps">
+      <li><div>\(q=300\ \mu\mathrm{C/m}=3\cdot10^{-4}\ \mathrm{C/m}\), \(l=14\ \mathrm m\).</div>
+        <div class="why"><b>Zakaj:</b> najprej osnovne enote – \(\mu=10^{-6}\).</div></li>
+      <li><div>\(Q=q\,l=3\cdot10^{-4}\cdot14\ \mathrm C=\) <span class="ans">\(4{,}20\ \mathrm{mC}\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> linijska gostota je naboj na meter; enakomerna gostota → naboj = gostota × dolžina.</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="1"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>Predznak elektrona (\(Q_0=-e_0\)).</li>
+    <li>\(\mathrm{ms}\to\mathrm s\).</li>
+    <li>Pri dveh tokovih najprej neto tok, šele nato integral.</li>
+    <li>Ne pozabi deliti s \(k\) pri integralu eksponenta.</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>1.5</b> – porazdelitve naboja</li><li><b>1.7a</b> – naboj na daljici</li><li><b>1.10a</b> – krogelni oblak</li><li><b>1.15</b> – naboj v krogli</li>
+    <li><b>2.1</b> – naboj → elektroni</li><li><b>2.2</b> – elektroni in njihova masa</li><li><b>2.6</b> – \(i=5e^{-\lambda t}\), naboj na plošči</li>
+    <li><b>2.8</b> – \(Q(t)\) → \(i(t)\)</li><li><b>3.1</b> – \(Q(t)\) → \(i(t)\)</li><li><b>3.2</b> – tok med dvema telesoma</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="1"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 2 ================= -->
+<section class="page" id="tip2" data-type="2">
+  <div class="typenav"></div>
+  <h1><span class="tnum">2</span>Polje točkastega naboja, premice in plošč</h1>
+  <p class="meta">3× · naloge 2021/2, 2025/2, 2025/3</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»kolikšna je \(E\) v točki«, »kje/kdaj je polje nič«, točke s koordinatami, vzporedne žice, dve plošči z \(\pm Q\).</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Vsak objekt ima svojo formulo za \(E\). Točka pada s <b>kvadratom</b> razdalje, premica samo z <b>razdaljo</b>, med dvema velikima ploščama je polje <b>konstantno</b> (razdalja ni pomembna). Polje pozitivnega naboja kaže stran od njega, negativnega proti njemu. Več nabojev → polja sešteješ kot vektorje.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[E_{\text{točka}}=\frac{|Q|}{4\pi\varepsilon_0R^2}\]<p class="small muted" style="margin:0 0 6px">\(R\) – razdalja do točke</p><span class="badge">Formular: »Točkasti naboj«</span></div>
+    <div class="f">\[E_{\text{premica}}=\frac{|q|}{2\pi\varepsilon_0\rho}\]<p class="small muted" style="margin:0 0 6px">\(\rho\) – pravokotna razdalja do žice</p><span class="badge">Formular: »Linijski naboj«</span></div>
+    <div class="f">\[E_{\text{plošči}}=\frac{\sigma}{\varepsilon_0}=\frac Ud\]<span class="badge">Formular: »Ploščni kondenzator«</span></div>
+    <div class="f">\[R=\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}\]<span class="badge miss">Ni na formularju – matematika (Pitagora)</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>Razdalja iz koordinat: \(R=\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}\) (v metrih).</li>
+    <li>Za vsak naboj velikost + smer (skica!).</li>
+    <li>Pri »polje je nič« vsoto prispevkov enači z 0 in izrazi neznanko (\(\varepsilon_0\) se pogosto pokrajša).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2021, naloga 2</div>
+    <div class="task">Dva tanka linijska vodnika sta na medsebojni razdalji \(d=1{,}5\ \mathrm m\), vzporedno z osjo \(z\). Desni vodnik ima gostoto naboja \(q_2=-2\ \mathrm{nC/m}\). Kolikšna mora biti gostota naboja \(q_1\) na levem vodniku, če je električna poljska jakost v koordinatnem izhodišču enaka nič?</div>
+    <svg class="sk" viewBox="0 0 520 170" width="520" role="img" aria-label="Skica dveh vodnikov na osi x">
+      <line x1="20" y1="80" x2="505" y2="80" class="s-th" marker-end="url(#arr)"/><text x="498" y="100" class="it">x</text>
+      <circle cx="80" cy="80" r="9" class="s-ln"/><circle cx="80" cy="80" r="3" class="s-pt"/>
+      <circle cx="440" cy="80" r="9" class="s-negl"/><circle cx="440" cy="80" r="3" class="s-neg"/>
+      <circle cx="200" cy="80" r="3.5" class="s-pt"/><text x="194" y="102">0</text>
+      <text x="62" y="58" class="it">q<tspan baseline-shift="sub" class="sm">1</tspan> = ?</text>
+      <text x="402" y="58" class="neg"><tspan class="it">q</tspan><tspan baseline-shift="sub" class="sm">2</tspan> = −2 nC/m</text>
+      <line x1="80" y1="128" x2="200" y2="128" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="125" y="122" class="it">d/3</text>
+      <line x1="200" y1="128" x2="440" y2="128" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="300" y="122" class="it">2d/3</text>
+      <line x1="80" y1="155" x2="440" y2="155" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="230" y="150"><tspan class="it">d</tspan> = 1,5 m</text>
+    </svg>
+    <p class="skcap">Vodnika sta pravokotna na list (vzporedna z \(z\)). Lega je razbrana iz uradne rešitve; slika v izvirniku ni bila berljiva.</p>
+    <ol class="steps">
+      <li><div>Levi: \(E_1=\dfrac{q_1}{2\pi\varepsilon_0\,d/3}\), smer \(+x\) (za \(q_1>0\)).</div>
+        <div class="why"><b>Zakaj:</b> žica → formula za premico (»Linijski naboj«). Izhodišče je desno od levega vodnika, polje pozitivnega naboja kaže stran od njega → v \(+x\).</div></li>
+      <li><div>Desni: \(E_2=\dfrac{q_2}{2\pi\varepsilon_0\,2d/3}\), smer \(-x\) (stran od desnega za \(q_2>0\)).</div>
+        <div class="why"><b>Zakaj:</b> izhodišče je levo od desnega vodnika, zato kaže njegovo polje (za pozitiven naboj) v \(-x\). Predznak \(q_2\) pustiš v formuli – sam bo obrnil smer.</div></li>
+      <li><div>\(E_x=\dfrac{q_1}{2\pi\varepsilon_0d/3}-\dfrac{q_2}{2\pi\varepsilon_0\,2d/3}=0\Rightarrow q_1=\dfrac{q_2}{2}=\) <span class="ans">\(-1\ \mathrm{nC/m}\)</span>. \(\varepsilon_0\) in \(d\) se pokrajšata.</div>
+        <div class="why"><b>Zakaj:</b> »polje je nič« = vsota komponent je nič. Levi vodnik je dvakrat bližje, zato potrebuje pol manjšo gostoto istega predznaka.</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2025, naloga 2</div>
+    <div class="task">Točkast naboj je v izhodišču. Njegovo polje ima v točki \(T(3\ \mathrm{cm},-4\ \mathrm{cm},7\ \mathrm{cm})\) absolutno vrednost \(E=400\ \mathrm{V/m}\). Določite množino naboja, če vemo, da je negativna.</div>
+    <svg class="sk" viewBox="0 0 300 220" width="300" role="img" aria-label="Točka T v 3D koordinatnem sistemu">
+      <line x1="150" y1="170" x2="150" y2="20" class="s-th" marker-end="url(#arr)"/><text x="158" y="30" class="it">z</text>
+      <line x1="150" y1="170" x2="280" y2="170" class="s-th" marker-end="url(#arr)"/><text x="272" y="190" class="it">y</text>
+      <line x1="150" y1="170" x2="90" y2="210" class="s-th" marker-end="url(#arr)"/><text x="78" y="212" class="it">x</text>
+      <circle cx="150" cy="170" r="6" class="s-neg"/><text x="160" y="190" class="neg"><tspan class="it">Q</tspan> &lt; 0</text>
+      <polyline points="150,170 126,188 70,188 70,90" class="s-aux"/>
+      <line x1="150" y1="170" x2="70" y2="90" class="s-acc"/><text x="118" y="120" class="it acc">R</text>
+      <circle cx="70" cy="90" r="4" class="s-pt"/><text x="20" y="80"><tspan class="it">T</tspan>(3; −4; 7) cm</text>
+    </svg>
+    <ol class="steps">
+      <li><div>\(R=\sqrt{3^2+(-4)^2+7^2}\ \mathrm{cm}=\sqrt{74}\ \mathrm{cm}=8{,}60\ \mathrm{cm}=0{,}0860\ \mathrm m\).</div>
+        <div class="why"><b>Zakaj:</b> formula za točkast naboj potrebuje razdaljo, ne koordinat. Naboj je v izhodišču, zato so \(\Delta\) kar koordinate točke.</div></li>
+      <li><div>\(|Q|=4\pi\varepsilon_0R^2E=4\pi\cdot8{,}854\cdot10^{-12}\cdot0{,}0860^2\cdot400\ \mathrm C=329\ \mathrm{pC}\).</div>
+        <div class="why"><b>Zakaj:</b> iz \(E=\frac{|Q|}{4\pi\varepsilon_0R^2}\) izraziš \(|Q|\). Velikost polja ne pove predznaka.</div></li>
+      <li><div>Naboj je negativen → <span class="ans">\(Q=-329\ \mathrm{pC}\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> predznak je podan v besedilu (»negativna«), ne iz formule.</div></li>
+    </ol>
+  </div>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2025, naloga 3</div>
+    <div class="task">Dve vzporedni plošči, vsaka površine \(1000\ \mathrm{cm^2}\), sta na medsebojni oddaljenosti \(1\ \mathrm{cm}\) in enakomerno naelektreni z nabojema \(\pm1\ \mu\mathrm C\). Izračunajte absolutno vrednost električne poljske jakosti med ploščama.</div>
+    <ol class="steps">
+      <li><div>\(A=1000\ \mathrm{cm^2}=1000\cdot10^{-4}\ \mathrm{m^2}=0{,}1\ \mathrm{m^2}\).</div>
+        <div class="why"><b>Zakaj:</b> \(\mathrm{cm^2}\to\mathrm{m^2}\) je \(10^{-4}\) (predpona na kvadrat), ne \(10^{-2}\).</div></li>
+      <li><div>\(\sigma=\dfrac QA=\dfrac{10^{-6}}{0{,}1}\ \mathrm{C/m^2}=10\ \mu\mathrm{C/m^2}\).</div>
+        <div class="why"><b>Zakaj:</b> formula za plošče rabi ploskovno gostoto, ne celotnega naboja.</div></li>
+      <li><div>\(E=\dfrac{\sigma}{\varepsilon_0}=\dfrac{10^{-5}}{8{,}854\cdot10^{-12}}\ \mathrm{V/m}=\) <span class="ans">\(1{,}13\ \mathrm{MV/m}\)</span>. Razdalja \(1\ \mathrm{cm}\) je odveč podatek.</div>
+        <div class="why"><b>Zakaj:</b> med velikima ploščama je polje konstantno – ne odvisno od razdalje.</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="2"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>\(R^2\) pri točki, \(\rho\) (brez kvadrata) pri premici.</li>
+    <li>\(\mathrm{cm^2}\to\mathrm{m^2}\) je \(10^{-4}\).</li>
+    <li>Predznak naboja je podan z besedilom (»negativna«).</li>
+    <li>Smer polja določi s skico, ne iz formule.</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>3.3</b> – gostota premice za dano \(E\)</li><li><b>8.1</b> – vektor \(\vec E\) točkastega naboja</li><li><b>8.2</b> – trije naboji</li>
+    <li><b>8.6</b> – \(E\) in razdalja za \(|E|=1\ \mathrm{kV/m}\)</li><li><b>8.8</b> – dvovod</li><li><b>8.9</b> – sila na naboj ob dvovodu</li>
+    <li><b>8.10</b> – tri premice</li><li><b>8.11</b> – dve plošči</li><li><b>8.12</b> – tri ravnine</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="2"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 3 ================= -->
+<section class="page" id="tip3" data-type="3">
+  <div class="typenav"></div>
+  <h1><span class="tnum">3</span>Krogelni oblak naboja (Gaussov stavek)</h1>
+  <p class="meta">3× · naloge 2021/3, 2023/1, 2024/5</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»krogelni oblak«, »krogla z enakomerno gostoto \(\rho\)«, polje na razdalji \(r\) od središča, »tik ob robu«, »na površini«.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Polje na polmeru \(r\) določa <b>samo naboj znotraj</b> tega polmera; ta se obnaša, kot bi bil zbran v središču. Zunaj oblaka je to ves naboj → formula za točkast naboj. Znotraj oblaka je vključen le del naboja, zato polje od središča <b>linearno narašča</b> do roba, zunaj pa pada z \(1/r^2\). Na robu obe formuli dasta isto.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[r\ge r_0:\quad E=\frac{Q}{4\pi\varepsilon_0r^2},\qquad Q=\rho\,\tfrac43\pi r_0^3\]<span class="badge">Formular: »Točkasti naboj«</span></div>
+    <div class="f">\[\oint\vec E\cdot d\vec a=\frac{Q_{\text{not}}}{\varepsilon_0}\]<span class="badge">Formular: »Lastnosti električne poljske jakosti« (Gauss)</span></div>
+    <div class="f">\[r&lt;r_0:\quad E=\frac{\rho\,r}{3\varepsilon_0}\qquad r=r_0:\quad E=\frac{\rho\,r_0}{3\varepsilon_0}\]<span class="badge miss">Ni na formularju – dobiš iz Gaussa</span>
+      <details style="margin-top:8px"><summary style="cursor:pointer;min-height:32px">Od kod to?</summary>
+        <p>Gaussova ploskev je krogla s polmerom \(r\). Polje je povsod radialno in enako veliko, zato je pretok \(E\cdot4\pi r^2\). Zajeti naboj je \(\rho\cdot\frac43\pi r^3\):</p>
+        \[E\cdot4\pi r^2=\frac{\rho\frac43\pi r^3}{\varepsilon_0}\ \Rightarrow\ E=\frac{\rho\,r}{3\varepsilon_0}\]
+      </details></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>Je točka znotraj (\(r&lt;r_0\)) ali zunaj/na robu?</li>
+    <li>Znotraj: \(E=\dfrac{\rho r}{3\varepsilon_0}\) z \(r\) <b>točke</b>.</li>
+    <li>Zunaj/na robu: \(Q=\rho\frac43\pi r_0^3\), nato točkast naboj.</li>
+    <li>Lupina (naboj samo na površini): znotraj \(E=0\), zunaj kot točkast naboj.</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2023, naloga 1</div>
+    <div class="task">Krogelni oblak elektrine s polmerom \(r_0=25\ \mathrm{cm}\) ima konstantno gostoto \(\rho=2\ \mu\mathrm{C/m^3}\). Določite velikost vektorja električne poljske jakosti na oddaljenosti \(r=5\ \mathrm{cm}\) od središča oblaka.</div>
+    <svg class="sk" viewBox="0 0 320 250" width="320" role="img" aria-label="Krogelni oblak z Gaussovo kroglo">
+      <circle cx="140" cy="125" r="110" class="s-fill"/>
+      <circle cx="140" cy="125" r="110" fill="url(#hatch)" opacity=".5"/>
+      <circle cx="140" cy="125" r="30" class="s-aux" style="stroke:var(--accent);stroke-width:2"/>
+      <circle cx="140" cy="125" r="3" class="s-pt"/>
+      <line x1="140" y1="125" x2="218" y2="47" class="s-th" marker-end="url(#arr)"/><text x="186" y="74" class="it">r<tspan baseline-shift="sub" class="sm">0</tspan></text>
+      <line x1="140" y1="125" x2="170" y2="125" class="s-acc" marker-end="url(#arrA)"/><circle cx="170" cy="125" r="4" class="s-accf"/>
+      <text x="148" y="145" class="it acc">r</text><text x="176" y="122" class="it acc">T</text>
+      <text x="255" y="210" class="it">ρ</text><text x="262" y="226" class="sm">(C/m³)</text>
+    </svg>
+    <p class="skcap">Črtkano: Gaussova krogla s polmerom \(r\) skozi točko.</p>
+    <ol class="steps">
+      <li><div>\(5\ \mathrm{cm}&lt;25\ \mathrm{cm}\) → točka je <b>znotraj</b> oblaka.</div>
+        <div class="why"><b>Zakaj:</b> od tega je odvisna formula – znotraj šteje le del naboja.</div></li>
+      <li><div>Gauss: \(E\cdot4\pi r^2=\dfrac{\rho\frac43\pi r^3}{\varepsilon_0}\Rightarrow E=\dfrac{\rho r}{3\varepsilon_0}\).</div>
+        <div class="why"><b>Zakaj:</b> formule za notranjost ni na formularju; Gauss z zajetim nabojem do polmera \(r\) jo da v eni vrstici.</div></li>
+      <li><div>\(E=\dfrac{2\cdot10^{-6}\cdot0{,}05}{3\cdot8{,}854\cdot10^{-12}}\ \mathrm{V/m}=\) <span class="ans">\(3{,}76\ \mathrm{kV/m}\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> vstaviš \(r\) <b>točke</b> (\(0{,}05\ \mathrm m\)), ne \(r_0\).</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2024, naloga 5</div>
+    <div class="task">V prostoru je krogla polmera \(r=2\ \mathrm{cm}\) z enakomerno gostoto naboja \(\rho=3\ \mu\mathrm{C/m^3}\). Določite električno poljsko jakost na površini krogle.</div>
+    <ol class="steps">
+      <li><div>»Na površini« → \(r=r_0=0{,}02\ \mathrm m\).</div><div class="why"><b>Zakaj:</b> na robu dasta notranja in zunanja formula isto, izbereš krajšo.</div></li>
+      <li><div>\(E=\dfrac{\rho r}{3\varepsilon_0}=\dfrac{3\cdot10^{-6}\cdot0{,}02}{3\cdot8{,}854\cdot10^{-12}}\ \mathrm{V/m}=\) <span class="ans">\(2{,}26\ \mathrm{kV/m}\)</span>.</div><div class="why"><b>Zakaj:</b> ne rabiš računati celotnega \(Q\) – formula z \(\rho\) je hitrejša.</div></li>
+    </ol>
+  </div>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2021, naloga 3 (obratno)</div>
+    <div class="task">V praznem prostoru lebdi osamljen krogelni oblak električnega naboja enakomerne prostorske gostote \(\rho\) in polmera \(r_0=10\ \mathrm{cm}\). Tik ob robu oblaka smo izmerili velikost električne poljske jakosti \(E=10\ \mathrm{kV/m}\). Koliko naboja \(Q\) je v oblaku?</div>
+    <ol class="steps">
+      <li><div>Tik ob robu je polje kot polje točkastega naboja \(Q\): \(E=\dfrac{Q}{4\pi\varepsilon_0r_0^2}\).</div><div class="why"><b>Zakaj:</b> zunaj (in na robu) se ves naboj oblaka obnaša, kot bi bil v središču.</div></li>
+      <li><div>\(Q=4\pi\varepsilon_0r_0^2E=4\pi\cdot8{,}854\cdot10^{-12}\cdot0{,}1^2\cdot10^4\ \mathrm C=\) <span class="ans">\(11{,}1\ \mathrm{nC}\)</span>.</div><div class="why"><b>Zakaj:</b> sprašujejo po \(Q\), zato \(\rho\) sploh ne rabiš.</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="3"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>Znotraj oblaka vzameš \(r\) točke, ne \(r_0\).</li>
+    <li>»Na površini« = \(r=r_0\).</li>
+    <li>\(\mathrm{cm}\to\mathrm m\).</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>9.3</b> – naelektrena krogelna lupina</li><li><b>9.4</b> – štiri koncentrične lupine (seštej naboje znotraj)</li>
+    <li><b>9.5</b> – polje tik ob robu oblaka</li><li><b>9.6</b> – izpeljava znotraj/zunaj</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="3"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 4 ================= -->
+<section class="page" id="tip4" data-type="4">
+  <div class="typenav"></div>
+  <h1><span class="tnum">4</span>Naelektren obroč</h1>
+  <p class="meta">2× · naloge 2023/3, 2024/3</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»obroč polmera \(a\) (ali \(r\)) z nabojem \(Q\)«, točka <b>na osi</b> obroča na razdalji \(z\) od ravnine, »središče obroča«.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Vsak delček obroča je od točke na osi oddaljen enako, \(\sqrt{a^2+z^2}\). Zato je potencial kar potencial točkastega naboja \(Q\) na tej razdalji. V središču (\(z=0\)) je \(V=\frac{Q}{4\pi\varepsilon_0a}\), polje pa nič (prispevki se izničijo).</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[V(z)=\frac{Q}{4\pi\varepsilon_0\sqrt{a^2+z^2}}\qquad E_z(z)=\frac{Q\,z}{4\pi\varepsilon_0(a^2+z^2)^{3/2}}\]<span class="badge">Formular: »Naelektren obroč«</span></div>
+    <div class="f">\[A=Q_1\,(V_{\text{začetek}}-V_{\text{konec}})\]<span class="badge">Formular: »Potencialna energija, potencial in napetost«</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>\(d=\sqrt{a^2+z^2}\).</li>
+    <li>Potencial → \(V=\dfrac{Q}{4\pi\varepsilon_0d}\); polje → \(E_z\); sila na naboj \(Q_1\) → \(F=Q_1E_z\).</li>
+    <li>Podana linijska gostota \(q\)? → \(Q=q\cdot2\pi a\).</li>
+    <li>Delo pri premiku: \(A=Q_1(V_{\text{začetek}}-V_{\text{konec}})\), v neskončnosti \(V=0\).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2024, naloga 3</div>
+    <div class="task">Obroč polmera \(r=4\ \mathrm{dm}\) je naelektren z elektrino \(Q=12\ \mathrm{nC}\). Izračunajte električni potencial v točki \(T\) v osi obroča, ki je od ravnine obroča oddaljena \(z=3\ \mathrm{dm}\).</div>
+    <svg class="sk" viewBox="0 0 300 210" width="300" role="img" aria-label="Obroč in točka T na osi">
+      <line x1="130" y1="200" x2="130" y2="18" class="s-th" marker-end="url(#arr)"/><text x="138" y="26" class="it">z</text>
+      <ellipse cx="130" cy="160" rx="100" ry="28" class="s-posl" style="stroke-width:3"/>
+      <circle cx="130" cy="160" r="3" class="s-pt"/>
+      <line x1="130" y1="160" x2="230" y2="160" class="s-th"/><text x="168" y="178" class="it">r</text><text x="176" y="178" class="sm"> = 4 dm</text>
+      <circle cx="130" cy="60" r="4.5" class="s-accf"/><text x="96" y="58" class="it acc">T</text>
+      <line x1="230" y1="160" x2="130" y2="60" class="s-aux" style="stroke:var(--accent)"/><text x="186" y="100" class="it acc">d</text>
+      <text x="80" y="115" class="it">z</text><text x="88" y="115" class="sm"> = 3 dm</text>
+      <text x="236" y="150" class="pos"><tspan class="it">Q</tspan> = 12 nC</text>
+    </svg>
+    <ol class="steps">
+      <li><div>\(d=\sqrt{0{,}4^2+0{,}3^2}\ \mathrm m=0{,}5\ \mathrm m\) (pitagorejska trojica 3-4-5).</div>
+        <div class="why"><b>Zakaj:</b> vsak delček obroča je od \(T\) oddaljen enako – hipotenuza trikotnika s katetama \(r\) in \(z\). \(\mathrm{dm}\to\mathrm m\): deliš z 10.</div></li>
+      <li><div>\(V=\dfrac{12\cdot10^{-9}}{4\pi\cdot8{,}854\cdot10^{-12}\cdot0{,}5}\ \mathrm V=\) <span class="ans">\(216\ \mathrm V\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> potencial je skalar – ves naboj je na isti razdalji \(d\), zato je to kar potencial točkastega naboja na razdalji \(d\).</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2023, naloga 3 – ⚠ predznak</div>
+    <div class="task">Kolikšno delo opravi električna sila, da premakne elektron z nabojem \(Q=-1{,}6\cdot10^{-19}\ \mathrm C\) iz neskončne okolice v središče obroča z nabojem \(Q'=5{,}6\ \mu\mathrm C\) in polmera \(a=3\ \mathrm{cm}\)?</div>
+    <ol class="steps">
+      <li><div>\(V_\infty=0\), \(V_{\text{središče}}=\dfrac{Q'}{4\pi\varepsilon_0a}=\dfrac{5{,}6\cdot10^{-6}}{4\pi\cdot8{,}854\cdot10^{-12}\cdot0{,}03}\ \mathrm V=1{,}68\ \mathrm{MV}\).</div>
+        <div class="why"><b>Zakaj:</b> delo pri premiku računaš iz potencialov začetne in končne točke; v središču je \(z=0\), torej \(d=a\).</div></li>
+      <li><div>\(|A|=|Q|\cdot V_{\text{središče}}=1{,}6\cdot10^{-19}\cdot1{,}68\cdot10^{6}\ \mathrm J=0{,}268\ \mathrm{pJ}\approx0{,}27\ \mathrm{pJ}\).</div>
+        <div class="why"><b>Zakaj:</b> velikost dela je naboj × razlika potencialov; predznak premisli posebej.</div></li>
+      <li><div>Predznak: \(A=Q\,(V_{\text{začetek}}-V_{\text{konec}})=(-1{,}6\cdot10^{-19})(0-1{,}68\cdot10^{6})\ \mathrm J=\) <span class="ans">\(+0{,}27\ \mathrm{pJ}\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> po definiciji \(A=Q\,U_{AB}=Q(V_A-V_B)\) (ista kot pri 2022/2). Fizikalno: pozitiven obroč elektron privlači, sila kaže v smeri premika → delo polja je pozitivno.</div></li>
+    </ol>
+    <div class="warn"><b>⚠ Uradna rešitev:</b> \(A=Q(V_k-V_z)=-0{,}27\ \mathrm{pJ}\)<br><b>Preračunano:</b> \(A=Q(V_\infty-V_{\text{središče}})=+0{,}27\ \mathrm{pJ}\)<br><b>Preveri pri asistentu</b>, kateri dogovor velja – uradna rešitev ima verjetno obrnjen predznak.</div>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="4"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>\(\mathrm{dm}\to\mathrm m\).</li>
+    <li>\(\sqrt{a^2+z^2}\), ne \(a+z\).</li>
+    <li>V središču \(E=0\), \(V\neq0\).</li>
+    <li>Predznak dela.</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>8.7</b> – sila na naboj v osi obroča, podana linijska gostota</li>
+    <li><b>8.16</b> – od obroča do diska (samo za radovedne)</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="4"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 5 ================= -->
+<section class="page" id="tip5" data-type="5">
+  <div class="typenav"></div>
+  <h1><span class="tnum">5</span>Delo, potencial in napetost v homogenem polju</h1>
+  <p class="meta">1× · naloga 2022/2 (= vaja 10.1)</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»koliko dela opravi (homogeno) polje«, »premik naboja iz točke \(A\) v \(B\)«, polje podano kot vektor \((E_x,E_y,E_z)\), »razlika potencialov«.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Potencial je »višina« točke v polju (v voltih), napetost razlika višin, delo polja pri premiku naboja je naboj × napetost. Pot ni pomembna, samo začetna in končna točka. V homogenem polju je integral kar skalarni produkt polja in vektorja premika.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[U_{AB}=\int_A^B\vec E\cdot d\vec l\]<span class="badge">Formular: »Potencialna energija, potencial in napetost«</span></div>
+    <div class="f">\[U_{AB}\overset{\text{homogeno}}{=}\vec E\cdot\overrightarrow{AB}=E_x\Delta x+E_y\Delta y+E_z\Delta z\]<span class="badge miss">Ni na formularju – matematika (skalarni produkt)</span></div>
+    <div class="f">\[A=Q\,U_{AB}\]<span class="badge miss">Ni dobesedno na formularju – iz \(W_{ep}=QV\)</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>\(\overrightarrow{AB}=B-A\) (končna minus začetna), v metrih.</li>
+    <li>\(U_{AB}=\vec E\cdot\overrightarrow{AB}\).</li>
+    <li>\(A=Q\,U_{AB}\).</li>
+    <li>Nehomogeno polje (točka, obroč, krogla): izračunaj \(V_A\), \(V_B\) s formulo objekta, nato \(A=Q(V_A-V_B)\).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2022, naloga 2</div>
+    <div class="task">Koliko dela opravi homogeno električno polje jakosti \(\vec E=(-20,10,30)\ \mathrm{kV/m}\) pri premiku točkaste elektrine množine \(Q=1\ \mu\mathrm C\) od točke \(A(10\ \mathrm{cm},10\ \mathrm{cm},40\ \mathrm{cm})\) do točke \(B(0\ \mathrm{cm},30\ \mathrm{cm},50\ \mathrm{cm})\)?</div>
+    <ol class="steps">
+      <li><div>\(\overrightarrow{AB}=B-A=(-10,20,10)\ \mathrm{cm}=(-0{,}1;\ 0{,}2;\ 0{,}1)\ \mathrm m\).</div>
+        <div class="why"><b>Zakaj:</b> premik je končna minus začetna točka; v metre zato, da se \(\mathrm{kV/m}\cdot\mathrm m\) skrajša v \(\mathrm{kV}\).</div></li>
+      <li><div>\(U_{AB}=(-20)(-0{,}1)+10\cdot0{,}2+30\cdot0{,}1=2+2+3=7\ \mathrm{kV}\).</div>
+        <div class="why"><b>Zakaj:</b> v homogenem polju je integral \(\int\vec E\cdot d\vec l\) kar skalarni produkt – pot ni pomembna.</div></li>
+      <li><div>\(A=Q\,U_{AB}=10^{-6}\cdot7000\ \mathrm J=\) <span class="ans">\(7\ \mathrm{mJ}\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> delo polja je naboj × napetost med začetno in končno točko. Pozitivno: polje naboj »potiska« v smeri premika.</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="5"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>\(\mathrm{kV/m}\) in \(\mathrm{cm}\) kombiniraj pravilno (\(\mathrm{kV/m}\cdot\mathrm m=\mathrm{kV}\)).</li>
+    <li>Vrstni red \(B-A\).</li>
+    <li>Negativne komponente.</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>10.1</b> – enaka kolokvijski</li><li><b>10.5</b> – energija → potencial</li><li><b>10.7</b> – delo pri približevanju dveh nabojev</li>
+    <li><b>10.8</b> – potencial v točki, kjer je \(E=0\)</li><li><b>10.9</b> – razlika potencialov v homogenem polju</li>
+    <li><b>10.14</b> – homogeno polje iz napetosti med točkami</li><li><b>1.16</b> v pogl. 10 – gibanje elektrona v polju</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="5"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 6 ================= -->
+<section class="page" id="tip6" data-type="6">
+  <div class="typenav"></div>
+  <h1><span class="tnum">6</span>Koncentrični krogli (krogelni kondenzator)</h1>
+  <p class="meta">2× · naloge 2022/3, 2025/4 (iste številke)</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>dve koncentrični krogelni lupini \(r_1, r_2\), napetost med njima, iščeš naboj ali gostoto \(\rho_0\) oblaka v notranji krogli.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Napetost med lupinama je razlika potencialov točkastega naboja na \(r_1\) in na \(r_2\). Ali je naboj na površini ali razmazan v oblaku znotraj \(r_1\), ni pomembno: zunaj sebe se obnaša kot točkast naboj (Tip 3).</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[U=\frac{Q}{4\pi\varepsilon_0}\left(\frac1{r_1}-\frac1{r_2}\right)=\frac{(r_2-r_1)\,Q}{4\pi\varepsilon_0r_1r_2}\ \Rightarrow\ Q=\frac{4\pi\varepsilon_0r_1r_2}{r_2-r_1}\,U\]<span class="badge">Formular: »Krogelni kondenzator« (\(V(T)\) med lupinama, \(C=4\pi\varepsilon\frac{r_1r_2}{r_2-r_1}\), \(U=Q/C\))</span></div>
+    <div class="f">\[\rho_0=\frac{Q}{\tfrac43\pi r_1^3}\]<span class="badge">Formular: »Naboj« (\(Q=\int\rho\,dV\))</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>Iz \(U\) izrazi \(Q\).</li>
+    <li>Za gostoto \(Q\) deli s prostornino <b>notranje</b> krogle.</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2025, naloga 4</div>
+    <div class="task">V krogelnem oblaku polmera \(r_1=2\ \mathrm{cm}\) je naboj z enakomerno prostorninsko gostoto \(\rho_0\). Izračunajte to gostoto, če vemo, da je med površino oblaka in koncentrično krogelno lupino polmera \(r_2=5\ \mathrm{cm}\) napetost \(U=10\ \mathrm{kV}\).</div>
+    <svg class="sk" viewBox="0 0 300 240" width="300" role="img" aria-label="Oblak in koncentrična lupina">
+      <circle cx="130" cy="120" r="100" class="s-ln" style="stroke-width:4"/>
+      <circle cx="130" cy="120" r="40" class="s-fill"/><circle cx="130" cy="120" r="40" fill="url(#hatch)"/>
+      <circle cx="130" cy="120" r="3" class="s-pt"/>
+      <line x1="130" y1="120" x2="102" y2="148" class="s-th" marker-end="url(#arr)"/><text x="98" y="140" class="it">r<tspan baseline-shift="sub" class="sm">1</tspan></text>
+      <line x1="130" y1="120" x2="130" y2="20" class="s-th" marker-end="url(#arr)"/><text x="136" y="50" class="it">r<tspan baseline-shift="sub" class="sm">2</tspan></text>
+      <line x1="170" y1="120" x2="230" y2="120" class="s-acc" marker-end="url(#arrA)"/><text x="190" y="112" class="it acc">U</text>
+      <text x="112" y="196" class="it">ρ<tspan baseline-shift="sub" class="sm">0</tspan></text><line x1="122" y1="186" x2="128" y2="158" class="s-th"/>
+    </svg>
+    <ol class="steps">
+      <li><div>Zunaj oblaka je polje kot polje točkastega naboja \(Q=\frac43\pi r_1^3\rho_0\) v središču.</div>
+        <div class="why"><b>Zakaj:</b> med \(r_1\) in \(r_2\) smo zunaj oblaka – oblika naboja znotraj ni pomembna (Gauss), zato velja formula krogelnega kondenzatorja.</div></li>
+      <li><div>\(\dfrac1{r_1}-\dfrac1{r_2}=50-20=30\ \mathrm{m^{-1}}\Rightarrow Q=\dfrac{4\pi\varepsilon_0\cdot10^4}{30}\ \mathrm C=37{,}1\ \mathrm{nC}\).</div>
+        <div class="why"><b>Zakaj:</b> iz \(U\) izraziš \(Q\). Polmera v metrih: \(1/0{,}02=50\), \(1/0{,}05=20\).</div></li>
+      <li><div>\(V=\frac43\pi(0{,}02)^3\ \mathrm{m^3}=3{,}35\cdot10^{-5}\ \mathrm{m^3}\Rightarrow\rho_0=\dfrac QV=\) <span class="ans">\(1{,}11\ \mathrm{mC/m^3}\)</span> (uradno \(1{,}1\ \mathrm{mC/m^3}\)).</div>
+        <div class="why"><b>Zakaj:</b> enakomerna gostota = naboj / prostornina. Prostornina <b>oblaka</b> (\(r_1\)), ne lupine \(r_2\).</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2022, naloga 3</div>
+    <div class="task">Med prevodnima koncentričnima krogelnima lupinama polmerov \(r_1=2\ \mathrm{cm}\) in \(r_2=5\ \mathrm{cm}\) smo izmerili napetost \(U=10\ \mathrm{kV}\). Določite konstantno prostorsko gostoto naboja v oblaku \(\rho_0\), ki zapolnjuje notranjo krogelno lupino.</div>
+    <ol class="steps">
+      <li><div>Iste številke kot 2025/4 → \(Q=\dfrac{4\pi\varepsilon_0r_1r_2}{r_2-r_1}U=37{,}1\ \mathrm{nC}\).</div><div class="why"><b>Zakaj:</b> napetost med lupinama določa celoten naboj znotraj \(r_1\).</div></li>
+      <li><div>\(\rho_0=\dfrac{Q}{\frac43\pi r_1^3}=\) <span class="ans">\(1{,}11\ \mathrm{mC/m^3}\)</span>.</div><div class="why"><b>Zakaj:</b> oblak zapolnjuje notranjo lupino → prostornina z \(r_1\).</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="6"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>Prostornina z \(r_1\), ne \(r_2\).</li>
+    <li>\(r_1^3\) v metrih (\(0{,}02^3=8\cdot10^{-6}\)).</li>
+    <li>\(\frac1{r_1}-\frac1{r_2}\) v \(\mathrm{m^{-1}}\).</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje"><li><b>10.10</b> – skoraj enaka naloga, \(U=20\ \mathrm V\)</li><li><b>9.4</b> – štiri koncentrične lupine</li></ul>
+  <label class="know"><input type="checkbox" data-know="6"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 7 ================= -->
+<section class="page" id="tip7" data-type="7">
+  <div class="typenav"></div>
+  <h1><span class="tnum">7</span>Koaksialni kabel</h1>
+  <p class="meta">3× · naloge 2022/4, 2024/2, 2025/5</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>žila polmera \(a\) (\(\rho_1\)), plašč z notranjim polmerom \(b\) (\(\rho_2\)), napetost \(U\) med njima, »plašč ozemljen«. Vprašanja: naboj \(q\), polje \(E\), ekvipotencialna ploskev, ploskovna gostota na plašču/žili.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Med žilo in plaščem je polje kot polje premice (Tip 2): največje ob žili, najmanjše ob plašču. Napetost je integral tega polja, zato logaritem. Pri ekvipotencialni ploskvi je trik deliti \(V(\rho)\) z \(U\): \(q\) in \(\varepsilon_0\) izgineta.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[U=\frac{q}{2\pi\varepsilon_0}\ln\frac ba\qquad E(\rho)=\frac{q}{2\pi\varepsilon_0\rho}=\frac{U}{\rho\ln(b/a)}\qquad V(\rho)=\frac{q}{2\pi\varepsilon_0}\ln\frac b\rho\ \ (\text{plašč ozemljen})\]<span class="badge">Formular: »Koaksialni kabel« (\(V(T)=\frac{q}{2\pi\varepsilon}\ln\frac b\rho\), \(E(T)=\frac{q}{2\pi\varepsilon\rho}\))</span></div>
+    <div class="f">\[\frac VU=\frac{\ln(b/\rho)}{\ln(b/a)}\ \Rightarrow\ \rho=b\left(\frac ab\right)^{V/U}\qquad V=\tfrac U2:\ \rho=\sqrt{ab}\qquad V=\tfrac U4:\ \rho=\sqrt[4]{a\,b^3}\]<span class="badge miss">Ni na formularju – bližnjica iz \(V(\rho)\) deljeno z \(U\)</span></div>
+    <div class="f">\[\sigma_{\text{plašč}}=-\varepsilon_0E(b)\qquad\sigma_{\text{žila}}=+\varepsilon_0E(a)\]<span class="badge">Formular: »Prevodnik« (\(\sigma=\varepsilon_0E_n\))</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>Iz \(U\) izračunaj \(q\) (če ga rabiš).</li>
+    <li>Polje: \(E=\dfrac{U}{\rho\ln(b/a)}\).</li>
+    <li>Ekvipotencialna ploskev: \(\rho=b\,(a/b)^{V/U}\). Preveri smisel: nižji potencial → bližje ozemljenemu plašču.</li>
+    <li>\(\sigma\) na plašču \(=-\varepsilon_0E(b)\) (plašč ima nasproten naboj kot žila; normala iz plašča kaže proti osi).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2025, naloga 5</div>
+    <div class="task">Koaksialni kabel določata polmer žile \(\rho_1=2\ \mathrm{cm}\) in notranji polmer plašča \(\rho_2=4\ \mathrm{cm}\). Med žilo in ozemljenim plaščem priključimo vir napetosti \(U=20\ \mathrm V\). Določite radij ekvipotencialne ploskve s potencialom \(U/4\).</div>
+    <svg class="sk" viewBox="0 0 330 250" width="330" role="img" aria-label="Prerez koaksialnega kabla">
+      <circle cx="130" cy="125" r="104" class="s-ln" style="stroke-width:16;stroke:var(--aux);opacity:.55"/>
+      <circle cx="130" cy="125" r="96" class="s-ln"/>
+      <circle cx="130" cy="125" r="48" class="s-fill" style="stroke:var(--pos)"/>
+      <circle cx="130" cy="125" r="80.7" class="s-aux" style="stroke:var(--accent);stroke-width:2"/>
+      <line x1="130" y1="125" x2="96" y2="91" class="s-th" marker-end="url(#arr)"/><text x="98" y="118" class="it">ρ<tspan baseline-shift="sub" class="sm">1</tspan></text>
+      <line x1="130" y1="125" x2="130" y2="29" class="s-th" marker-end="url(#arr)"/><text x="136" y="60" class="it">ρ<tspan baseline-shift="sub" class="sm">2</tspan></text>
+      <line x1="130" y1="125" x2="187" y2="182" class="s-acc" marker-end="url(#arrA)"/><text x="168" y="158" class="it acc">ρ</text><text x="196" y="200" class="acc sm"><tspan class="it">V</tspan> = <tspan class="it">U</tspan>/4</text>
+      <line x1="234" y1="125" x2="280" y2="125" class="s-ln"/><line x1="280" y1="125" x2="280" y2="150" class="s-ln"/>
+      <line x1="266" y1="150" x2="294" y2="150" class="s-ln"/><line x1="271" y1="157" x2="289" y2="157" class="s-ln"/><line x1="276" y1="164" x2="284" y2="164" class="s-ln"/>
+      <text x="250" y="186" class="sm">plašč ozemljen</text>
+    </svg>
+    <p class="skcap">Črtkana krožnica je narisana v merilu (\(\rho=3{,}36\ \mathrm{cm}\)).</p>
+    <ol class="steps">
+      <li><div>\(U=\dfrac{q}{2\pi\varepsilon_0}\ln\dfrac{\rho_2}{\rho_1}\) in \(\dfrac U4=\dfrac{q}{2\pi\varepsilon_0}\ln\dfrac{\rho_2}{\rho}\).</div>
+        <div class="why"><b>Zakaj:</b> plašč je ozemljen (\(V=0\)), zato je potencial točke kar napetost med njo in plaščem – formula iz okvirja »Koaksialni kabel«.</div></li>
+      <li><div>Deli: \(\ln\dfrac{\rho_2}{\rho_1}=4\ln\dfrac{\rho_2}{\rho}\Rightarrow\dfrac{\rho_2}{\rho_1}=\left(\dfrac{\rho_2}{\rho}\right)^4\).</div>
+        <div class="why"><b>Zakaj:</b> z deljenjem enačb izgineta \(q\) in \(\varepsilon_0\) – ni treba računati naboja.</div></li>
+      <li><div>\(\rho=\sqrt[4]{\rho_1\rho_2^3}=\sqrt[4]{2\cdot64}\ \mathrm{cm}=\) <span class="ans">\(3{,}36\ \mathrm{cm}\)</span>. Smisel: \(U/4\) je blizu 0 → blizu plašča (4 cm). ✓</div>
+        <div class="why"><b>Zakaj:</b> izraziš \(\rho\). Ker je tu razmerje polmerov, lahko ostaneš kar v \(\mathrm{cm}\). Preizkus smisla ujame obrnjen logaritem.</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2022, naloga 4</div>
+    <div class="task">Določite radij ekvipotencialne ploskve s potencialom \(15\ \mathrm{kV}\) v koaksialnem kablu z žilo polmera \(a=0{,}2\ \mathrm{cm}\) in notranjim polmerom plašča \(b=0{,}5\ \mathrm{cm}\), ki je priključen na vir enosmerne napetosti \(U_{ab}=30\ \mathrm{kV}\). Plašč koaksialnega kabla je ozemljen!</div>
+    <ol class="steps">
+      <li><div>\(q=\dfrac{2\pi\varepsilon_0U}{\ln(b/a)}=\dfrac{2\pi\cdot8{,}854\cdot10^{-12}\cdot3\cdot10^4}{\ln2{,}5}\ \mathrm{C/m}=1{,}82\ \mu\mathrm{C/m}\).</div><div class="why"><b>Zakaj:</b> uradna rešitev gre prek \(q\); ni nujno, a je dober vmesni preizkus.</div></li>
+      <li><div>\(V=\dfrac U2\Rightarrow\rho=\sqrt{ab}=\sqrt{0{,}2\cdot0{,}5}\ \mathrm{cm}=\) <span class="ans">\(0{,}316\ \mathrm{cm}\)</span> (uradno \(0{,}32\ \mathrm{cm}\)).</div><div class="why"><b>Zakaj:</b> \(15\ \mathrm{kV}\) je točno polovica \(30\ \mathrm{kV}\) – bližnjica \(\rho=b(a/b)^{1/2}=\sqrt{ab}\).</div></li>
+    </ol>
+  </div>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2024, naloga 2</div>
+    <div class="task">Med žilo z radijem \(a=1\ \mathrm{mm}\) in plaščem koaksialnega kabla z notranjim radijem \(b=3\ \mathrm{mm}\) je napetost \(U=20\ \mathrm V\). Izračunajte površinsko gostoto naboja na plašču.</div>
+    <ol class="steps">
+      <li><div>\(E(b)=\dfrac{U}{b\ln(b/a)}=\dfrac{20}{0{,}003\ln3}\ \mathrm{V/m}=6{,}07\ \mathrm{kV/m}\).</div><div class="why"><b>Zakaj:</b> \(\sigma\) na prevodniku je odvisna od polja tik ob njem – za plašč pri \(\rho=b\).</div></li>
+      <li><div>\(\sigma_b=-\varepsilon_0E(b)=-8{,}854\cdot10^{-12}\cdot6068\ \mathrm{C/m^2}=\) <span class="ans">\(-53{,}7\ \mathrm{nC/m^2}\)</span>.</div><div class="why"><b>Zakaj:</b> \(\sigma=\varepsilon_0E_n\); normala iz plašča kaže proti osi, polje (pri pozitivni žili) pa stran od osi → minus.</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="7"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>\(\ln(b/a)\), ne \(\ln(a/b)\).</li>
+    <li>\(\rho\) tu pomeni razdaljo (\(\mathrm m\)), ne gostoto.</li>
+    <li>Minus pri \(\sigma\) na plašču.</li>
+    <li>\(E\) pri \(\rho=b\) za plašč, pri \(\rho=a\) za žilo.</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje"><li><b>10.12</b> – največje polje → napetost</li></ul>
+  <label class="know"><input type="checkbox" data-know="7"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 8 ================= -->
+<section class="page" id="tip8" data-type="8">
+  <div class="typenav"></div>
+  <h1><span class="tnum">8</span>Električni dipol (navor)</h1>
+  <p class="meta">2× · naloge 2021/5, 2023/4</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»dipol«, par nabojev \(\pm Q\) na razdalji \(d\), kot \(\alpha\) glede na polje, »navor«.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Polje vleče \(+Q\) v eno smer, \(-Q\) v drugo, zato dipol zasuka proti smeri polja. Navor je največji pri \(90^\circ\) in nič, ko je dipol poravnan s poljem. V homogenem polju ni sile, samo navor.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[p=Q\,d\qquad M=p\,E\sin\alpha=Q\,d\,E\sin\alpha\qquad(\vec M=\vec p\times\vec E)\qquad W_{ep}=-pE\cos\alpha\]<span class="badge">Formular: »Električni dipol«</span></div>
+    <div class="f">\[E=\frac Ud\]<p class="small muted" style="margin:0 0 6px">polje med ploščama</p><span class="badge">Formular: »Ploščni kondenzator«</span></div>
+  </div>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>\(p=Qd\) (\(d\) v metrih!).</li>
+    <li>Če polje ni podano, ga izračunaj (med ploščama \(E=U/d\)).</li>
+    <li>\(M=pE\sin\alpha\).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2021, naloga 5</div>
+    <div class="task">Med vzporedni ravni plošči na medsebojni razdalji \(d=15\ \mathrm{mm}\) priključimo napetostni vir \(U=10\ \mathrm{kV}\). V prostoru med ploščama se nahaja točkasti dipol (\(Q_d=5\ \mu\mathrm C\), \(d_d=2\ \mathrm{mm}\)) pod kotom \(60^\circ\) glede na smer polja. Določite absolutno vrednost navora na dipol.</div>
+    <svg class="sk" viewBox="0 0 380 260" width="380" role="img" aria-label="Dipol med ploščama">
+      <line x1="40" y1="20" x2="40" y2="210" class="s-posl" style="stroke-width:6"/><text x="22" y="30" class="pos">+</text>
+      <line x1="330" y1="20" x2="330" y2="210" class="s-negl" style="stroke-width:6"/><text x="342" y="30" class="neg">−</text>
+      <line x1="48" y1="40" x2="322" y2="40" class="s-fld" marker-end="url(#arrF)"/>
+      <line x1="48" y1="190" x2="322" y2="190" class="s-fld" marker-end="url(#arrF)"/>
+      <text x="290" y="60" class="it fld">E</text>
+      <line x1="185" y1="115" x2="250" y2="115" class="s-aux"/>
+      <line x1="153" y1="170" x2="217" y2="60" class="s-ln" style="stroke-width:3"/>
+      <circle cx="217" cy="60" r="9" class="s-pos"/><text x="228" y="56" class="pos">+<tspan class="it">Q</tspan><tspan baseline-shift="sub" class="sm">d</tspan></text>
+      <circle cx="153" cy="170" r="9" class="s-neg"/><text x="104" y="180" class="neg">−<tspan class="it">Q</tspan><tspan baseline-shift="sub" class="sm">d</tspan></text>
+      <path d="M 225 115 A 40 40 0 0 0 205 81" class="s-acc"/><text x="226" y="96" class="acc">60°</text>
+      <text x="150" y="110" class="it acc">d<tspan baseline-shift="sub" class="sm">d</tspan></text>
+      <line x1="40" y1="240" x2="330" y2="240" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="170" y="234"><tspan class="it">d</tspan> = 15 mm</text>
+    </svg>
+    <ol class="steps">
+      <li><div>\(E=\dfrac Ud=\dfrac{10^4}{0{,}015}\ \mathrm{V/m}=667\ \mathrm{kV/m}\).</div>
+        <div class="why"><b>Zakaj:</b> polje ni podano, med ploščama je homogeno – iz napetosti in <b>razmika plošč</b> \(d\).</div></li>
+      <li><div>\(p=Q_dd_d=5\cdot10^{-6}\cdot0{,}002\ \mathrm{Cm}=10^{-8}\ \mathrm{Cm}\).</div>
+        <div class="why"><b>Zakaj:</b> dipolni moment uporablja <b>dolžino dipola</b> \(d_d\), ne razmika plošč.</div></li>
+      <li><div>\(M=pE\sin\alpha=10^{-8}\cdot6{,}67\cdot10^5\cdot\sin60^\circ\ \mathrm{Nm}=\) <span class="ans">\(5{,}77\ \mathrm{mNm}\)</span> (uradno \(5{,}78\cdot10^{-3}\ \mathrm{Nm}\) – razlika le v zaokroževanju).</div>
+        <div class="why"><b>Zakaj:</b> navor je največji pri \(90^\circ\) in nič pri \(0^\circ\) – zato \(\sin\alpha\).</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2023, naloga 4</div>
+    <div class="task">Električni dipol (\(Q=2\ \mathrm{nC}\), \(d=2\ \mathrm{mm}\)) se nahaja v električnem polju velikosti \(E=25\ \mathrm{kV/m}\) pod kotom \(\alpha=30^\circ\). Kolikšna je absolutna vrednost navora električne sile na dipol?</div>
+    <svg class="sk" viewBox="0 0 300 160" width="300" role="img" aria-label="Dipol v homogenem polju">
+      <line x1="20" y1="30" x2="280" y2="30" class="s-fld" marker-end="url(#arrF)"/>
+      <line x1="20" y1="80" x2="280" y2="80" class="s-fld" marker-end="url(#arrF)" opacity=".35"/>
+      <line x1="20" y1="130" x2="280" y2="130" class="s-fld" marker-end="url(#arrF)"/>
+      <text x="262" y="20" class="it fld">E</text>
+      <line x1="150" y1="80" x2="215" y2="80" class="s-aux"/>
+      <line x1="98" y1="110" x2="202" y2="50" class="s-ln" style="stroke-width:3"/>
+      <circle cx="202" cy="50" r="8" class="s-pos"/><text x="212" y="52" class="pos">+<tspan class="it">Q</tspan></text>
+      <circle cx="98" cy="110" r="8" class="s-neg"/><text x="62" y="118" class="neg">−<tspan class="it">Q</tspan></text>
+      <path d="M 195 80 A 45 45 0 0 0 189 58" class="s-acc"/><text x="198" y="72" class="acc">30°</text>
+      <text x="130" y="76" class="it acc">d</text>
+    </svg>
+    <ol class="steps">
+      <li><div>\(p=Qd=2\cdot10^{-9}\cdot0{,}002\ \mathrm{Cm}=4\cdot10^{-12}\ \mathrm{Cm}\).</div><div class="why"><b>Zakaj:</b> dipol opišeš z enim številom – momentom.</div></li>
+      <li><div>\(M=pE\sin\alpha=4\cdot10^{-12}\cdot25000\cdot0{,}5\ \mathrm{Nm}=\) <span class="ans">\(50\ \mathrm{nNm}\)</span>.</div><div class="why"><b>Zakaj:</b> polje je podano, kot tudi – formula iz okvirja »Električni dipol«.</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="8"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li><b>Dve različni »\(d\)«</b> (razmik plošč in dolžina dipola).</li>
+    <li>Kalkulator v stopinjah, ne radianih.</li>
+    <li>\(\mathrm{mm}\to\mathrm m\).</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje"><li><b>12.1</b> – dipol: energija in navor, vektorsko</li><li><b>12.2</b> – navor na kroglici na distančniku</li></ul>
+  <label class="know"><input type="checkbox" data-know="8"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 9 ================= -->
+<section class="page" id="tip9" data-type="9">
+  <div class="typenav"></div>
+  <h1><span class="tnum">9</span>Zrcaljenje: vodnik nad zemljo, dvovod</h1>
+  <p class="meta">4× · naloge 2021/4, 2022/5, 2023/2, 2023/5</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>»nad zemljo«, »nad prevodno (ozemljeno) podlago«, »pred ozemljeno steno«, »dvovod«, višina \(h\), vodniki v kovinskih ceveh. Najpogostejši tip skupaj s Tipom 1 in edini, ki zahteva malo razmisleka.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Ozemljena ravnina je ekvipotencialna (\(V=0\)). Enak učinek dobiš, če zemljo izbrišeš in namesto nje narišeš <b>zrcalni naboj \(-q\) na globini \(h\)</b>, natanko pod vodnikom. Potem imaš navaden par \(+q\), \(-q\) na razdalji \(2h\) in računaš le s formulami za premico.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[V(T)=\frac{q}{2\pi\varepsilon_0}\ln\frac{r_-}{r_+}\]<p class="small muted" style="margin:0 0 6px">\(r_+\) do \(+q\), \(r_-\) do \(-q\); na površini vodnika \(r_+=a\)</p><span class="badge">Formular: »Linijski naboj« (\(V=-\frac{q}{2\pi\varepsilon_0}\ln\rho+\text{konst.}\), za par se konstanti odštejeta) in »Simetrični dvovod«</span></div>
+  </div>
+  <div class="tscroll" style="margin-top:10px"><table>
+    <thead><tr><th>Kaj iščeš</th><th>Formula</th><th>Od kod</th><th>Formular</th></tr></thead>
+    <tbody>
+      <tr><td>napetost vodnik–zemlja</td><td>\(U=\dfrac{q}{2\pi\varepsilon_0}\ln\dfrac{2h}{a}\)</td><td>\(V(T)\) z \(r_+=a\), \(r_-=2h\)</td><td><span class="badge">»Nadzemni vodnik« (\(C\cong\frac{2\pi\varepsilon_0l}{\ln(2h/r)}\), \(U=Q/C\))</span></td></tr>
+      <tr><td>\(\sigma\) na zemlji pod vodnikom</td><td>\(\sigma=-\dfrac{q}{\pi h}\)</td><td>\(E=2\cdot\dfrac{q}{2\pi\varepsilon_0h}\), \(\sigma=-\varepsilon_0E\)</td><td><span class="badge">»Prevodnik« (\(\sigma=\varepsilon_0E_n\))</span></td></tr>
+      <tr><td>sila zemlje na vodnik (na enoto dolžine)</td><td>\(f=\dfrac{q^2}{4\pi\varepsilon_0h}\), proti zemlji</td><td>\(f=q\cdot E\) zrcalnega naboja na razdalji \(2h\)</td><td><span class="badge miss">Ni na formularju – \(f=qE\), \(E\) iz »Linijski naboj«</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Več vodnikov → zrcali vsakega posebej in prispevke seštej.</p>
+
+  <h2>Postopek</h2>
+  <ol class="proc">
+    <li>Nariši zrcalne naboje.</li>
+    <li>Določi razdalje \(r_+\), \(r_-\) do točke.</li>
+    <li>Izberi vrstico tabele ali seštej prispevke.</li>
+    <li>Predznak (\(\sigma\) pod pozitivnim vodnikom je negativna, sila je privlačna).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2022, naloga 5</div>
+    <div class="task">Tanki dolgi žici sta nameščeni ena nad drugo na višinah \(h_1=3\ \mathrm m\) in \(h_2=4\ \mathrm m\) nad zemljo. Linijska gostota naboja na spodnji žici je \(q_1=30\ \mathrm{nC/m}\), na zgornji pa \(q_2=-20\ \mathrm{nC/m}\). Določite ploskovni naboj v točki na zemlji, ki se nahaja neposredno pod vodnikoma.</div>
+    <svg class="sk" viewBox="0 0 320 360" width="300" role="img" aria-label="Dve žici nad zemljo z zrcalnima nabojema">
+      <rect x="20" y="180" width="280" height="14" fill="url(#hatch)"/><line x1="20" y1="180" x2="300" y2="180" class="s-ln"/>
+      <line x1="150" y1="30" x2="150" y2="340" class="s-aux"/>
+      <circle cx="150" cy="75" r="8" class="s-neg"/><text x="164" y="80" class="neg"><tspan class="it">q</tspan><tspan baseline-shift="sub" class="sm">2</tspan> = −20 nC/m</text>
+      <circle cx="150" cy="110" r="8" class="s-pos"/><text x="164" y="115" class="pos"><tspan class="it">q</tspan><tspan baseline-shift="sub" class="sm">1</tspan> = 30 nC/m</text>
+      <circle cx="150" cy="180" r="4" class="s-pt"/><text x="132" y="172" class="it">T</text>
+      <circle cx="150" cy="250" r="8" class="s-neg" opacity=".55"/><text x="164" y="255" class="neg">−<tspan class="it">q</tspan><tspan baseline-shift="sub" class="sm">1</tspan> (zrcalni)</text>
+      <circle cx="150" cy="285" r="8" class="s-pos" opacity=".55"/><text x="164" y="290" class="pos">−<tspan class="it">q</tspan><tspan baseline-shift="sub" class="sm">2</tspan> (zrcalni)</text>
+      <line x1="60" y1="110" x2="60" y2="180" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="30" y="150" class="it">h<tspan baseline-shift="sub" class="sm">1</tspan></text>
+      <line x1="100" y1="75" x2="100" y2="180" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="70" y="96" class="it">h<tspan baseline-shift="sub" class="sm">2</tspan></text>
+      <text x="230" y="212" class="sm">zemlja</text>
+    </svg>
+    <p class="skcap">Pod tlemi so zrcalni naboji (bledo) – v resnici jih ni, nadomestijo vpliv zemlje.</p>
+    <ol class="steps">
+      <li><div>Vsaka žica skupaj s svojo zrcalno sliko da v \(T\) navpično polje \(E=\dfrac{2q}{2\pi\varepsilon_0h}\), torej \(\sigma=-\dfrac{q}{\pi h}\).</div>
+        <div class="why"><b>Zakaj:</b> žica in njen zrcalni naboj sta od \(T\) oba oddaljena \(h\); vodoravni komponenti ni, navpični se seštejeta (dvakratno polje premice). Nato \(\sigma=\varepsilon_0E_n\), normala iz zemlje kaže navzgor, polje pozitivne žice pa navzdol → minus.</div></li>
+      <li><div>\(\sigma=-\left(\dfrac{q_1}{\pi h_1}+\dfrac{q_2}{\pi h_2}\right)=-(3{,}18-1{,}59)\ \mathrm{nC/m^2}=\) <span class="ans">\(-1{,}59\ \mathrm{nC/m^2}\)</span> (uradno \(-1{,}6\ \mathrm{nC/m^2}\)).</div>
+        <div class="why"><b>Zakaj:</b> superpozicija – vsak vodnik zrcališ posebej in prispevke sešteješ s predznaki.</div></li>
+    </ol>
+  </div>
+
+  <h2>Drugi primeri s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2023, naloga 2</div>
+    <div class="task">Nad ravno prevodno in ozemljeno podlago se na višini \(h=2\ \mathrm m\) nahaja vodnik z nabojem \(q=15\ \mathrm{nC/m}\). Določite vektor sile na enoto dolžine \(\vec f\), s katero podlaga privlači vodnik.</div>
+    <svg class="sk" viewBox="0 0 280 250" width="280" role="img" aria-label="Vodnik nad zemljo s silo" style="overflow:visible">
+      <rect x="20" y="130" width="240" height="14" fill="url(#hatch)"/><line x1="20" y1="130" x2="260" y2="130" class="s-ln"/>
+      <circle cx="130" cy="60" r="8" class="s-pos"/><text x="144" y="56" class="pos">+<tspan class="it">q</tspan></text>
+      <circle cx="130" cy="200" r="8" class="s-neg" opacity=".55"/><text x="144" y="205" class="neg">−<tspan class="it">q</tspan> (zrcalni)</text>
+      <line x1="130" y1="70" x2="130" y2="112" class="s-posl" marker-end="url(#arrR)" style="stroke-width:3"/><text x="140" y="100" class="it pos">f</text>
+      <line x1="70" y1="60" x2="70" y2="130" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="50" y="100" class="it">h</text>
+      <line x1="40" y1="60" x2="40" y2="200" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="16" y="170">2<tspan class="it">h</tspan></text>
+      <line x1="255" y1="235" x2="255" y2="205" class="s-th" marker-end="url(#arr)"/><text x="262" y="212" class="it">y</text>
+    </svg>
+    <ol class="steps">
+      <li><div>Zemljo zamenjaš z zrcalnim nabojem \(-q\) na razdalji \(2h=4\ \mathrm m\) pod vodnikom.</div><div class="why"><b>Zakaj:</b> sila podlage = sila, s katero bi zrcalni naboj deloval na vodnik.</div></li>
+      <li><div>\(\vec f=q\cdot\dfrac{-q}{2\pi\varepsilon_0\cdot2h}\,\vec e_y=-\dfrac{q^2}{4\pi\varepsilon_0h}\,\vec e_y\).</div><div class="why"><b>Zakaj:</b> \(f=qE\), kjer je \(E\) polje premice \(-q\) na razdalji \(2h\). Formule za silo ni na formularju.</div></li>
+      <li><div>\(\vec f=-\dfrac{(15\cdot10^{-9})^2}{4\pi\cdot8{,}854\cdot10^{-12}\cdot2}\,\vec e_y\ \mathrm{N/m}=\) <span class="ans">\(-1{,}01\ \mu\mathrm{N/m}\ \vec e_y\)</span> (navzdol).</div><div class="why"><b>Zakaj:</b> raznoimenska naboja se privlačita → sila kaže proti zemlji.</div></li>
+    </ol>
+  </div>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2021, naloga 4</div>
+    <div class="task">Dvovod nad prevodno podlago sestavljata vodnika z enakima polmeroma \(a=2\ \mathrm{mm}\). Naboj na vodnikih je \(\pm q=\pm10\ \mathrm{nC/m}\), medsebojna razdalja med njima pa je \(d=5\ \mathrm m\). Izračunajte napetost med vodnikoma, če sta na višini \(h=2{,}5\ \mathrm m\) nad podlago.</div>
+    <svg class="sk" viewBox="0 0 380 270" width="380" role="img" aria-label="Dvovod nad zemljo s štirimi naboji">
+      <rect x="20" y="130" width="340" height="14" fill="url(#hatch)"/><line x1="20" y1="130" x2="360" y2="130" class="s-ln"/>
+      <circle cx="90" cy="50" r="8" class="s-pos"/><text x="70" y="34" class="pos">+<tspan class="it">q</tspan></text>
+      <circle cx="290" cy="50" r="8" class="s-neg"/><text x="280" y="34" class="neg">−<tspan class="it">q</tspan></text>
+      <circle cx="90" cy="210" r="8" class="s-neg" opacity=".55"/><text x="70" y="238" class="neg">−<tspan class="it">q</tspan></text>
+      <circle cx="290" cy="210" r="8" class="s-pos" opacity=".55"/><text x="280" y="238" class="pos">+<tspan class="it">q</tspan></text>
+      <line x1="100" y1="50" x2="280" y2="50" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="186" y="44" class="it">d</text>
+      <line x1="60" y1="50" x2="60" y2="210" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="30" y="170">2<tspan class="it">h</tspan></text>
+      <line x1="90" y1="50" x2="290" y2="210" class="s-aux" style="stroke:var(--accent)"/><text x="196" y="118" class="acc sm">√(<tspan class="it">d</tspan>² + (2<tspan class="it">h</tspan>)²)</text>
+      <line x1="320" y1="50" x2="320" y2="130" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="328" y="96" class="it">h</text>
+    </svg>
+    <ol class="steps">
+      <li><div>Potencial levega vodnika = prispevek njegovega para + prispevek desnega para:<br>\(V_L=\dfrac{q}{2\pi\varepsilon_0}\left[\ln\dfrac{2h}{a}+\ln\dfrac{d}{\sqrt{d^2+(2h)^2}}\right]\).</div>
+        <div class="why"><b>Zakaj:</b> po zrcaljenju so 4 naboji. Za levi par (\(+q\) in njegov \(-q\)): \(r_+=a\), \(r_-=2h\). Za desni par (\(-q\) in njegov \(+q\)): naboj \(-q\) je na razdalji \(d\), zrcalni \(+q\) pa na diagonali – ta logaritem je negativen.</div></li>
+      <li><div>Simetrija: \(V_D=-V_L\), \(U=2V_L=\dfrac{q}{\pi\varepsilon_0}\ln\dfrac{2hd}{a\sqrt{d^2+(2h)^2}}\).</div>
+        <div class="why"><b>Zakaj:</b> desni vodnik je zrcalna slika levega z nasprotnim nabojem; napetost med vodnikoma je razlika potencialov.</div></li>
+      <li><div>\(U=\dfrac{10^{-8}}{\pi\cdot8{,}854\cdot10^{-12}}\ln\dfrac{2\cdot2{,}5\cdot5}{0{,}002\cdot\sqrt{50}}\ \mathrm V=\) <span class="ans">\(2{,}69\ \mathrm{kV}\)</span> (uradno \(2{,}7\ \mathrm{kV}\)).</div>
+        <div class="why"><b>Zakaj:</b> vse v metrih: \(a=0{,}002\ \mathrm m\).</div></li>
+    </ol>
+  </div>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2023, naloga 5</div>
+    <div class="task">Tanka vodnika, naelektrena z nasprotno enakima nabojema \(\pm q\), ležita v kovinskih ceveh notranjega polmera \(a=3\ \mathrm{cm}\) in zunanjega polmera \(b=4\ \mathrm{cm}\). Osi cevi sta med sabo oddaljeni za razdaljo \(d=2\ \mathrm m\). Izračunajte absolutno vrednost gostote naboja na posameznem vodniku, če je leva cev na potencialu \(V_L=10\ \mathrm{kV}\). (Skica ni v merilu.)</div>
+    <svg class="sk" viewBox="0 0 380 170" width="380" role="img" aria-label="Dve kovinski cevi z vodnikoma">
+      <circle cx="80" cy="80" r="35" class="s-ln" style="stroke-width:10;stroke:var(--aux);opacity:.6"/>
+      <circle cx="300" cy="80" r="35" class="s-ln" style="stroke-width:10;stroke:var(--aux);opacity:.6"/>
+      <circle cx="80" cy="80" r="5" class="s-pos"/><circle cx="300" cy="80" r="5" class="s-neg"/>
+      <text x="70" y="70" class="pos sm">+<tspan class="it">q</tspan></text><text x="290" y="70" class="neg sm">−<tspan class="it">q</tspan></text>
+      <line x1="80" y1="80" x2="80" y2="50" class="s-th"/><text x="84" y="47" class="it sm">a</text>
+      <line x1="80" y1="80" x2="120" y2="80" class="s-th"/><text x="104" y="96" class="it sm">b</text>
+      <line x1="80" y1="145" x2="300" y2="145" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="160" y="138"><tspan class="it">d</tspan> = 2 m</text>
+      <text x="40" y="20"><tspan class="it">V</tspan><tspan baseline-shift="sub" class="sm">L</tspan> = 10 kV</text>
+    </svg>
+    <ol class="steps">
+      <li><div>Zaradi influence se na <b>zunanji</b> površini vsake cevi pojavi naboj, enak naboju žice v njej → navzven sta to dva valja polmera \(b\) z \(\pm q\) (dvovod).</div><div class="why"><b>Zakaj:</b> zunaj cevi »vidiš« le naboj na zunanji površini; notranji polmer \(a\) na zunanje polje ne vpliva.</div></li>
+      <li><div>\(V_L=\dfrac{|q|}{2\pi\varepsilon_0}\ln\dfrac db\) (\(r_+=b\), \(r_-\approx d\); simetrija \(V_D=-V_L\)).</div><div class="why"><b>Zakaj:</b> potencial na površini leve cevi: do lastnega naboja je \(b\), do nasprotnega približno \(d\) (ker \(d\gg b\)).</div></li>
+      <li><div>\(|q|=\dfrac{2\pi\varepsilon_0V_L}{\ln(d/b)}=\dfrac{2\pi\cdot8{,}854\cdot10^{-12}\cdot10^4}{\ln50}\ \mathrm{C/m}=\) <span class="ans">\(142\ \mathrm{nC/m}\)</span>. Podatek \(a\) je odveč (past!).</div><div class="why"><b>Zakaj:</b> izraziš \(|q|\); \(d/b=2/0{,}04=50\).</div></li>
+    </ol>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="9"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>\(2h\), ne \(h\) (razdalja do zrcalnega naboja).</li>
+    <li>Predznak \(\sigma\) in sile.</li>
+    <li>Pri 2021/4 dva logaritma, drugi negativen.</li>
+    <li>Pri 2023/5 odveč podatek \(a\).</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>13.1</b> – \(\sigma\) pod točkastim nabojem</li><li><b>13.2</b> – naboj pred ozemljeno steno</li>
+    <li><b>13.3</b> – \(\sigma\) pod žico in 10 m stran (najboljša za začetek)</li><li><b>13.6</b> – dvovod nad zemljo, potenciala</li>
+    <li><b>13.7</b> – dvovod vzporedno z zemljo, napetost</li><li><b>13.8</b> – vodnik nad zemljo: \(U\), \(E\), \(\sigma\)</li>
+    <li><b>10.11</b> – potencial tretje žice ob dvovodu</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="9"> Ta tip znam</label>
+</section>
+
+<!-- ================= TIP 10 ================= -->
+<section class="page" id="tip10" data-type="10">
+  <div class="typenav"></div>
+  <h1><span class="tnum">10</span>Coulombova sila in ravnovesje</h1>
+  <p class="meta">1× · naloga 2024/4</p>
+
+  <h2>Prepoznaš po</h2>
+  <p>sila med dvema nabojema, kroglice na vrvicah (elektroskop), »naboj miruje«, »sila je nič«, masa v gramih.</p>
+
+  <h2>Kaj računaš in zakaj</h2>
+  <p>Istoimenska naboja se odbijata, raznoimenska privlačita. Pri ravnovesju narišeš vse sile (teža, električna sila, vrvica) in zahtevaš, da je vsota nič. Iz geometrije dobiš kot vrvice, iz kota razmerje med električno silo in težo.</p>
+
+  <h2>Formule</h2>
+  <div class="fgrid">
+    <div class="f">\[\vec F=Q\vec E\]<span class="badge">Formular: »Lorentzova sila« (\(\vec w=0\))</span></div>
+    <div class="f">\[E=\frac{Q}{4\pi\varepsilon_0R^2}\]<span class="badge">Formular: »Točkasti naboj«</span></div>
+    <div class="f">\[F=\frac{Q_1Q_2}{4\pi\varepsilon_0d^2}\]<span class="badge miss">Ni na formularju kot ena formula – dobiš iz \(F=Q_2E_1\)</span></div>
+    <div class="f">\[F_e=mg\,\mathrm{tg}\,\beta,\qquad\sin\beta=\frac{d/2}{l}\]<span class="badge miss">Ni na formularju – ravnovesje sil (mehanika)</span></div>
+  </div>
+
+  <h2>Postopek (elektroskop)</h2>
+  <ol class="proc">
+    <li>Sile na kroglico: teža \(mg\) (dol), \(F_e\) (vodoravno, stran od druge kroglice), vrvica.</li>
+    <li>\(\sin\beta=\dfrac{d/2}{l}\).</li>
+    <li>Ravnovesje: \(F_e=mg\,\mathrm{tg}\,\beta\).</li>
+    <li>Coulomb z \(Q_1=Q_2=Q\): \(Q=\pm\sqrt{4\pi\varepsilon_0d^2\,mg\,\mathrm{tg}\,\beta}\).</li>
+  </ol>
+
+  <h2>Rešen primer s kolokvija</h2>
+  <div class="ex">
+    <div class="exhead">Kolokvij 2024, naloga 4</div>
+    <div class="task">Elektroskop sestavljata kroglici mase \(m=9\ \mathrm g\), obešeni na dveh tankih vrvicah dolžine \(l=50\ \mathrm{cm}\). Koliko naboja je na vsaki od kroglic, ko sta oddaljeni za \(d=10\ \mathrm{cm}\)?</div>
+    <svg class="sk" viewBox="0 0 360 290" width="340" role="img" aria-label="Elektroskop s silami">
+      <line x1="120" y1="20" x2="240" y2="20" class="s-ln" style="stroke-width:4"/>
+      <line x1="180" y1="22" x2="180" y2="230" class="s-aux"/>
+      <line x1="180" y1="22" x2="132" y2="210" class="s-ln"/><line x1="180" y1="22" x2="228" y2="210" class="s-ln"/>
+      <circle cx="132" cy="210" r="10" class="s-pos"/><circle cx="228" cy="210" r="10" class="s-pos"/>
+      <text x="206" y="120" class="it">l</text>
+      <path d="M 180 80 A 58 58 0 0 0 194 78" class="s-acc"/><text x="186" y="100" class="it acc">β</text>
+      <line x1="228" y1="222" x2="228" y2="275" class="s-th" marker-end="url(#arr)"/><text x="236" y="272"><tspan class="it">mg</tspan></text>
+      <line x1="240" y1="210" x2="300" y2="210" class="s-posl" marker-end="url(#arrR)"/><text x="292" y="200" class="pos it">F<tspan baseline-shift="sub" class="sm">e</tspan></text>
+      <line x1="226" y1="198" x2="214" y2="150" class="s-acc" marker-end="url(#arrA)"/><text x="196" y="160" class="acc it sm">F<tspan baseline-shift="sub">v</tspan></text>
+      <line x1="132" y1="245" x2="228" y2="245" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="172" y="262" class="it">d</text>
+    </svg>
+    <ol class="steps">
+      <li><div>\(\sin\beta=\dfrac{0{,}05}{0{,}5}=0{,}1\Rightarrow\beta=5{,}74^\circ\), \(\mathrm{tg}\,\beta=0{,}1005\).</div>
+        <div class="why"><b>Zakaj:</b> vsaka kroglica je od navpičnice odmaknjena za \(d/2\) – nasprotna kateta proti hipotenuzi \(l\).</div></li>
+      <li><div>\(F_e=mg\,\mathrm{tg}\,\beta=0{,}009\cdot9{,}81\cdot0{,}1005\ \mathrm N=8{,}87\ \mathrm{mN}\).</div>
+        <div class="why"><b>Zakaj:</b> kroglica miruje → vodoravna komponenta sile vrvice uravnoteži \(F_e\), navpična pa težo. Razmerje je \(\mathrm{tg}\,\beta\). Masa v \(\mathrm{kg}\)!</div></li>
+      <li><div>\(Q=\pm\sqrt{4\pi\varepsilon_0\cdot0{,}1^2\cdot8{,}87\cdot10^{-3}}\ \mathrm C=\) <span class="ans">\(\pm99{,}4\ \mathrm{nC}\)</span>.</div>
+        <div class="why"><b>Zakaj:</b> \(F_e\) je Coulombova sila z \(Q_1=Q_2=Q\) na razdalji \(d\) (cela razdalja, ne \(d/2\)). Predznaka ne poznaš – oba naboja sta le istoimenska.</div></li>
+    </ol>
+    <div class="warn"><b>⚠ Uradna rešitev:</b> \(\pm99{,}3\ \mathrm{nC}\) – dobiš jo z \(g=9{,}8\ \mathrm{m/s^2}\).<br><b>Preračunano:</b> z \(g=9{,}81\ \mathrm{m/s^2}\) pride \(\pm99{,}4\ \mathrm{nC}\). Oboje je pravilno.</div>
+  </div>
+
+  <h2>Kalkulator</h2>
+  <div class="calc" data-calc="10"></div>
+
+  <h2>Pasti</h2>
+  <div class="traps"><ul>
+    <li>\(\mathrm g\to\mathrm{kg}\).</li>
+    <li>\(d/2\) v sinusu (ne \(d\)).</li>
+    <li>V Coulombu cela razdalja \(d\).</li>
+    <li>Predznak naboja ni določen (\(\pm\)).</li>
+  </ul></div>
+
+  <h2>Vaje iz avditornih vaj</h2>
+  <ul class="vaje">
+    <li><b>1.4</b> – sila med dvema točkastima nabojema</li><li><b>8.3</b> – sila na naboj med tremi naboji</li>
+    <li><b>8.5</b> – ravnovesje treh nabojev na premici</li><li><b>8.13</b> – ravnovesje: sile na vse tri naboje nič</li>
+    <li><b>9.10</b> – kroglica pod oblakom ne pade</li>
+  </ul>
+  <label class="know"><input type="checkbox" data-know="10"> Ta tip znam</label>
+</section>
+
+<!-- ================= KVIZ ================= -->
+<section class="page" id="kviz">
+  <h1>Preveri se: prepoznaj tip</h1>
+  <p class="meta">Prikažem besedilo naloge s kolokvija (vseh 25, v naključnem vrstnem redu). Izberi tip.</p>
+  <div id="quizBox"></div>
+</section>
+
+<!-- ================= SIMULACIJA ================= -->
+<section class="page" id="simulacija">
+  <h1>Simulacija kolokvija</h1>
+  <p class="meta">Izberi leto: dobiš 5 nalog brez tipov in rešitev, štoparico in polja za rezultate. Rešuj na papir, samo s formularjem.</p>
+  <div id="simBox"></div>
+</section>
+
+<!-- ================= PLAN ================= -->
+<section class="page" id="plan">
+  <h1>Plan učenja</h1>
+  <div class="card">
+    <div class="settings">
+      <div><label for="planDate">Datum kolokvija OE</label><input type="date" id="planDate"></div>
+      <div><div class="big" id="planCount" style="margin-top:20px"></div></div>
+    </div>
+    <p class="small muted">Pretekli kolokviji so bili med 1. in 15. decembrom. ~1 ura na dan (hkrati matematika – kolokvij 25. 11. – in fizika), lažji tipi najprej, generalka na koncu.</p>
+  </div>
+  <p class="note">Vsak dan: najprej sam reši rešeni primer brez gledanja, preveri s kalkulatorjem, šele nato razkrij rešitev.</p>
+  <div id="planWarn"></div>
+  <ul class="plan" id="planList" style="padding:0"></ul>
+</section>
+
+<!-- ================= NAPAKE ================= -->
+<section class="page" id="napake">
+  <h1>Najpogostejše napake</h1>
+  <div class="errbox"><ul class="errlist"></ul></div>
+</section>
+
+</main>
+</div>
+<script>
+/* ===== Jedro: konstante, razčlenjevalnik enot, oblikovanje ===== */
+const CONST = {
+  eps0: 8.854e-12,      // As/(Vm)
+  e0: 1.602e-19,        // C (naboj elektrona je -e0)
+  g: 9.81,              // m/s^2
+  k: 1 / (4 * Math.PI * 8.854e-12) // ≈ 8,988e9 Vm/(As)
+};
+
+const PREFIX = { p: 1e-12, n: 1e-9, u: 1e-6, m: 1e-3, c: 1e-2, d: 1e-1, k: 1e3, M: 1e6, G: 1e9 };
+
+// [simbol, faktor v SI, dimenzija, potenca predpone]
+const UNITS = [
+  ['C', 1, 'Q', 1], ['C/m', 1, 'Q/L', 1], ['C/m2', 1, 'Q/L2', 1], ['C/m3', 1, 'Q/L3', 1],
+  ['m', 1, 'L', 1], ['m2', 1, 'L2', 2], ['m3', 1, 'L3', 3],
+  ['V', 1, 'U', 1], ['V/m', 1, 'U/L', 1], ['A', 1, 'I', 1], ['s', 1, 'T', 1],
+  ['g', 1e-3, 'M', 1], ['N', 1, 'F', 1], ['N/m', 1, 'F/L', 1], ['J', 1, 'W', 1], ['Nm', 1, 'W', 1],
+  ['Cm', 1, 'Cm', 1], ['rad', 1, 'ang', 1], ['°', Math.PI / 180, 'ang', 0], ['deg', Math.PI / 180, 'ang', 0],
+  ['1/s', 1, '1/T', 1], ['s-1', 1, '1/T', 1], ['Hz', 1, '1/T', 1], ['1/m', 1, '1/L', 1], ['m-1', 1, '1/L', 1]
+];
+const UNITMAP = Object.fromEntries(UNITS.map(u => [u[0], u]));
+
+// pričakovana dimenzija po vrsti polja + besedilo opozorila
+const KINDS = {
+  length:  ['L', 'dolžino (m, cm, mm …)', 'm'],
+  area:    ['L2', 'površino (m², cm² …)', 'm^2'],
+  volume:  ['L3', 'prostornino (m³, cm³ …)', 'm^3'],
+  charge:  ['Q', 'naboj (C, mC, µC, nC, pC)', 'C'],
+  lcharge: ['Q/L', 'linijsko gostoto (C/m, nC/m …)', 'C/m'],
+  scharge: ['Q/L2', 'ploskovno gostoto (C/m², nC/m² …)', 'C/m^2'],
+  vcharge: ['Q/L3', 'prostorsko gostoto (C/m³, µC/m³ …)', 'C/m^3'],
+  voltage: ['U', 'napetost/potencial (V, kV …)', 'V'],
+  efield:  ['U/L', 'poljsko jakost (V/m, kV/m …)', 'V/m'],
+  current: ['I', 'tok (A, mA …)', 'A'],
+  time:    ['T', 'čas (s, ms …)', 's'],
+  mass:    ['M', 'maso (kg, g …)', 'kg'],
+  force:   ['F', 'silo (N, mN …)', 'N'],
+  energy:  ['W', 'energijo/delo (J, mJ …)', 'J'],
+  angle:   ['ang', 'kot (°, rad)', '°'],
+  freq:    ['1/T', 'količino na sekundo (1/s)', '1/s'],
+  accel:   ['A2', 'pospešek (m/s²)', 'm/s^2'],
+  num:     ['1', 'število', '']
+};
+UNITMAP['m/s2'] = ['m/s2', 1, 'A2', 1];
+
+function normNum(s) {
+  return s.replace(/[−–]/g, '-').replace(/\s+/g, ' ').trim();
+}
+
+// vrne {v, dim, unit, err}
+function parseQty(str) {
+  if (str == null) return { err: 'prazno' };
+  let s = normNum(String(str));
+  if (!s) return { err: 'prazno' };
+  const m = s.match(/^([+-]?\s*(?:\d+(?:[.,]\d*)?|[.,]\d+))\s*(?:[eE]\s*([+-]?\d+)|(?:[·*x×⋅]\s*)?10\s*\^\s*\(?\s*([+-]?\d+)\s*\)?)?\s*(.*)$/);
+  if (!m) return { err: 'ne razumem števila' };
+  let v = parseFloat(m[1].replace(/\s/g, '').replace(',', '.'));
+  const ex = m[2] ?? m[3];
+  if (ex != null) v *= Math.pow(10, parseInt(ex, 10));
+  let u = (m[4] || '').replace(/\s+/g, '').replace(/[µμ]/g, 'u').replace(/²/g, '2').replace(/³/g, '3')
+    .replace(/\^/g, '').replace(/[·⋅*]/g, '').replace(/^\((.*)\)$/, '$1').replace(/m\/s\/s/, 'm/s2');
+  if (u === '') return { v, dim: null, unit: '' };
+  let ent = UNITMAP[u], pf = 1;
+  if (!ent && u.length > 1 && PREFIX[u[0]] !== undefined) {
+    const rest = UNITMAP[u.slice(1)];
+    if (rest && rest[3] > 0) { ent = rest; pf = Math.pow(PREFIX[u[0]], rest[3]); }
+  }
+  if (!ent) return { err: 'neznana enota »' + m[4].trim() + '«' };
+  return { v: v * pf * ent[1], dim: ent[2], unit: u };
+}
+
+// polje določene vrste: preveri dimenzijo
+function parseField(str, kind) {
+  const r = parseQty(str);
+  if (r.err) return r;
+  const K = KINDS[kind];
+  if (kind === 'angle' && r.dim === null) { r.v *= Math.PI / 180; r.dim = 'ang'; r.note = 'brez enote – privzamem stopinje'; return r; }
+  if (kind === 'num' || kind === 'freq') { if (r.dim === null || r.dim === K[0]) { r.dim = K[0]; return r; } }
+  if (r.dim === null) { r.dim = K[0]; if (kind !== 'num') r.note = 'brez enote – privzamem ' + (K[2] ? '\\(\\mathrm{' + K[2] + '}\\)' : 'SI'); return r; }
+  if (r.dim !== K[0]) return { err: 'pričakujem ' + K[1] };
+  return r;
+}
+
+/* ---- oblikovanje ---- */
+function dec(x, digits) { // število → niz z vejico
+  return x.toFixed(digits).replace('.', '{,}');
+}
+function sig3(x) { // 3 veljavna mesta, vrne niz z vejico
+  if (x === 0) return '0';
+  const e = Math.floor(Math.log10(Math.abs(x)) + 1e-12);
+  const d = Math.max(0, 2 - e);
+  let s = Math.abs(x).toFixed(d);
+  if (parseFloat(s) >= Math.pow(10, e + 1) && d > 0) s = Math.abs(x).toFixed(d - 1);
+  return (x < 0 ? '-' : '') + s.replace('.', '{,}');
+}
+// znanstveni zapis za TeX (za vmesne številke)
+function sciTex(x, sig = 4) {
+  if (x === 0) return '0';
+  if (!isFinite(x)) return '\\infty';
+  const e = Math.floor(Math.log10(Math.abs(x)) + 1e-12);
+  if (e >= -2 && e <= 3) {
+    let s = parseFloat(x.toPrecision(sig)).toString();
+    return s.replace('.', '{,}').replace('-', '-');
+  }
+  let mant = parseFloat((x / Math.pow(10, e)).toPrecision(sig));
+  let ee = e;
+  if (Math.abs(mant) >= 10) { mant /= 10; ee++; }
+  const ms = mant.toString().replace('.', '{,}');
+  return (ms === '1' ? '' : ms === '-1' ? '-' : ms + '\\cdot') + '10^{' + ee + '}';
+}
+function P(x, sig) { const s = sciTex(x, sig); return x < 0 ? '(' + s + ')' : s; } // v oklepaju, če negativno
+
+const ENGP = [[1e9, 'G'], [1e6, 'M'], [1e3, 'k'], [1, ''], [1e-3, 'm'], [1e-6, '\\mu'], [1e-9, 'n'], [1e-12, 'p'], [1e-15, 'f']];
+// rezultat v inženirskem zapisu; unit je TeX znotraj \mathrm (npr. 'C/m^2'); opt.sci → brez predpone
+function eng(v, unit, opt = {}) {
+  if (!isFinite(v)) return '\\text{ni definirano}';
+  if (unit === 'deg') return sig3(v * 180 / Math.PI) + '^\\circ';
+  if (opt.sci || unit === '' || /\^[23]$/.test(unit) && /^m/.test(unit)) {
+    if (v === 0) return '0' + (unit ? '\\ \\mathrm{' + unit + '}' : '');
+    const e = Math.floor(Math.log10(Math.abs(v)) + 1e-12);
+    let body;
+    if (e >= -1 && e <= 2) body = sig3(v);
+    else { let m = v / Math.pow(10, e); let s = sig3(m); if (Math.abs(parseFloat(s.replace('{,}', '.'))) >= 10) { s = sig3(m / 10); } body = s + '\\cdot10^{' + e + '}'; }
+    return body + (unit ? '\\ \\mathrm{' + unit + '}' : '');
+  }
+  if (v === 0) return '0\\ \\mathrm{' + unit + '}';
+  const vr = Number(v.toPrecision(3));
+  let a = Math.abs(vr), pick = ENGP[ENGP.length - 1];
+  for (const p of ENGP) { if (a >= p[0] * (1 - 1e-9)) { pick = p; break; } }
+  const s = sig3(vr / pick[0]);
+  const pre = pick[1] === '\\mu' ? '\\mu\\mathrm{' : '\\mathrm{' + pick[1];
+  return s + '\\ ' + pre + unit + '}';
+}
+
+// SI vrednost vnosa za izpis pod poljem
+function siTex(v, kind) {
+  const K = KINDS[kind];
+  if (kind === 'angle') return sig3(v * 180 / Math.PI) + '^\\circ=' + sciTex(v, 3) + '\\ \\mathrm{rad}';
+  const a = Math.abs(v);
+  const body = (a !== 0 && (a < 0.1 || a >= 1e4)) ? sciTex(v, 4) : parseFloat(v.toPrecision(4)).toString().replace('.', '{,}');
+  return body + (K[2] ? '\\ \\mathrm{' + K[2] + '}' : '');
+}
+
+// primerjava mojega rezultata s pravilnim (oba v SI)
+function compare(mine, ref, opt = {}) {
+  if (ref === 0) return Math.abs(mine) < 1e-12 ? { ok: true, msg: 'Pravilno ✓' } : { ok: false, kind: 'bad', msg: 'Narobe.' };
+  if (opt.pm) mine = Math.abs(mine), ref = Math.abs(ref);
+  const r = mine / ref;
+  if (Math.abs(r - 1) < 0.01) return { ok: true, kind: 'ok', msg: 'Pravilno ✓' };
+  if (Math.abs(-r - 1) < 0.01) return { ok: false, kind: 'sign', msg: 'Narobe predznak – velikost je prava.' };
+  const ar = Math.abs(r), n = Math.round(Math.log10(ar));
+  if (n !== 0 && Math.abs(ar / Math.pow(10, n) - 1) < 0.01) {
+    const sgn = r < 0 ? ' Pa še predznak je narobe.' : '';
+    return { ok: false, kind: 'pow', msg: 'Razlika za faktor \\(10^{' + n + '}\\) – preveri pretvorbo predpon (cm → m, nC → C …).' + sgn };
+  }
+  return { ok: false, kind: 'bad', msg: 'Narobe – razlikuje se za ' + (Math.abs(r - 1) * 100).toFixed(0).replace('.', ',') + ' %.' };
+}
+
+if (typeof module !== 'undefined') module.exports = { CONST, parseQty, parseField, eng, sig3, sciTex, siTex, compare };
+/* ===== Aplikacija ===== */
+const R = String.raw;
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+/* ---- shranjevanje ---- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('oe1k_' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('oe1k_' + k, JSON.stringify(v)); } catch (e) { /* brez shranjevanja */ } }
+};
+
+/* ---- KaTeX ---- */
+function K(tex, display) {
+  try { if (window.katex) return katex.renderToString(tex, { throwOnError: false, displayMode: !!display }); } catch (e) { }
+  return display ? '\\[' + tex + '\\]' : '\\(' + tex + '\\)';
+}
+function renderMath(el) {
+  if (typeof renderMathInElement !== 'function') return;
+  try {
+    renderMathInElement(el, {
+      delimiters: [{ left: '\\[', right: '\\]', display: true }, { left: '\\(', right: '\\)', display: false }],
+      throwOnError: false
+    });
+  } catch (e) { console.warn(e); }
+}
+
+/* ---- tipi ---- */
+const TYPES = [
+  null,
+  { n: 1, name: 'Naboj in tok', cnt: 4, tasks: '21/1, 22/1, 24/1, 25/1', key: R`i=-\frac{dQ}{dt},\ \ Q=q\,l`,
+    first: R`Konstanten tok: \(I=\frac{n\,|e_0|}{1\ \mathrm s}\); tok \(i(t)\): najprej neto tok, ki <b>odteka</b>, nato integral z minusom.`, box: '»Tok«, »Naboj«' },
+  { n: 2, name: 'Polje točke, premice, plošč', cnt: 3, tasks: '21/2, 25/2, 25/3', key: R`\frac{Q}{4\pi\varepsilon_0R^2},\ \frac{q}{2\pi\varepsilon_0\rho},\ \frac{\sigma}{\varepsilon_0}`,
+    first: R`Razdalja iz koordinat \(R=\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}\) (v metrih); za vsak naboj velikost + smer (skica).`, box: '»Točkasti naboj«, »Linijski naboj«, »Ploščni kondenzator«' },
+  { n: 3, name: 'Krogelni oblak (Gauss)', cnt: 3, tasks: '21/3, 23/1, 24/5', key: R`\text{znotraj }\frac{\rho r}{3\varepsilon_0},\ \text{zunaj }\frac{Q}{4\pi\varepsilon_0r^2}`,
+    first: R`Je točka znotraj (\(r&lt;r_0\)) ali zunaj/na robu? Znotraj \(E=\frac{\rho r}{3\varepsilon_0}\) z \(r\) točke.`, box: '»Točkasti naboj« + »Lastnosti električne poljske jakosti« (Gauss)' },
+  { n: 4, name: 'Naelektren obroč', cnt: 2, tasks: '23/3, 24/3', key: R`V=\frac{Q}{4\pi\varepsilon_0\sqrt{a^2+z^2}}`,
+    first: R`\(d=\sqrt{a^2+z^2}\), nato \(V=\frac{Q}{4\pi\varepsilon_0d}\).`, box: '»Naelektren obroč«' },
+  { n: 5, name: 'Delo v homogenem polju', cnt: 1, tasks: '22/2', key: R`A=Q\,\vec E\cdot\overrightarrow{AB}`,
+    first: R`\(\overrightarrow{AB}=B-A\) (končna minus začetna) v metrih, nato \(U_{AB}=\vec E\cdot\overrightarrow{AB}\).`, box: '»Potencialna energija, potencial in napetost«' },
+  { n: 6, name: 'Koncentrični krogli', cnt: 2, tasks: '22/3, 25/4', key: R`U=\frac{Q}{4\pi\varepsilon_0}\left(\frac1{r_1}-\frac1{r_2}\right)`,
+    first: R`Iz \(U\) izrazi \(Q=\frac{4\pi\varepsilon_0r_1r_2}{r_2-r_1}U\); za gostoto deli s prostornino notranje krogle.`, box: '»Krogelni kondenzator«' },
+  { n: 7, name: 'Koaksialni kabel', cnt: 3, tasks: '22/4, 24/2, 25/5', key: R`U=\frac{q}{2\pi\varepsilon_0}\ln\frac ba`,
+    first: R`Iz \(U\) izračunaj \(q\) (če ga rabiš); polje \(E=\frac{U}{\rho\ln(b/a)}\); ekvipotencialna ploskev \(\rho=b(a/b)^{V/U}\).`, box: '»Koaksialni kabel«, »Prevodnik«' },
+  { n: 8, name: 'Dipol (navor)', cnt: 2, tasks: '21/5, 23/4', key: R`M=Q\,d\,E\sin\alpha`,
+    first: R`\(p=Qd\) (\(d\) v metrih!); če polje ni podano, \(E=U/d\) med ploščama.`, box: '»Električni dipol«, »Ploščni kondenzator«' },
+  { n: 9, name: 'Zrcaljenje (vodnik nad zemljo, dvovod)', cnt: 4, tasks: '21/4, 22/5, 23/2, 23/5', key: R`\text{zrcalni naboj }-q\text{ na globini }h`,
+    first: R`Nariši zrcalne naboje (\(-q\) na globini \(h\) pod vsakim vodnikom), nato razdalje \(r_+\), \(r_-\).`, box: '»Nadzemni vodnik«, »Linijski naboj«, »Simetrični dvovod«, »Prevodnik«' },
+  { n: 10, name: 'Coulombova sila, ravnovesje', cnt: 1, tasks: '24/4', key: R`F=\frac{Q_1Q_2}{4\pi\varepsilon_0d^2}`,
+    first: R`Nariši sile na kroglico (\(mg\), \(F_e\), vrvica); \(\sin\beta=\frac{d/2}{l}\), \(F_e=mg\,\mathrm{tg}\,\beta\).`, box: '»Lorentzova sila« (\(\vec w=0\)) + »Točkasti naboj«' }
+];
+
+/* ---- najpogostejše napake (razširljiv seznam) ---- */
+const ERRORS = [
+  R`<b>Pretvorbe:</b> pozabljena pretvorba \(\mathrm{cm}\to\mathrm m\), \(\mathrm{mm}\to\mathrm m\), \(\mathrm{dm}\to\mathrm m\), \(\mathrm{nC}\to\mathrm C\), \(\mu\mathrm C\to\mathrm C\), \(\mathrm g\to\mathrm{kg}\). \(\mathrm{cm^2}\to\mathrm{m^2}\) je \(10^{-4}\), \(\mathrm{cm^3}\to\mathrm{m^3}\) je \(10^{-6}\).`,
+  R`<b>\(R^2\) proti \(\rho\):</b> točka ima \(R^2\) (\(4\pi\)), premica samo \(\rho\) (\(2\pi\)). Dve različni številki pred \(\pi\).`,
+  R`<b>\(r_0\) namesto \(r\) znotraj oblaka:</b> znotraj vzameš razdaljo točke.`,
+  R`<b>Predznak pri \(\sigma\):</b> na plašču koaksa in na zemlji pod pozitivnim vodnikom je \(\sigma\) negativna.`,
+  R`<b>Predznak pri delu:</b> \(A=Q(V_{\text{začetek}}-V_{\text{konec}})\); elektron ima negativen naboj. Pri 2023/3 se uradna rešitev in pravilo ne ujemata – vprašaj asistenta.`,
+  R`<b>Dve različni »\(d\)« pri dipolu:</b> razmik plošč (za \(E=U/d\)) in dolžina dipola (za \(p=Qd\)).`,
+  R`<b>Zrcaljenje:</b> razdalja do zrcalnega naboja je \(2h\), ne \(h\).`,
+  R`<b>Koaks:</b> \(\ln(b/a)\), ne \(\ln(a/b)\); \(\rho\) je tu razdalja, ne gostota.`,
+  R`<b>Elektroskop:</b> v sinusu \(d/2\), v Coulombu cel \(d\).`,
+  R`<b>Odveč podatki</b> (2025/3 razmik plošč, 2023/5 polmer \(a\)): ne iščeš, kam bi jih vstavil.`
+];
+
+/* ---- naloge s kolokvijev (kviz, simulacija) ---- */
+const QUIZ = [
+  { c: '2021/1', t: 1, x: R`Na telo priteče vsako sekundo \(7{,}5\cdot10^{18}\) elektronov. Kolikšen je električni tok s telesa? Osnovni naboj elektrona je \(Q_0=-1{,}6\cdot10^{-19}\ \mathrm C\).`, r: R`1{,}2\ \mathrm A`, v: 1.2, d: 'I' },
+  { c: '2021/2', t: 2, x: R`Dva tanka linijska vodnika sta na medsebojni razdalji \(d=1{,}5\ \mathrm m\), vzporedno z osjo \(z\). Desni vodnik ima gostoto naboja \(q_2=-2\ \mathrm{nC/m}\). Kolikšna mora biti gostota \(q_1\) na levem vodniku, če je električna poljska jakost v koordinatnem izhodišču enaka nič?`, r: R`-1\ \mathrm{nC/m}`, v: -1e-9, d: 'Q/L' },
+  { c: '2021/3', t: 3, x: R`V praznem prostoru lebdi osamljen krogelni oblak naboja enakomerne prostorske gostote \(\rho\) in polmera \(r_0=10\ \mathrm{cm}\). Tik ob robu oblaka smo izmerili \(E=10\ \mathrm{kV/m}\). Koliko naboja \(Q\) je v oblaku?`, r: R`11{,}1\ \mathrm{nC}`, v: 1.113e-8, d: 'Q' },
+  { c: '2021/4', t: 9, x: R`Dvovod nad prevodno podlago sestavljata vodnika polmera \(a=2\ \mathrm{mm}\). Naboj na vodnikih je \(\pm q=\pm10\ \mathrm{nC/m}\), razdalja med njima \(d=5\ \mathrm m\). Izračunajte napetost med vodnikoma, če sta na višini \(h=2{,}5\ \mathrm m\) nad podlago.`, r: R`2{,}69\ \mathrm{kV}`, v: 2688, d: 'U' },
+  { c: '2021/5', t: 8, x: R`Med vzporedni plošči na razdalji \(d=15\ \mathrm{mm}\) priključimo vir \(U=10\ \mathrm{kV}\). Med ploščama je točkasti dipol (\(Q_d=5\ \mu\mathrm C\), \(d_d=2\ \mathrm{mm}\)) pod kotom \(60^\circ\) glede na smer polja. Določite absolutno vrednost navora na dipol.`, r: R`5{,}77\ \mathrm{mNm}`, v: 5.774e-3, d: 'W' },
+  { c: '2022/1', t: 1, x: R`Na prevodno telo priteka naboj s tokom \(i_1(t)=2e^{-100t/\mathrm s}\ \mathrm A\) in odteka s tokom \(i_2(t)=1{,}4e^{-100t/\mathrm s}\ \mathrm A\). Koliko naboja je na telesu ob \(t_1=10\ \mathrm{ms}\), če je ob \(0\ \mathrm s\) naboj enak \(0\ \mathrm C\)?`, r: R`3{,}79\ \mathrm{mC}`, v: 3.793e-3, d: 'Q' },
+  { c: '2022/2', t: 5, x: R`Koliko dela opravi homogeno polje \(\vec E=(-20,10,30)\ \mathrm{kV/m}\) pri premiku \(Q=1\ \mu\mathrm C\) od \(A(10,10,40)\ \mathrm{cm}\) do \(B(0,30,50)\ \mathrm{cm}\)?`, r: R`7\ \mathrm{mJ}`, v: 7e-3, d: 'W' },
+  { c: '2022/3', t: 6, x: R`Med prevodnima koncentričnima krogelnima lupinama polmerov \(r_1=2\ \mathrm{cm}\) in \(r_2=5\ \mathrm{cm}\) smo izmerili \(U=10\ \mathrm{kV}\). Določite konstantno prostorsko gostoto naboja \(\rho_0\) v oblaku, ki zapolnjuje notranjo lupino.`, r: R`1{,}11\ \mathrm{mC/m^3}`, v: 1.107e-3, d: 'Q/L3' },
+  { c: '2022/4', t: 7, x: R`Določite radij ekvipotencialne ploskve s potencialom \(15\ \mathrm{kV}\) v koaksialnem kablu z žilo \(a=0{,}2\ \mathrm{cm}\) in plaščem \(b=0{,}5\ \mathrm{cm}\), priključenem na \(U_{ab}=30\ \mathrm{kV}\). Plašč je ozemljen.`, r: R`0{,}316\ \mathrm{cm}`, v: 3.162e-3, d: 'L' },
+  { c: '2022/5', t: 9, x: R`Tanki dolgi žici sta ena nad drugo na višinah \(h_1=3\ \mathrm m\) in \(h_2=4\ \mathrm m\) nad zemljo; \(q_1=30\ \mathrm{nC/m}\) (spodnja), \(q_2=-20\ \mathrm{nC/m}\) (zgornja). Določite ploskovni naboj v točki na zemlji neposredno pod vodnikoma.`, r: R`-1{,}59\ \mathrm{nC/m^2}`, v: -1.592e-9, d: 'Q/L2' },
+  { c: '2023/1', t: 3, x: R`Krogelni oblak s polmerom \(r_0=25\ \mathrm{cm}\) ima konstantno gostoto \(\rho=2\ \mu\mathrm{C/m^3}\). Določite velikost \(\vec E\) na oddaljenosti \(r=5\ \mathrm{cm}\) od središča.`, r: R`3{,}76\ \mathrm{kV/m}`, v: 3765, d: 'U/L' },
+  { c: '2023/2', t: 9, x: R`Nad ravno prevodno ozemljeno podlago je na višini \(h=2\ \mathrm m\) vodnik z nabojem \(q=15\ \mathrm{nC/m}\). Določite vektor sile na enoto dolžine \(\vec f\), s katero podlaga privlači vodnik.`, r: R`-1{,}01\ \mu\mathrm{N/m}\ \vec e_y`, v: -1.011e-6, d: 'F/L', note: R`Vpiši komponento \(f_y\) (navzdol je negativna).` },
+  { c: '2023/3', t: 4, x: R`Kolikšno delo opravi električna sila, da premakne elektron (\(Q=-1{,}6\cdot10^{-19}\ \mathrm C\)) iz neskončnosti v središče obroča z nabojem \(Q'=5{,}6\ \mu\mathrm C\) in polmerom \(a=3\ \mathrm{cm}\)?`, r: R`+0{,}27\ \mathrm{pJ}\ \ (\text{⚠ uradno }-0{,}27\ \mathrm{pJ})`, v: 2.684e-13, d: 'W', warn: true },
+  { c: '2023/4', t: 8, x: R`Dipol (\(Q=2\ \mathrm{nC}\), \(d=2\ \mathrm{mm}\)) je v polju \(E=25\ \mathrm{kV/m}\) pod kotom \(\alpha=30^\circ\). Kolikšna je absolutna vrednost navora?`, r: R`50\ \mathrm{nNm}`, v: 5e-8, d: 'W' },
+  { c: '2023/5', t: 9, x: R`Tanka vodnika z \(\pm q\) ležita v kovinskih ceveh notranjega polmera \(a=3\ \mathrm{cm}\) in zunanjega \(b=4\ \mathrm{cm}\). Osi cevi sta oddaljeni \(d=2\ \mathrm m\). Izračunajte \(|q|\), če je leva cev na potencialu \(V_L=10\ \mathrm{kV}\).`, r: R`142\ \mathrm{nC/m}`, v: 1.422e-7, d: 'Q/L' },
+  { c: '2024/1', t: 1, x: R`Na telo priteče vsako sekundo \(7{,}5\cdot10^{18}\) elektronov. Kolikšen je električni tok s telesa? Osnovni naboj elektrona je \(Q_0=-1{,}6\cdot10^{-19}\ \mathrm C\). <span class="muted">(= 2021/1)</span>`, r: R`1{,}2\ \mathrm A`, v: 1.2, d: 'I' },
+  { c: '2024/2', t: 7, x: R`Med žilo \(a=1\ \mathrm{mm}\) in plaščem koaksialnega kabla \(b=3\ \mathrm{mm}\) je \(U=20\ \mathrm V\). Izračunajte površinsko gostoto naboja na plašču.`, r: R`-53{,}7\ \mathrm{nC/m^2}`, v: -5.373e-8, d: 'Q/L2' },
+  { c: '2024/3', t: 4, x: R`Obroč polmera \(r=4\ \mathrm{dm}\) je naelektren z \(Q=12\ \mathrm{nC}\). Izračunajte potencial v točki \(T\) na osi obroča, ki je od ravnine obroča oddaljena \(z=3\ \mathrm{dm}\).`, r: R`216\ \mathrm V`, v: 215.7, d: 'U' },
+  { c: '2024/4', t: 10, x: R`Elektroskop sestavljata kroglici mase \(m=9\ \mathrm g\) na vrvicah dolžine \(l=50\ \mathrm{cm}\). Koliko naboja je na vsaki od kroglic, ko sta oddaljeni za \(d=10\ \mathrm{cm}\)?`, r: R`\pm99{,}4\ \mathrm{nC}\ \ (\text{uradno }\pm99{,}3\ \mathrm{nC},\ g=9{,}8)`, v: 9.936e-8, d: 'Q', pm: true },
+  { c: '2024/5', t: 3, x: R`V prostoru je krogla polmera \(r=2\ \mathrm{cm}\) z enakomerno gostoto naboja \(\rho=3\ \mu\mathrm{C/m^3}\). Določite električno poljsko jakost na površini krogle.`, r: R`2{,}26\ \mathrm{kV/m}`, v: 2259, d: 'U/L' },
+  { c: '2025/1', t: 1, x: R`Ravna žica je enakomerno naelektrena z nabojem gostote \(300\ \mu\mathrm{C/m}\). Kolikšna je množina naboja na odseku žice dolžine \(14\ \mathrm m\)?`, r: R`4{,}20\ \mathrm{mC}`, v: 4.2e-3, d: 'Q' },
+  { c: '2025/2', t: 2, x: R`Točkast naboj je v izhodišču. Njegovo polje ima v točki \(T(3\ \mathrm{cm},-4\ \mathrm{cm},7\ \mathrm{cm})\) absolutno vrednost \(E=400\ \mathrm{V/m}\). Določite množino naboja, če vemo, da je negativna.`, r: R`-329\ \mathrm{pC}`, v: -3.293e-10, d: 'Q' },
+  { c: '2025/3', t: 2, x: R`Dve vzporedni plošči, vsaka površine \(1000\ \mathrm{cm^2}\), sta na oddaljenosti \(1\ \mathrm{cm}\) in naelektreni z nabojema \(\pm1\ \mu\mathrm C\). Izračunajte absolutno vrednost električne poljske jakosti med ploščama.`, r: R`1{,}13\ \mathrm{MV/m}`, v: 1.129e6, d: 'U/L' },
+  { c: '2025/4', t: 6, x: R`V krogelnem oblaku polmera \(r_1=2\ \mathrm{cm}\) je naboj z enakomerno gostoto \(\rho_0\). Izračunajte to gostoto, če je med površino oblaka in koncentrično krogelno lupino polmera \(r_2=5\ \mathrm{cm}\) napetost \(U=10\ \mathrm{kV}\).`, r: R`1{,}11\ \mathrm{mC/m^3}`, v: 1.107e-3, d: 'Q/L3' },
+  { c: '2025/5', t: 7, x: R`Koaksialni kabel: polmer žile \(\rho_1=2\ \mathrm{cm}\), notranji polmer plašča \(\rho_2=4\ \mathrm{cm}\). Med žilo in ozemljenim plaščem je vir \(U=20\ \mathrm V\). Določite radij ekvipotencialne ploskve s potencialom \(U/4\).`, r: R`3{,}36\ \mathrm{cm}`, v: 0.03364, d: 'L' }
+];
+
+const CONFUSE = {
+  '3-6': R`Oba sta krogli: <b>Tip 3</b> sprašuje po polju \(E\) enega oblaka; <b>Tip 6</b> po napetosti \(U\) med dvema koncentričnima lupinama (iz nje \(Q\) ali \(\rho_0\)).`,
+  '2-7': R`<b>Koaks (Tip 7)</b> ima dva prevodnika – žilo v plašču – in napetost med njima. <b>Tip 2</b> je premica (ali točka, plošči) v praznem prostoru.`,
+  '2-9': R`Če je v besedilu zemlja, podlaga, stena, dvovod ali cev → <b>zrcaljenje (Tip 9)</b>. Sama premica v praznem prostoru → <b>Tip 2</b>.`,
+  '7-9': R`<b>Koaks (Tip 7)</b>: žila znotraj plašča, koncentrično. <b>Zrcaljenje (Tip 9)</b>: vodnik nad ravno zemljo ali dva vodnika drug ob drugem.`
+};
+
+/* ================= KALKULATORJI ================= */
+const e0 = () => CONST.eps0;
+const PI = Math.PI;
+const UDIM = { 'C': 'Q', 'C/m': 'Q/L', 'C/m^2': 'Q/L2', 'C/m^3': 'Q/L3', 'm': 'L', 'V': 'U', 'V/m': 'U/L', 'A': 'I', 'J': 'W', 'Nm': 'W', 'N': 'F', 'N/m': 'F/L', 'Cm': 'Cm', 'deg': 'ang', 'm^3': 'L3', 'm^2': 'L2' };
+const e0s = R`8{,}854\cdot10^{-12}`;
+
+// pomožni zapis: vrstica rezultata
+function PW(x, n) { const s = sciTex(x); return (x < 0 || /cdot|10\^/.test(s)) ? '(' + s + ')^{' + n + '}' : s + '^{' + n + '}'; }
+const degT = a => String(parseFloat((a * 180 / PI).toPrecision(3))).replace('.', '{,}');
+function row(lab, sym, num, v, u, extra = {}) { return Object.assign({ lab, sym, num, v, u }, extra); }
+
+const CALCS = {
+  1: [
+    { name: 'Elektroni na sekundo', inputs: [
+        { k: 'n', lab: R`n\ [1/\mathrm s]`, kind: 'freq', ph: '7,5e18' },
+        { k: 'Q0', lab: R`Q_0`, kind: 'charge', ph: '-1,6e-19 C', def: '-1,602e-19 C' }],
+      samples: [{ lab: '2021/1 = 2024/1', v: { n: '7,5e18', Q0: '-1,6e-19 C' } }],
+      run(x) {
+        const dQ = x.n * x.Q0, I = -dQ;
+        return [row(R`\Delta Q`, R`n\,Q_0\cdot1\ \mathrm s`, R`${sciTex(x.n)}\cdot${P(x.Q0)}`, dQ, 'C'),
+          row('i', R`-\frac{\Delta Q}{\Delta t}`, R`-\frac{${sciTex(dQ)}}{1}`, I, 'A', { main: 1 })];
+      } },
+    { name: 'Gostota × dolžina', inputs: [
+        { k: 'q', lab: 'q', kind: 'lcharge', ph: '300 µC/m' }, { k: 'l', lab: 'l', kind: 'length', ph: '14 m' }],
+      samples: [{ lab: '2025/1', v: { q: '300 µC/m', l: '14 m' } }],
+      run(x) { return [row('Q', R`q\,l`, R`${P(x.q)}\cdot${P(x.l)}`, x.q * x.l, 'C', { main: 1 })]; } },
+    { name: 'Dva toka i(t)', note: R`Priteka \(A_1e^{-kt}\), odteka \(A_2e^{-kt}\).`, inputs: [
+        { k: 'A1', lab: R`A_1\ (\text{priteka})`, kind: 'current', ph: '2 A' }, { k: 'A2', lab: R`A_2\ (\text{odteka})`, kind: 'current', ph: '1,4 A' },
+        { k: 'k', lab: R`k\ [1/\mathrm s]`, kind: 'freq', ph: '100' }, { k: 't', lab: 't', kind: 'time', ph: '10 ms' },
+        { k: 'Qz', lab: R`Q(0)`, kind: 'charge', ph: '0 C', def: '0 C' }],
+      samples: [{ lab: '2022/1', v: { A1: '2 A', A2: '1,4 A', k: '100', t: '10 ms', Qz: '0 C' } }],
+      run(x) {
+        const c = x.A2 - x.A1, ex = Math.exp(-x.k * x.t), Q = x.Qz - c * (1 - ex) / x.k;
+        return [
+          { tex: R`i=i_{\text{odteka}}-i_{\text{priteka}}=${sciTex(c)}\,e^{-${sciTex(x.k)}\,t}\ \mathrm A` },
+          row(R`e^{-kt}`, '', R`e^{-${sciTex(x.k * x.t)}}`, ex, '', { sci: 1 }),
+          row(R`Q(t)`, R`Q(0)-\frac{(A_2-A_1)(1-e^{-kt})}{k}`, R`${P(x.Qz)}-\frac{${P(c)}\cdot(1-${sciTex(ex, 3)})}{${sciTex(x.k)}}`, Q, 'C', { main: 1 })];
+      } }
+  ],
+  2: [
+    { name: 'Točka: E iz Q', note: R`Vpiši \(R\) ali razlike koordinat \(\Delta x,\Delta y,\Delta z\) med nabojem in točko.`, inputs: [
+        { k: 'Q', lab: 'Q', kind: 'charge', ph: '5 nC' }, { k: 'R', lab: 'R', kind: 'length', ph: '10 cm', opt: 1 },
+        { k: 'dx', lab: R`\Delta x`, kind: 'length', opt: 1 }, { k: 'dy', lab: R`\Delta y`, kind: 'length', opt: 1 }, { k: 'dz', lab: R`\Delta z`, kind: 'length', opt: 1 }],
+      run(x) {
+        const out = []; let Rr = x.R;
+        if (Rr == null) { Rr = Math.hypot(x.dx || 0, x.dy || 0, x.dz || 0); out.push(row('R', R`\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}`, R`\sqrt{${PW(x.dx || 0, 2)}+${PW(x.dy || 0, 2)}+${PW(x.dz || 0, 2)}}`, Rr, 'm')); }
+        out.push(row('E', R`\frac{|Q|}{4\pi\varepsilon_0R^2}`, R`\frac{${sciTex(Math.abs(x.Q))}}{4\pi\cdot${e0s}\cdot${PW(Rr, 2)}}`, Math.abs(x.Q) / (4 * PI * e0() * Rr * Rr), 'V/m', { main: 1 }));
+        return out;
+      } },
+    { name: 'Točka: |Q| iz E', note: R`Naboj v izhodišču, točka \(T(x,y,z)\).`, inputs: [
+        { k: 'E', lab: 'E', kind: 'efield', ph: '400 V/m' }, { k: 'x', lab: 'x_T', kind: 'length', ph: '3 cm' }, { k: 'y', lab: 'y_T', kind: 'length', ph: '-4 cm' }, { k: 'z', lab: 'z_T', kind: 'length', ph: '7 cm' },
+        { k: 'sg', lab: R`\text{predznak }Q`, kind: 'sign' }],
+      samples: [{ lab: '2025/2', v: { E: '400 V/m', x: '3 cm', y: '-4 cm', z: '7 cm', sg: '-1' } }],
+      run(x) {
+        const Rr = Math.hypot(x.x, x.y, x.z), Qa = 4 * PI * e0() * Rr * Rr * x.E;
+        return [row('R', R`\sqrt{x^2+y^2+z^2}`, R`\sqrt{${PW(x.x, 2)}+${PW(x.y, 2)}+${PW(x.z, 2)}}`, Rr, 'm'),
+          row('|Q|', R`4\pi\varepsilon_0R^2E`, R`4\pi\cdot${e0s}\cdot${PW(Rr, 2)}\cdot${sciTex(x.E)}`, Qa, 'C'),
+          row('Q', R`${x.sg < 0 ? '-' : '+'}|Q|`, '', x.sg * Qa, 'C', { main: 1 })];
+      } },
+    { name: 'Premica', inputs: [{ k: 'q', lab: 'q', kind: 'lcharge', ph: '15 nC/m' }, { k: 'r', lab: R`\rho`, kind: 'length', ph: '2 m' }],
+      run(x) { return [row('E', R`\frac{|q|}{2\pi\varepsilon_0\rho}`, R`\frac{${sciTex(Math.abs(x.q))}}{2\pi\cdot${e0s}\cdot${sciTex(x.r)}}`, Math.abs(x.q) / (2 * PI * e0() * x.r), 'V/m', { main: 1 })]; } },
+    { name: 'Plošči: Q, A', inputs: [{ k: 'Q', lab: 'Q', kind: 'charge', ph: '1 µC' }, { k: 'A', lab: 'A', kind: 'area', ph: '1000 cm2' }],
+      samples: [{ lab: '2025/3', v: { Q: '1 µC', A: '1000 cm2' } }],
+      run(x) {
+        const s = Math.abs(x.Q) / x.A;
+        return [row(R`\sigma`, R`\frac{|Q|}{A}`, R`\frac{${sciTex(Math.abs(x.Q))}}{${sciTex(x.A)}}`, s, 'C/m^2'),
+          row('E', R`\frac{\sigma}{\varepsilon_0}`, R`\frac{${sciTex(s)}}{${e0s}}`, s / e0(), 'V/m', { main: 1 })];
+      } },
+    { name: 'Plošči: U, d', inputs: [{ k: 'U', lab: 'U', kind: 'voltage', ph: '10 kV' }, { k: 'd', lab: 'd', kind: 'length', ph: '15 mm' }],
+      run(x) { return [row('E', R`\frac Ud`, R`\frac{${sciTex(x.U)}}{${sciTex(x.d)}}`, x.U / x.d, 'V/m', { main: 1 })]; } },
+    { name: 'Dve premici na osi x', note: R`Lege \(x_1\), \(x_2\) premic in točka \(x_0\) na osi \(x\). Izračunam \(E_x\) in kolikšen bi moral biti \(q_1\), da je \(E_x=0\).`, inputs: [
+        { k: 'x1', lab: 'x_1', kind: 'length', ph: '-0,5 m' }, { k: 'q1', lab: 'q_1', kind: 'lcharge', ph: '0 nC/m' },
+        { k: 'x2', lab: 'x_2', kind: 'length', ph: '1 m' }, { k: 'q2', lab: 'q_2', kind: 'lcharge', ph: '-2 nC/m' }, { k: 'x0', lab: 'x_0', kind: 'length', ph: '0 m' }],
+      samples: [{ lab: '2021/2', v: { x1: '-0,5 m', q1: '0 nC/m', x2: '1 m', q2: '-2 nC/m', x0: '0 m' } }],
+      run(x) {
+        const d1 = x.x0 - x.x1, d2 = x.x0 - x.x2;
+        const E1 = x.q1 / (2 * PI * e0() * d1), E2 = x.q2 / (2 * PI * e0() * d2);
+        const q1n = -x.q2 * d1 / d2;
+        return [row('E_{1x}', R`\frac{q_1}{2\pi\varepsilon_0(x_0-x_1)}`, R`\frac{${P(x.q1)}}{2\pi\cdot${e0s}\cdot${P(d1)}}`, E1, 'V/m'),
+          row('E_{2x}', R`\frac{q_2}{2\pi\varepsilon_0(x_0-x_2)}`, R`\frac{${P(x.q2)}}{2\pi\cdot${e0s}\cdot${P(d2)}}`, E2, 'V/m'),
+          row('E_x', R`E_{1x}+E_{2x}`, '', E1 + E2, 'V/m'),
+          row(R`q_1\,(E_x=0)`, R`-q_2\frac{x_0-x_1}{x_0-x_2}`, R`-${P(x.q2)}\cdot\frac{${P(d1)}}{${P(d2)}}`, q1n, 'C/m', { main: 1 })];
+      } }
+  ],
+  3: [
+    { name: 'E v oblaku / zunaj', inputs: [{ k: 'rho', lab: R`\rho`, kind: 'vcharge', ph: '2 µC/m3' }, { k: 'r0', lab: 'r_0', kind: 'length', ph: '25 cm' }, { k: 'r', lab: 'r', kind: 'length', ph: '5 cm' }],
+      samples: [{ lab: '2023/1', v: { rho: '2 µC/m3', r0: '25 cm', r: '5 cm' } }, { lab: '2024/5', v: { rho: '3 µC/m3', r0: '2 cm', r: '2 cm' } }],
+      run(x) {
+        const Q = x.rho * 4 / 3 * PI * Math.pow(x.r0, 3);
+        const out = [row('Q', R`\rho\,\tfrac43\pi r_0^3`, R`${P(x.rho)}\cdot\tfrac43\pi\cdot${PW(x.r0, 3)}`, Q, 'C')];
+        let E;
+        if (x.r < x.r0 * (1 - 1e-9)) {
+          out.push({ html: R`<b>Znotraj</b> (\(r&lt;r_0\)) → \(E=\frac{\rho r}{3\varepsilon_0}\) z \(r\) točke.` });
+          E = x.rho * x.r / (3 * e0());
+          out.push(row('E', R`\frac{\rho\,r}{3\varepsilon_0}`, R`\frac{${P(x.rho)}\cdot${sciTex(x.r)}}{3\cdot${e0s}}`, E, 'V/m', { main: 1 }));
+        } else {
+          out.push({ html: Math.abs(x.r - x.r0) < 1e-9 * x.r0 ? R`<b>Na robu</b> (\(r=r_0\)) – obe formuli dasta isto.` : R`<b>Zunaj</b> (\(r>r_0\)) → točkast naboj \(Q\) v središču.` });
+          E = Q / (4 * PI * e0() * x.r * x.r);
+          out.push(row('E', R`\frac{Q}{4\pi\varepsilon_0r^2}`, R`\frac{${P(Q)}}{4\pi\cdot${e0s}\cdot${PW(x.r, 2)}}`, E, 'V/m', { main: 1 }));
+        }
+        out.svg = graphEr(x.rho, x.r0, x.r);
+        return out;
+      } },
+    { name: 'Obratno: Q iz E ob robu', inputs: [{ k: 'E', lab: 'E', kind: 'efield', ph: '10 kV/m' }, { k: 'r0', lab: 'r_0', kind: 'length', ph: '10 cm' }],
+      samples: [{ lab: '2021/3', v: { E: '10 kV/m', r0: '10 cm' } }],
+      run(x) {
+        const Q = 4 * PI * e0() * x.r0 * x.r0 * x.E, rho = Q / (4 / 3 * PI * Math.pow(x.r0, 3));
+        return [row('Q', R`4\pi\varepsilon_0r_0^2E`, R`4\pi\cdot${e0s}\cdot${PW(x.r0, 2)}\cdot${sciTex(x.E)}`, Q, 'C', { main: 1 }),
+          row(R`\rho`, R`\frac{Q}{\frac43\pi r_0^3}`, R`\frac{${sciTex(Q)}}{\frac43\pi\cdot${PW(x.r0, 3)}}`, rho, 'C/m^3')];
+      } }
+  ],
+  4: [
+    { name: 'Obroč: V, E, delo', note: R`Vpiši \(Q\) <b>ali</b> linijsko gostoto \(q\). \(Q_1\) (neobvezno) je naboj, ki ga premikamo iz neskončnosti v točko.`, inputs: [
+        { k: 'Q', lab: 'Q', kind: 'charge', ph: '12 nC', opt: 1 }, { k: 'q', lab: 'q', kind: 'lcharge', opt: 1 },
+        { k: 'a', lab: 'a', kind: 'length', ph: '4 dm' }, { k: 'z', lab: 'z', kind: 'length', ph: '3 dm' }, { k: 'Q1', lab: 'Q_1', kind: 'charge', opt: 1 }],
+      samples: [{ lab: '2024/3', v: { Q: '12 nC', q: '', a: '4 dm', z: '3 dm', Q1: '' } }, { lab: '2023/3', v: { Q: '5,6 µC', q: '', a: '3 cm', z: '0 cm', Q1: '-1,6e-19 C' } }],
+      run(x) {
+        const out = []; let Q = x.Q;
+        if (Q == null) { if (x.q == null) throw 'Vpiši \\(Q\\) ali \\(q\\).'; Q = x.q * 2 * PI * x.a; out.push(row('Q', R`q\cdot2\pi a`, R`${P(x.q)}\cdot2\pi\cdot${sciTex(x.a)}`, Q, 'C')); }
+        const d = Math.hypot(x.a, x.z), V = Q / (4 * PI * e0() * d), Ez = Q * x.z / (4 * PI * e0() * Math.pow(d, 3));
+        out.push(row('d', R`\sqrt{a^2+z^2}`, R`\sqrt{${PW(x.a, 2)}+${PW(x.z, 2)}}`, d, 'm'));
+        out.push(row('V', R`\frac{Q}{4\pi\varepsilon_0d}`, R`\frac{${P(Q)}}{4\pi\cdot${e0s}\cdot${sciTex(d)}}`, V, 'V', { main: x.Q1 == null ? 1 : 0 }));
+        out.push(row('E_z', R`\frac{Q\,z}{4\pi\varepsilon_0(a^2+z^2)^{3/2}}`, R`\frac{${P(Q)}\cdot${sciTex(x.z)}}{4\pi\cdot${e0s}\cdot${PW(d, 3)}}`, Ez, 'V/m'));
+        if (x.Q1 != null) {
+          out.push(row('A', R`Q_1(V_\infty-V)=Q_1(0-V)`, R`${P(x.Q1)}\cdot(0-${sciTex(V)})`, x.Q1 * (0 - V), 'J', { main: 1, pj: Math.abs(x.Q1 * V) < 1e-12 }));
+          out.push(row('F', R`Q_1E_z`, R`${P(x.Q1)}\cdot${P(Ez)}`, x.Q1 * Ez, 'N'));
+          if (Math.abs(x.Q1 + 1.6e-19) < 1e-21 && Math.abs(x.z) < 1e-12) out.push({ html: R`<div class="warn">⚠ 2023/3: uradna rešitev navaja \(-0{,}27\ \mathrm{pJ}\); po \(A=Q(V_A-V_B)\) pride \(+0{,}27\ \mathrm{pJ}\). Preveri pri asistentu.</div>` });
+        }
+        return out;
+      } }
+  ],
+  5: [
+    { name: 'Homogeno polje', inputs: [
+        { k: 'Ex', lab: 'E_x', kind: 'efield', ph: '-20 kV/m' }, { k: 'Ey', lab: 'E_y', kind: 'efield', ph: '10 kV/m' }, { k: 'Ez', lab: 'E_z', kind: 'efield', ph: '30 kV/m' },
+        { k: 'xA', lab: 'x_A', kind: 'length', ph: '10 cm' }, { k: 'yA', lab: 'y_A', kind: 'length', ph: '10 cm' }, { k: 'zA', lab: 'z_A', kind: 'length', ph: '40 cm' },
+        { k: 'xB', lab: 'x_B', kind: 'length', ph: '0 cm' }, { k: 'yB', lab: 'y_B', kind: 'length', ph: '30 cm' }, { k: 'zB', lab: 'z_B', kind: 'length', ph: '50 cm' },
+        { k: 'Q', lab: 'Q', kind: 'charge', ph: '1 µC' }],
+      samples: [{ lab: '2022/2', v: { Ex: '-20 kV/m', Ey: '10 kV/m', Ez: '30 kV/m', xA: '10 cm', yA: '10 cm', zA: '40 cm', xB: '0 cm', yB: '30 cm', zB: '50 cm', Q: '1 µC' } }],
+      run(x) {
+        const dx = x.xB - x.xA, dy = x.yB - x.yA, dz = x.zB - x.zA;
+        const t1 = x.Ex * dx, t2 = x.Ey * dy, t3 = x.Ez * dz, U = t1 + t2 + t3;
+        return [{ tex: R`\overrightarrow{AB}=B-A=(${sciTex(dx)};\ ${sciTex(dy)};\ ${sciTex(dz)})\ \mathrm m` },
+          row(R`E_x\Delta x`, '', R`${P(x.Ex)}\cdot${P(dx)}`, t1, 'V'), row(R`E_y\Delta y`, '', R`${P(x.Ey)}\cdot${P(dy)}`, t2, 'V'), row(R`E_z\Delta z`, '', R`${P(x.Ez)}\cdot${P(dz)}`, t3, 'V'),
+          row(R`U_{AB}`, R`E_x\Delta x+E_y\Delta y+E_z\Delta z`, R`${sciTex(t1)}+${P(t2)}+${P(t3)}`, U, 'V'),
+          row('A', R`Q\,U_{AB}`, R`${P(x.Q)}\cdot${P(U)}`, x.Q * U, 'J', { main: 1 })];
+      } },
+    { name: 'Iz potencialov', inputs: [{ k: 'Q', lab: 'Q', kind: 'charge' }, { k: 'VA', lab: R`V_A\ (\text{začetek})`, kind: 'voltage' }, { k: 'VB', lab: R`V_B\ (\text{konec})`, kind: 'voltage' }],
+      run(x) { return [row('A', R`Q(V_A-V_B)`, R`${P(x.Q)}\cdot(${sciTex(x.VA)}-${P(x.VB)})`, x.Q * (x.VA - x.VB), 'J', { main: 1 })]; } }
+  ],
+  6: [
+    { name: 'Iz U → Q, ρ₀', inputs: [{ k: 'r1', lab: 'r_1', kind: 'length', ph: '2 cm' }, { k: 'r2', lab: 'r_2', kind: 'length', ph: '5 cm' }, { k: 'U', lab: 'U', kind: 'voltage', ph: '10 kV' }],
+      samples: [{ lab: '2025/4 = 2022/3', v: { r1: '2 cm', r2: '5 cm', U: '10 kV' } }],
+      run(x) {
+        const inv = 1 / x.r1 - 1 / x.r2, Q = 4 * PI * e0() * x.U / inv, V = 4 / 3 * PI * Math.pow(x.r1, 3);
+        return [row(R`\frac1{r_1}-\frac1{r_2}`, '', R`\frac1{${sciTex(x.r1)}}-\frac1{${sciTex(x.r2)}}`, inv, 'm^{-1}', { sci: 1 }),
+          row('Q', R`\frac{4\pi\varepsilon_0\,U}{\frac1{r_1}-\frac1{r_2}}`, R`\frac{4\pi\cdot${e0s}\cdot${sciTex(x.U)}}{${sciTex(inv)}}`, Q, 'C'),
+          row('V', R`\tfrac43\pi r_1^3`, R`\tfrac43\pi\cdot${PW(x.r1, 3)}`, V, 'm^3', { sci: 1 }),
+          row(R`\rho_0`, R`\frac QV`, R`\frac{${sciTex(Q)}}{${sciTex(V)}}`, Q / V, 'C/m^3', { main: 1 })];
+      } },
+    { name: 'Obratno: Q ali ρ₀ → U', note: R`Vpiši \(Q\) <b>ali</b> \(\rho_0\).`, inputs: [{ k: 'r1', lab: 'r_1', kind: 'length' }, { k: 'r2', lab: 'r_2', kind: 'length' }, { k: 'Q', lab: 'Q', kind: 'charge', opt: 1 }, { k: 'rho', lab: R`\rho_0`, kind: 'vcharge', opt: 1 }],
+      run(x) {
+        const out = []; let Q = x.Q;
+        if (Q == null) { if (x.rho == null) throw 'Vpiši \\(Q\\) ali \\(\\rho_0\\).'; Q = x.rho * 4 / 3 * PI * Math.pow(x.r1, 3); out.push(row('Q', R`\rho_0\tfrac43\pi r_1^3`, R`${P(x.rho)}\cdot\tfrac43\pi\cdot${PW(x.r1, 3)}`, Q, 'C')); }
+        out.push(row('U', R`\frac{Q}{4\pi\varepsilon_0}\left(\frac1{r_1}-\frac1{r_2}\right)`, R`\frac{${P(Q)}}{4\pi\cdot${e0s}}\cdot\left(\frac1{${sciTex(x.r1)}}-\frac1{${sciTex(x.r2)}}\right)`, Q / (4 * PI * e0()) * (1 / x.r1 - 1 / x.r2), 'V', { main: 1 }));
+        return out;
+      } }
+  ],
+  7: [
+    { name: 'Koaks', note: R`\(\rho\) in \(V\) sta neobvezna. Plašč je ozemljen. Za drugo primerjavo izberi vrstico v »Moj rezultat«.`, inputs: [
+        { k: 'a', lab: R`a\ (\rho_1)`, kind: 'length', ph: '2 cm' }, { k: 'b', lab: R`b\ (\rho_2)`, kind: 'length', ph: '4 cm' }, { k: 'U', lab: 'U', kind: 'voltage', ph: '20 V' },
+        { k: 'r', lab: R`\rho\ (\text{točka})`, kind: 'length', opt: 1 }, { k: 'V', lab: R`V\ (\text{ekvipot.})`, kind: 'voltage', opt: 1 }],
+      samples: [{ lab: '2025/5', v: { a: '2 cm', b: '4 cm', U: '20 V', r: '', V: '5 V' } }, { lab: '2022/4', v: { a: '0,2 cm', b: '0,5 cm', U: '30 kV', r: '', V: '15 kV' } }, { lab: '2024/2', v: { a: '1 mm', b: '3 mm', U: '20 V', r: '', V: '' } }],
+      run(x) {
+        if (!(x.b > x.a)) throw 'Mora veljati \\(b>a\\).';
+        const L = Math.log(x.b / x.a), q = 2 * PI * e0() * x.U / L;
+        const out = [row('q', R`\frac{2\pi\varepsilon_0U}{\ln(b/a)}`, R`\frac{2\pi\cdot${e0s}\cdot${sciTex(x.U)}}{\ln(${sciTex(x.b)}/${sciTex(x.a)})}`, q, 'C/m')];
+        if (x.r != null) {
+          out.push(row(R`E(\rho)`, R`\frac{U}{\rho\ln(b/a)}`, R`\frac{${sciTex(x.U)}}{${sciTex(x.r)}\cdot${sciTex(L)}}`, x.U / (x.r * L), 'V/m'));
+          out.push(row(R`V(\rho)`, R`U\frac{\ln(b/\rho)}{\ln(b/a)}`, R`${sciTex(x.U)}\cdot\frac{\ln(${sciTex(x.b)}/${sciTex(x.r)})}{${sciTex(L)}}`, x.U * Math.log(x.b / x.r) / L, 'V'));
+        }
+        let rv = null;
+        if (x.V != null) {
+          rv = x.b * Math.pow(x.a / x.b, x.V / x.U);
+          out.push(row(R`\rho_{\text{ekv}}`, R`b\left(\frac ab\right)^{V/U}`, R`${sciTex(x.b)}\cdot\left(\frac{${sciTex(x.a)}}{${sciTex(x.b)}}\right)^{${sciTex(x.V / x.U, 3)}}`, rv, 'm', { main: 1, cm: 1 }));
+        }
+        const Eb = x.U / (x.b * L), Ea = x.U / (x.a * L);
+        out.push(row(R`E(b)`, R`\frac{U}{b\ln(b/a)}`, R`\frac{${sciTex(x.U)}}{${sciTex(x.b)}\cdot${sciTex(L)}}`, Eb, 'V/m'));
+        out.push(row(R`\sigma_{\text{plašč}}`, R`-\varepsilon_0E(b)`, R`-${e0s}\cdot${sciTex(Eb)}`, -e0() * Eb, 'C/m^2', { main: x.V == null ? 1 : 0 }));
+        out.push(row(R`E(a)`, R`\frac{U}{a\ln(b/a)}`, R`\frac{${sciTex(x.U)}}{${sciTex(x.a)}\cdot${sciTex(L)}}`, Ea, 'V/m'));
+        out.push(row(R`\sigma_{\text{žila}}`, R`+\varepsilon_0E(a)`, R`${e0s}\cdot${sciTex(Ea)}`, e0() * Ea, 'C/m^2'));
+        out.svg = coaxSvg(x.a, x.b, rv, x.r);
+        return out;
+      } }
+  ],
+  8: [
+    { name: 'Navor na dipol', note: R`Vpiši \(E\) <b>ali</b> \(U\) in razmik plošč \(d_{\text{plošč}}\).`, inputs: [
+        { k: 'Q', lab: 'Q', kind: 'charge', ph: '5 µC' }, { k: 'd', lab: R`d\ (\text{dipol})`, kind: 'length', ph: '2 mm' }, { k: 'al', lab: R`\alpha`, kind: 'angle', ph: '60°' },
+        { k: 'E', lab: 'E', kind: 'efield', opt: 1 }, { k: 'U', lab: 'U', kind: 'voltage', opt: 1 }, { k: 'dp', lab: R`d_{\text{plošč}}`, kind: 'length', opt: 1 }],
+      samples: [{ lab: '2021/5', v: { Q: '5 µC', d: '2 mm', al: '60°', E: '', U: '10 kV', dp: '15 mm' } }, { lab: '2023/4', v: { Q: '2 nC', d: '2 mm', al: '30°', E: '25 kV/m', U: '', dp: '' } }],
+      run(x) {
+        const out = []; let E = x.E;
+        if (E == null) { if (x.U == null || x.dp == null) throw 'Vpiši \\(E\\) ali \\(U\\) in \\(d_{\\text{plošč}}\\).'; E = x.U / x.dp; out.push(row('E', R`\frac{U}{d_{\text{plošč}}}`, R`\frac{${sciTex(x.U)}}{${sciTex(x.dp)}}`, E, 'V/m')); }
+        const p = x.Q * x.d;
+        out.push(row('p', R`Q\,d`, R`${P(x.Q)}\cdot${sciTex(x.d)}`, p, 'Cm'));
+        out.push(row('M', R`pE\sin\alpha`, R`${P(p)}\cdot${sciTex(E)}\cdot\sin${degT(x.al)}^\circ`, Math.abs(p * E * Math.sin(x.al)), 'Nm', { main: 1 }));
+        out.push(row(R`W_{ep}`, R`-pE\cos\alpha`, R`-${P(p)}\cdot${sciTex(E)}\cdot\cos${degT(x.al)}^\circ`, -p * E * Math.cos(x.al), 'J'));
+        return out;
+      } }
+  ],
+  9: [
+    { name: 'En vodnik nad zemljo', note: R`\(a\) (polmer vodnika) je neobvezen – rabiš ga le za \(U\).`, inputs: [{ k: 'q', lab: 'q', kind: 'lcharge', ph: '15 nC/m' }, { k: 'h', lab: 'h', kind: 'length', ph: '2 m' }, { k: 'a', lab: 'a', kind: 'length', opt: 1 }],
+      samples: [{ lab: '2023/2', v: { q: '15 nC/m', h: '2 m', a: '' } }],
+      run(x) {
+        const out = [];
+        if (x.a != null) out.push(row('U', R`\frac{q}{2\pi\varepsilon_0}\ln\frac{2h}{a}`, R`\frac{${P(x.q)}}{2\pi\cdot${e0s}}\ln\frac{2\cdot${sciTex(x.h)}}{${sciTex(x.a)}}`, x.q / (2 * PI * e0()) * Math.log(2 * x.h / x.a), 'V'));
+        out.push(row(R`\sigma_T`, R`-\frac{q}{\pi h}`, R`-\frac{${P(x.q)}}{\pi\cdot${sciTex(x.h)}}`, -x.q / (PI * x.h), 'C/m^2'));
+        out.push(row(R`f_y`, R`-\frac{q^2}{4\pi\varepsilon_0h}`, R`-\frac{${PW(x.q, 2)}}{4\pi\cdot${e0s}\cdot${sciTex(x.h)}}`, -x.q * x.q / (4 * PI * e0() * x.h), 'N/m', { main: 1 }));
+        out.push({ html: 'Sila kaže navzdol (proti zemlji) – raznoimenska naboja se privlačita.' });
+        out.svg = mirrorSvg([{ q: x.q, h: x.h }], 'single');
+        return out;
+      } },
+    { name: 'Več vodnikov na navpičnici', note: R`\(\sigma\) na tleh neposredno pod vodniki. Tretji vodnik je neobvezen.`, inputs: [
+        { k: 'q1', lab: 'q_1', kind: 'lcharge', ph: '30 nC/m' }, { k: 'h1', lab: 'h_1', kind: 'length', ph: '3 m' },
+        { k: 'q2', lab: 'q_2', kind: 'lcharge', ph: '-20 nC/m', opt: 1 }, { k: 'h2', lab: 'h_2', kind: 'length', ph: '4 m', opt: 1 },
+        { k: 'q3', lab: 'q_3', kind: 'lcharge', opt: 1 }, { k: 'h3', lab: 'h_3', kind: 'length', opt: 1 }],
+      samples: [{ lab: '2022/5', v: { q1: '30 nC/m', h1: '3 m', q2: '-20 nC/m', h2: '4 m', q3: '', h3: '' } }],
+      run(x) {
+        const L = [{ q: x.q1, h: x.h1 }];
+        if (x.q2 != null && x.h2 != null) L.push({ q: x.q2, h: x.h2 });
+        if (x.q3 != null && x.h3 != null) L.push({ q: x.q3, h: x.h3 });
+        const out = []; let s = 0;
+        L.forEach((w, i) => { const si = -w.q / (PI * w.h); s += si; out.push(row(R`\sigma_${i + 1}`, R`-\frac{q_${i + 1}}{\pi h_${i + 1}}`, R`-\frac{${P(w.q)}}{\pi\cdot${sciTex(w.h)}}`, si, 'C/m^2')); });
+        out.push(row(R`\sigma`, L.map((w, i) => R`\sigma_${i + 1}`).join('+'), '', s, 'C/m^2', { main: 1 }));
+        out.svg = mirrorSvg(L, 'stack');
+        return out;
+      } },
+    { name: 'Dvovod nad zemljo', inputs: [{ k: 'q', lab: 'q', kind: 'lcharge', ph: '10 nC/m' }, { k: 'a', lab: 'a', kind: 'length', ph: '2 mm' }, { k: 'd', lab: 'd', kind: 'length', ph: '5 m' }, { k: 'h', lab: 'h', kind: 'length', ph: '2,5 m' }],
+      samples: [{ lab: '2021/4', v: { q: '10 nC/m', a: '2 mm', d: '5 m', h: '2,5 m' } }],
+      run(x) {
+        const diag = Math.hypot(x.d, 2 * x.h), l1 = Math.log(2 * x.h / x.a), l2 = Math.log(x.d / diag);
+        const VL = x.q / (2 * PI * e0()) * (l1 + l2);
+        return [row(R`\ln\frac{2h}{a}`, '', R`\ln\frac{${sciTex(2 * x.h)}}{${sciTex(x.a)}}`, l1, '', { sci: 1 }),
+          row(R`\ln\frac{d}{\sqrt{d^2+(2h)^2}}`, '', R`\ln\frac{${sciTex(x.d)}}{${sciTex(diag)}}`, l2, '', { sci: 1 }),
+          row('V_L', R`\frac{q}{2\pi\varepsilon_0}\left[\ln\frac{2h}{a}+\ln\frac{d}{\sqrt{d^2+(2h)^2}}\right]`, R`\frac{${P(x.q)}}{2\pi\cdot${e0s}}\cdot(${sciTex(l1)}${l2 < 0 ? '' : '+'}${sciTex(l2)})`, VL, 'V'),
+          row('U', R`2V_L`, R`2\cdot${sciTex(VL)}`, 2 * VL, 'V', { main: 1 })];
+      }, svg: x => mirrorSvg([{ q: x.q, h: x.h }], 'pair', x.d) },
+    { name: 'Dvovod brez zemlje (cevi)', note: R`Polmer, ki šteje navzven (pri cevi zunanji \(b\)), razmik osi \(d\), potencial levega \(V_L\).`, inputs: [{ k: 'b', lab: R`b\ (\text{polmer})`, kind: 'length', ph: '4 cm' }, { k: 'd', lab: 'd', kind: 'length', ph: '2 m' }, { k: 'V', lab: 'V_L', kind: 'voltage', ph: '10 kV' }],
+      samples: [{ lab: '2023/5', v: { b: '4 cm', d: '2 m', V: '10 kV' } }],
+      run(x) {
+        return [row(R`|q|`, R`\frac{2\pi\varepsilon_0V_L}{\ln(d/b)}`, R`\frac{2\pi\cdot${e0s}\cdot${sciTex(x.V)}}{\ln(${sciTex(x.d)}/${sciTex(x.b)})}`, 2 * PI * e0() * Math.abs(x.V) / Math.log(x.d / x.b), 'C/m', { main: 1 })];
+      }, svg: () => mirrorSvg([], 'pipes') }
+  ],
+  10: [
+    { name: 'Elektroskop', inputs: [{ k: 'm', lab: 'm', kind: 'mass', ph: '9 g' }, { k: 'l', lab: 'l', kind: 'length', ph: '50 cm' }, { k: 'd', lab: 'd', kind: 'length', ph: '10 cm' }, { k: 'g', lab: 'g', kind: 'accel', def: '9,81 m/s2' }],
+      samples: [{ lab: '2024/4', v: { m: '9 g', l: '50 cm', d: '10 cm', g: '9,81 m/s2' } }],
+      run(x) {
+        const sb = x.d / 2 / x.l; if (sb >= 1) throw 'Mora veljati \\(d/2<l\\).';
+        const b = Math.asin(sb), tg = Math.tan(b), Fe = x.m * x.g * tg, Q = Math.sqrt(4 * PI * e0() * x.d * x.d * Fe);
+        return [row(R`\beta`, R`\arcsin\frac{d/2}{l}`, R`\arcsin\frac{${sciTex(x.d / 2)}}{${sciTex(x.l)}}`, b, 'deg'),
+          row(R`\mathrm{tg}\,\beta`, '', '', tg, '', { sci: 1 }),
+          row(R`F_e`, R`mg\,\mathrm{tg}\,\beta`, R`${sciTex(x.m)}\cdot${sciTex(x.g)}\cdot${sciTex(tg)}`, Fe, 'N'),
+          row('Q', R`\pm\sqrt{4\pi\varepsilon_0d^2F_e}`, R`\pm\sqrt{4\pi\cdot${e0s}\cdot${PW(x.d, 2)}\cdot${sciTex(Fe)}}`, Q, 'C', { main: 1, pm: 1 })];
+      } },
+    { name: 'Sila med nabojema', inputs: [{ k: 'Q1', lab: 'Q_1', kind: 'charge' }, { k: 'Q2', lab: 'Q_2', kind: 'charge' }, { k: 'd', lab: 'd', kind: 'length' }],
+      run(x) {
+        const F = x.Q1 * x.Q2 / (4 * PI * e0() * x.d * x.d);
+        return [row('F', R`\frac{Q_1Q_2}{4\pi\varepsilon_0d^2}`, R`\frac{${P(x.Q1)}\cdot${P(x.Q2)}}{4\pi\cdot${e0s}\cdot${PW(x.d, 2)}}`, F, 'N', { main: 1 }),
+          { html: F > 0 ? 'Pozitivno → istoimenska naboja, sila je <b>odbojna</b>.' : F < 0 ? 'Negativno → raznoimenska naboja, sila je <b>privlačna</b>.' : 'Sile ni.' }];
+      } }
+  ]
+};
+
+/* ---- dinamične skice za kalkulatorje ---- */
+function graphEr(rho, r0, r) {
+  const W = 320, H = 170, x0 = 40, y0 = 140, w = 260, h = 110, rmax = 3 * r0;
+  const Emax = Math.abs(rho) * r0 / (3 * e0());
+  const E = s => s < r0 ? Math.abs(rho) * s / (3 * e0()) : Math.abs(rho) * Math.pow(r0, 3) / (3 * e0() * s * s);
+  let pts = [];
+  for (let i = 0; i <= 120; i++) { const s = rmax * i / 120; pts.push((x0 + w * s / rmax).toFixed(1) + ',' + (y0 - h * E(s) / Emax).toFixed(1)); }
+  const px = x0 + w * Math.min(r, rmax) / rmax, py = y0 - h * E(Math.min(r, rmax)) / Emax, xr0 = x0 + w / 3;
+  return `<svg class="sk" viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="Graf E(r)">
+    <line x1="${x0}" y1="${y0}" x2="${x0 + w + 10}" y2="${y0}" class="s-th" marker-end="url(#arr)"/><text x="${x0 + w + 6}" y="${y0 + 18}" class="it">r</text>
+    <line x1="${x0}" y1="${y0}" x2="${x0}" y2="${y0 - h - 15}" class="s-th" marker-end="url(#arr)"/><text x="${x0 - 22}" y="${y0 - h - 6}" class="it">E</text>
+    <line x1="${xr0}" y1="${y0}" x2="${xr0}" y2="${y0 - h}" class="s-aux"/><text x="${xr0 - 8}" y="${y0 + 18}" class="it">r<tspan baseline-shift="sub" class="sm">0</tspan></text>
+    <polyline points="${pts.join(' ')}" class="s-acc"/>
+    <circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5" class="s-pos"/>
+    <text x="${x0 + 6}" y="${y0 - h + 4}" class="sm">znotraj ∝ r</text><text x="${xr0 + 40}" y="${y0 - 60}" class="sm">zunaj ∝ 1/r²</text></svg>`;
+}
+function coaxSvg(a, b, rv, rp) {
+  const S = 95 / b, cx = 130, cy = 115;
+  let s = `<svg class="sk" viewBox="0 0 300 235" width="300" role="img" aria-label="Prerez koaksa v merilu">
+    <circle cx="${cx}" cy="${cy}" r="${(b * S + 7).toFixed(1)}" class="s-ln" style="stroke-width:14;stroke:var(--aux);opacity:.55"/>
+    <circle cx="${cx}" cy="${cy}" r="${(b * S).toFixed(1)}" class="s-ln"/>
+    <circle cx="${cx}" cy="${cy}" r="${Math.max(2, a * S).toFixed(1)}" class="s-fill" style="stroke:var(--pos)"/>`;
+  if (rv) s += `<circle cx="${cx}" cy="${cy}" r="${(rv * S).toFixed(1)}" class="s-aux" style="stroke:var(--accent);stroke-width:2.2"/><text x="${cx + 4}" y="${(cy - rv * S - 5).toFixed(1)}" class="acc sm">ekvipotencialna ploskev</text>`;
+  if (rp) s += `<circle cx="${(cx + rp * S * 0.707).toFixed(1)}" cy="${(cy + rp * S * 0.707).toFixed(1)}" r="4" class="s-pt"/>`;
+  s += `<text x="${cx - 6}" y="${cy + 5}" class="it sm">a</text><text x="${cx + b * S + 16}" y="${cy + 4}" class="it">b</text><text x="10" y="228" class="sm muted">merilo: b = ${sig3(b * 100).replace('{,}', ',')} cm</text></svg>`;
+  return s;
+}
+function mirrorSvg(L, mode, d) {
+  const gy = 120;
+  let s = `<svg class="sk" viewBox="0 0 320 240" width="300" role="img" aria-label="Skica z zrcalnimi naboji">
+    <rect x="10" y="${gy}" width="300" height="10" fill="url(#hatch)"/><line x1="10" y1="${gy}" x2="310" y2="${gy}" class="s-ln"/>`;
+  const dot = (x, y, q, faint) => `<circle cx="${x}" cy="${y}" r="7" class="${q >= 0 ? 's-pos' : 's-neg'}"${faint ? ' opacity=".5"' : ''}/>`;
+  if (mode === 'pipes') {
+    s = `<svg class="sk" viewBox="0 0 320 120" width="300" role="img" aria-label="Dve cevi">
+      <circle cx="70" cy="60" r="28" class="s-ln" style="stroke-width:8;stroke:var(--aux)"/><circle cx="250" cy="60" r="28" class="s-ln" style="stroke-width:8;stroke:var(--aux)"/>
+      <circle cx="70" cy="60" r="4" class="s-pos"/><circle cx="250" cy="60" r="4" class="s-neg"/>
+      <line x1="70" y1="105" x2="250" y2="105" class="s-th" marker-start="url(#arr)" marker-end="url(#arr)"/><text x="154" y="99" class="it">d</text>
+      <text x="40" y="22" class="sm">brez zemlje: zunanji naboj ±q na polmeru b</text></svg>`;
+    return s;
+  }
+  const hmax = Math.max(...L.map(w => Math.abs(w.h)), 1e-9), sc = 95 / hmax;
+  if (mode === 'pair') {
+    const h = L[0].h * sc, q = L[0].q;
+    s += dot(90, gy - h, q) + dot(230, gy - h, -q) + dot(90, gy + h, -q, 1) + dot(230, gy + h, q, 1)
+      + `<line x1="90" y1="${gy - h}" x2="230" y2="${gy + h}" class="s-aux" style="stroke:var(--accent)"/><text x="150" y="${gy - h - 10}" class="it">d</text><text x="60" y="${gy - h / 2}" class="it">h</text>`;
+  } else {
+    L.forEach((w, i) => { const y = w.h * sc; s += dot(160, gy - y, w.q) + dot(160, gy + y, -w.q, 1) + `<text x="174" y="${gy - y + 5}" class="it sm">q<tspan baseline-shift="sub">${i + 1}</tspan></text>`; });
+    s += `<circle cx="160" cy="${gy}" r="3.5" class="s-pt"/><text x="140" y="${gy - 6}" class="it sm">T</text>`;
+    if (mode === 'single') s += `<line x1="160" y1="${gy - L[0].h * sc + 9}" x2="160" y2="${gy - 6}" class="s-posl" marker-end="url(#arrR)"/>`;
+  }
+  return s + `<text x="240" y="${gy + 26}" class="sm muted">zemlja</text></svg>`;
+}
+
+/* ---- izris kalkulatorja ---- */
+function texPlain(t) {
+  const G = { sigma: 'σ', rho: 'ρ', beta: 'β', Delta: 'Δ', alpha: 'α', pm: '±', mathrm: '', text: '', infty: '∞' };
+  return t.replace(/\\[,;!: ]/g, ' ').replace(/\\frac\{?([^{}]*)\}?\{([^{}]*)\}/g, '$1/$2').replace(/\\([a-zA-Z]+)/g, (m, g) => G[g] !== undefined ? G[g] : '')
+    .replace(/[{}_\\]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function mountCalc(el) {
+  const tabs = CALCS[el.dataset.calc]; if (!tabs) return;
+  let cur = 0;
+  el.innerHTML = '';
+  const tabBar = document.createElement('div'); tabBar.className = 'tabs';
+  const body = document.createElement('div');
+  el.append(tabBar, body);
+  if (tabs.length > 1) tabs.forEach((t, i) => { const b = document.createElement('button'); b.textContent = t.name; b.onclick = () => { cur = i; draw(); }; tabBar.appendChild(b); });
+  function draw() {
+    $$('button', tabBar).forEach((b, i) => b.classList.toggle('on', i === cur));
+    const t = tabs[cur];
+    body.innerHTML = (t.note ? `<p class="small muted" style="margin-top:0">${t.note}</p>` : '') +
+      `<div class="cgrid">${t.inputs.map(f => `<div class="cf" data-k="${f.k}"><label>${K(f.lab)}${f.opt ? ' <span class="small muted">(neobvezno)</span>' : ''}</label>` +
+        (f.kind === 'sign' ? `<select data-in="${f.k}"><option value="1">pozitiven</option><option value="-1">negativen</option></select>` :
+          `<input type="text" data-in="${f.k}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${f.ph ? 'npr. ' + f.ph : ''}" value="${f.def || ''}">`) +
+        `<div class="conv"></div></div>`).join('')}</div>
+      <div class="row" style="margin-top:12px"><button class="primary" data-act="calc">Izračunaj</button>
+      ${(t.samples || []).map((s, i) => `<button data-act="sample" data-i="${i}">Naloži podatke s kolokvija ${s.lab}</button>`).join('')}
+      <button data-act="clear">Počisti</button></div>
+      <div class="cout"></div>
+      <div class="check" hidden><input type="text" data-act="mine" placeholder="Moj rezultat, npr. -53,7 nC/m2" autocomplete="off" autocapitalize="off" spellcheck="false"><select data-act="which"></select>
+      <div style="grid-column:1/-1"><button data-act="cmp">Preveri moj rezultat</button><div class="fbx"></div></div></div>`;
+    renderMath(body);
+    $$('input[data-in]', body).forEach(inp => { inp.addEventListener('input', () => conv(inp)); if (inp.value) conv(inp); });
+    body.querySelector('[data-act=calc]').onclick = calc;
+    $$('[data-act=sample]', body).forEach(b => b.onclick = () => {
+      const s = t.samples[+b.dataset.i].v;
+      $$('[data-in]', body).forEach(inp => { if (s[inp.dataset.in] !== undefined) { inp.value = s[inp.dataset.in]; if (inp.tagName === 'INPUT') conv(inp); } });
+      calc();
+    });
+    body.querySelector('[data-act=clear]').onclick = () => { $$('input[data-in]', body).forEach(inp => { const f = t.inputs.find(f => f.k === inp.dataset.in); inp.value = f.def || ''; conv(inp); }); $('.cout', body).innerHTML = ''; $('.check', body).hidden = true; };
+    body.querySelector('[data-act=cmp]').onclick = check;
+    body.querySelector('[data-act=mine]').addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+  }
+  function conv(inp) {
+    const f = tabs[cur].inputs.find(f => f.k === inp.dataset.in), out = inp.parentElement.querySelector('.conv');
+    out.className = 'conv';
+    if (!inp.value.trim()) { out.innerHTML = ''; return; }
+    const r = parseField(inp.value, f.kind);
+    if (r.err) { out.classList.add('err'); out.textContent = r.err.startsWith('pričakujem') ? r.err : r.err + ' – ' + 'pričakujem ' + KINDS[f.kind][1]; return; }
+    out.innerHTML = '= ' + K(siTex(r.v, f.kind)) + (r.note ? ` <span class="small">(${r.note.replace(/\\\((.*?)\\\)/g, (m, g) => K(g))})</span>` : '');
+    if (r.note) out.classList.add('nt');
+  }
+  let lastRows = [];
+  function calc() {
+    const t = tabs[cur], x = {}, errs = [];
+    t.inputs.forEach(f => {
+      const inp = $(`[data-in="${f.k}"]`, body);
+      if (f.kind === 'sign') { x[f.k] = +inp.value; return; }
+      if (!inp.value.trim()) { if (f.opt) { x[f.k] = null; return; } errs.push(K(f.lab) + ': manjka'); return; }
+      const r = parseField(inp.value, f.kind);
+      if (r.err) errs.push(K(f.lab) + ': ' + r.err); else x[f.k] = r.v;
+    });
+    const out = $('.cout', body);
+    if (errs.length) { out.innerHTML = `<div class="fb bad">${errs.join('<br>')}</div>`; $('.check', body).hidden = true; return; }
+    let rows;
+    try { rows = t.run(x); } catch (e) { out.innerHTML = `<div class="fb bad">${typeof e === 'string' ? e : 'Napaka v izračunu.'}</div>`; renderMath(out); return; }
+    if (t.svg) rows.svg = t.svg(x);
+    lastRows = rows;
+    out.innerHTML = rows.map(r => {
+      if (r.html) return `<div class="rowres">${r.html}</div>`;
+      if (r.tex) return `<div class="rowres">${K(r.tex)}</div>`;
+      let res = eng(r.v, r.u, { sci: r.sci });
+      if (r.pm) res = '\\pm' + res;
+      if (r.cm) res += R`=${sig3(r.v * 100)}\ \mathrm{cm}`;
+      if (r.pj) res += R`=${sig3(r.v * 1e12)}\ \mathrm{pJ}`;
+      const tex = [r.lab, r.sym, r.num, res].filter(Boolean).join('=');
+      return `<div class="rowres${r.main ? ' main' : ''}">${K(r.main ? R`\boxed{${tex}}` : tex)}</div>`;
+    }).join('') + (rows.svg || '');
+    renderMath(out);
+    const sel = $('[data-act=which]', body), num = rows.map((r, i) => [r, i]).filter(([r]) => r.v != null && r.u !== '' && !r.sci);
+    sel.innerHTML = num.map(([r, i]) => `<option value="${i}"${r.main ? ' selected' : ''}>primerjaj z: ${texPlain(r.lab)}</option>`).join('');
+    $('.check', body).hidden = !num.length;
+    $('.fbx', body).innerHTML = '';
+  }
+  function check() {
+    const r = lastRows[+$('[data-act=which]', body).value], fb = $('.fbx', body), s = $('[data-act=mine]', body).value;
+    if (!r) return;
+    const m = parseQty(s);
+    if (m.err) { fb.innerHTML = `<div class="fb bad">${m.err}</div>`; return; }
+    const want = UDIM[r.u];
+    if (m.dim && want && m.dim !== want) { fb.innerHTML = `<div class="fb bad">Enota se ne ujema – rezultat je v \\(\\mathrm{${r.u === 'deg' ? '^\\circ' : r.u}}\\).</div>`; renderMath(fb); return; }
+    let mine = m.v;
+    if (r.u === 'deg' && !m.dim) mine = mine * PI / 180;
+    const c = compare(mine, r.v, { pm: r.pm });
+    fb.innerHTML = `<div class="fb ${c.kind}">${c.msg}${m.dim ? '' : ' <span class="small">(brez enote – privzel sem osnovno enoto)</span>'}</div>`;
+    renderMath(fb);
+  }
+  draw();
+}
+
+/* ================= NAVIGACIJA ================= */
+const PAGES = ['pregled', 'osnove', ...Array.from({ length: 10 }, (_, i) => 'tip' + (i + 1)), 'kviz', 'simulacija', 'plan', 'napake'];
+function buildNav() {
+  const know = store.get('know', {});
+  let h = `<a href="#pregled" data-p="pregled">🏠 Pregled</a><a href="#osnove" data-p="osnove">🧮 Osnove</a><div class="sec">Tipi nalog</div>`;
+  for (let i = 1; i <= 10; i++) h += `<a href="#tip${i}" data-p="tip${i}"><span class="tn">${i}</span> ${TYPES[i].name}<span class="tick">${know[i] ? '✓' : ''}</span></a>`;
+  h += `<div class="sec">Preveri se</div><a href="#kviz" data-p="kviz">❓ Prepoznaj tip</a><a href="#simulacija" data-p="simulacija">⏱️ Simulacija kolokvija</a>
+    <div class="sec">Učenje</div><a href="#plan" data-p="plan">📅 Plan učenja</a><a href="#napake" data-p="napake">⚠️ Najpogostejše napake</a>`;
+  $('#side').innerHTML = h;
+  renderMath($('#side'));
+  showActive();
+}
+function showActive() {
+  const id = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'pregled';
+  $$('#side a').forEach(a => a.classList.toggle('active', a.dataset.p === id));
+}
+function route() {
+  const id = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'pregled';
+  $$('.page').forEach(p => p.classList.toggle('show', p.id === id));
+  const pg = document.getElementById(id);
+  if (!pg.dataset.rendered) { renderMath(pg); pg.dataset.rendered = 1; }
+  showActive();
+  $('#side').classList.remove('open');
+  window.scrollTo(0, 0);
+  if (id === 'plan') drawPlan();
+}
+
+/* ---- razkrivanje korakov ---- */
+function setupSteps() {
+  $$('ol.steps').forEach(ol => {
+    const lis = $$('li', ol); lis.forEach(li => li.classList.add('hid'));
+    const extras = []; let n = ol.nextElementSibling;
+    while (n && n.classList.contains('warn')) { extras.push(n); n.hidden = true; n = n.nextElementSibling; }
+    const bar = document.createElement('div'); bar.className = 'revbar';
+    bar.innerHTML = `<button class="primary" data-a="next">Naslednji korak (1/${lis.length})</button><button data-a="all">Pokaži vse</button><button data-a="hide" hidden>Skrij rešitev</button>`;
+    ol.before(bar);
+    let k = 0;
+    const upd = () => {
+      lis.forEach((li, i) => li.classList.toggle('hid', i >= k));
+      extras.forEach(e => e.hidden = k < lis.length);
+      const nb = $('[data-a=next]', bar);
+      nb.disabled = k >= lis.length; nb.textContent = k >= lis.length ? 'Vsi koraki prikazani' : `Naslednji korak (${k + 1}/${lis.length})`;
+      $('[data-a=all]', bar).hidden = k >= lis.length; $('[data-a=hide]', bar).hidden = k === 0;
+    };
+    $('[data-a=next]', bar).onclick = () => { k++; upd(); };
+    $('[data-a=all]', bar).onclick = () => { k = lis.length; upd(); };
+    $('[data-a=hide]', bar).onclick = () => { k = 0; upd(); };
+    upd();
+  });
+}
+
+function setupTypePages() {
+  const know = store.get('know', {});
+  for (let i = 1; i <= 10; i++) {
+    const pg = $('#tip' + i);
+    $('.typenav', pg).innerHTML = (i > 1 ? `<a href="#tip${i - 1}">◀ ${i - 1} ${TYPES[i - 1].name}</a>` : '<span></span>') + (i < 10 ? `<a href="#tip${i + 1}">${i + 1} ${TYPES[i + 1].name} ▶</a>` : '<span></span>');
+    const cb = $('[data-know]', pg); cb.checked = !!know[i];
+    cb.onchange = () => { const k = store.get('know', {}); k[i] = cb.checked; store.set('know', k); buildNav(); drawTypeTable(); };
+  }
+}
+
+/* ---- pregled ---- */
+function drawTypeTable() {
+  const know = store.get('know', {});
+  const order = TYPES.slice(1).map((t, i) => t).sort((a, b) => b.cnt - a.cnt || a.n - b.n);
+  const tb = $('#typeTable tbody');
+  tb.innerHTML = order.map(t => `<tr class="click" data-go="tip${t.n}"><td><b>${t.n}</b> ${t.name}</td><td>${t.cnt}×</td><td>${t.tasks}</td><td>${K(t.key)}</td><td style="color:var(--ok);font-weight:700">${know[t.n] ? '✓' : ''}</td></tr>`).join('');
+  $$('tr[data-go]', tb).forEach(tr => tr.onclick = () => location.hash = tr.dataset.go);
+}
+function fmtDate(d) { return `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`; }
+function parseDate(s) { if (!s) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); }
+function today0() { const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); }
+function daysLeft() { const d = parseDate(store.get('examDate', '')); return d ? Math.round((d - today0()) / 864e5) : null; }
+function setupSettings() {
+  const dI = $('#setDate'), pI = $('#planDate');
+  const sync = () => {
+    const v = store.get('examDate', ''); dI.value = v; pI.value = v;
+    const n = daysLeft();
+    $('#setDateOut').textContent = v ? (n >= 0 ? `še ${n} dni` : 'datum je že mimo') : 'ni podatka';
+    $('#planCount').textContent = v ? (n >= 0 ? `še ${n} dni` : 'datum je že mimo') : 'datum ni vpisan';
+  };
+  [dI, pI].forEach(el => el.onchange = () => { store.set('examDate', el.value); sync(); drawPlan(); });
+  for (const [id, key] of [['#setDur', 'dur'], ['#setPts', 'pts'], ['#setForm', 'form']]) {
+    const el = $(id); el.value = store.get(key, ''); el.onchange = () => store.set(key, el.value);
+  }
+  sync();
+}
+function drawErrors() { $$('.errlist').forEach(ul => ul.innerHTML = ERRORS.map(e => `<li>${e}</li>`).join('')); }
+function drawConst() {
+  $('#constBox').innerHTML = `<ul style="margin:0">
+    <li>${K(R`\varepsilon_0=${sciTex(CONST.eps0)}\ \mathrm{As/(Vm)}`)} <span class="small muted">(formular navaja tudi ${K(R`\varepsilon_0\approx\frac{10^{-9}}{36\pi}\ \mathrm{As/(Vm)}`)})</span></li>
+    <li>${K(R`e_0=${sciTex(CONST.e0)}\ \mathrm C`)}; naboj elektrona je ${K(R`-e_0`)} <span class="small muted">(kolokviji pišejo ${K(R`Q_0=-1{,}6\cdot10^{-19}\ \mathrm C`)})</span></li>
+    <li>${K(R`g=${sciTex(CONST.g)}\ \mathrm{m/s^2}`)}</li>
+    <li>${K(R`\frac{1}{4\pi\varepsilon_0}\approx${sciTex(CONST.k)}\ \mathrm{Vm/(As)}`)}</li></ul>`;
+}
+
+/* ---- mini vaja pretvorb ---- */
+const DRILL = [
+  ['cm', 'm', 1e-2], ['mm', 'm', 1e-3], ['dm', 'm', 0.1], ['cm^2', 'm^2', 1e-4], ['cm^3', 'm^3', 1e-6], ['mm^2', 'm^2', 1e-6],
+  ['nC', 'C', 1e-9], ['\\mu C', 'C', 1e-6], ['pC', 'C', 1e-12], ['mC', 'C', 1e-3], ['kV', 'V', 1e3], ['kV/m', 'V/m', 1e3], ['MV/m', 'V/m', 1e6],
+  ['g', 'kg', 1e-3], ['ms', 's', 1e-3], ['\\mu C/m^2', 'C/m^2', 1e-6], ['nC/m', 'C/m', 1e-9], ['\\mu C/m^3', 'C/m^3', 1e-6], ['nC/m^2', 'C/m^2', 1e-9]
+];
+const DNUM = [2, 3, 5, 12, 15, 25, 40, 300, 1000, 0.5, 0.2, 250];
+function newDrill() {
+  const box = $('#drill'); const items = [];
+  for (let i = 0; i < 10; i++) {
+    const t = DRILL[Math.floor(Math.random() * DRILL.length)], n = DNUM[Math.floor(Math.random() * DNUM.length)];
+    items.push({ t, n, v: n * t[2] });
+  }
+  const ut = u => u.startsWith('\\mu') ? '\\mu\\mathrm{' + u.slice(4) + '}' : '\\mathrm{' + u + '}';
+  box.innerHTML = items.map((it, i) => `<div class="drill" data-i="${i}"><div>${K(R`${String(it.n).replace('.', '{,}')}\ ${ut(it.t[0])}=\ ?\ ${ut(it.t[1])}`)}</div>
+    <input type="text" inputmode="decimal" autocomplete="off" placeholder="v ${it.t[1].replace('^2', '²').replace('^3', '³')}"><div class="fbx small"></div></div>`).join('');
+  const res = new Array(10).fill(null);
+  const score = () => { $('#drillScore').textContent = res.some(r => r !== null) ? `${res.filter(r => r).length}/10` : ''; };
+  $$('.drill', box).forEach(d => {
+    const it = items[+d.dataset.i], inp = $('input', d), fb = $('.fbx', d);
+    const go = () => {
+      if (!inp.value.trim()) return;
+      const r = parseQty(inp.value);
+      if (r.err) { fb.innerHTML = `<span style="color:var(--bad)">${r.err}</span>`; return; }
+      const ok = Math.abs(r.v / it.v - 1) < 0.01;
+      res[+d.dataset.i] = ok;
+      fb.innerHTML = ok ? `<b style="color:var(--ok)">✓</b>` : `<b style="color:var(--bad)">✗</b> ${K(R`=${sciTex(it.v)}`)}`;
+      score();
+    };
+    inp.addEventListener('change', go); inp.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  });
+  score();
+}
+
+/* ================= KVIZ ================= */
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function quizStart() {
+  const box = $('#quizBox');
+  const last = store.get('quizLast', null);
+  box.innerHTML = `<div class="card"><p>25 nalog s kolokvijev 2021–2025. Za vsako izberi tip; po odgovoru vidiš prvi korak recepta in okvir na formularju.</p>
+    ${last ? `<p class="muted">Zadnji rezultat: <b>${last.s}/${last.n}</b> (${last.d})</p>` : ''}
+    <button class="primary" id="qGo">Začni kviz</button></div>`;
+  $('#qGo').onclick = () => runQuiz(shuffle(QUIZ));
+}
+function runQuiz(order) {
+  let i = 0, score = 0; const missed = [];
+  const box = $('#quizBox');
+  function show() {
+    const q = order[i];
+    box.innerHTML = `<div class="progress"><div style="width:${i / order.length * 100}%"></div></div>
+      <p class="muted">Naloga ${i + 1} / ${order.length} · pravilnih ${score}</p>
+      <div class="task">${q.x}</div>
+      <div class="qbtns">${TYPES.slice(1).map(t => `<button data-t="${t.n}"><b>${t.n}</b> · ${t.name}</button>`).join('')}</div>
+      <div id="qFb"></div>`;
+    renderMath(box);
+    $$('.qbtns button', box).forEach(b => b.onclick = () => answer(+b.dataset.t, b));
+  }
+  function answer(t, btn) {
+    const q = order[i], ok = t === q.t, T = TYPES[q.t];
+    $$('.qbtns button', box).forEach(b => { b.disabled = true; if (+b.dataset.t === q.t) b.classList.add('right'); });
+    if (!ok) { btn.classList.add('wrong'); missed.push({ q, t }); } else score++;
+    const key = [t, q.t].sort((a, b) => a - b).join('-');
+    const hint = !ok && CONFUSE[key] ? `<div class="warn"><b>Razlikovalni namig:</b> ${CONFUSE[key]}</div>` : '';
+    $('#qFb').innerHTML = `<div class="fb ${ok ? 'ok' : 'bad'}">${ok ? 'Pravilno ✓' : 'Narobe ✗'} – to je <b>Tip ${q.t}: ${T.name}</b> (kolokvij ${q.c}).</div>${hint}
+      <div class="card"><p style="margin-top:0"><b>Prvi korak recepta:</b> ${T.first}</p>
+      <p><span class="badge">Formular: ${T.box}</span></p>
+      <p style="margin-bottom:0"><b>Rezultat:</b> ${K(q.r)} · <a href="#tip${q.t}">odpri Tip ${q.t}</a></p></div>
+      <button class="primary" id="qNext">${i + 1 < order.length ? 'Naslednja naloga' : 'Rezultat'}</button>`;
+    renderMath($('#qFb'));
+    $('#qNext').onclick = () => { i++; if (i < order.length) show(); else end(); };
+  }
+  function end() {
+    store.set('quizLast', { s: score, n: order.length, d: fmtDate(new Date()), missed: missed.map(m => m.q.c) });
+    box.innerHTML = `<div class="card"><p class="big">Rezultat: ${score}/${order.length}</p>
+      ${missed.length ? `<h3>Zgrešene</h3><ul>${missed.map(m => `<li><b>${m.q.c}</b> – pravilno Tip ${m.q.t} (${TYPES[m.q.t].name}), izbral si Tip ${m.t}. <a href="#tip${m.q.t}">Odpri tip</a></li>`).join('')}</ul>` : '<p>Vse pravilno! 🎉</p>'}
+      <div class="row"><button class="primary" id="qAgain">Ponovi kviz</button>${missed.length ? '<button id="qMiss">Samo zgrešene</button>' : ''}</div></div>`;
+    $('#qAgain').onclick = () => runQuiz(shuffle(QUIZ));
+    if (missed.length) $('#qMiss').onclick = () => runQuiz(shuffle(missed.map(m => m.q)));
+  }
+  show();
+}
+
+/* ================= SIMULACIJA ================= */
+let simTimer = null;
+function simStart() {
+  if (simTimer) { clearInterval(simTimer); simTimer = null; }
+  const box = $('#simBox');
+  box.innerHTML = `<div class="card"><p style="margin-top:0">Izberi leto:</p><div class="row">${[2021, 2022, 2023, 2024, 2025].map(y => `<button data-y="${y}">${y}</button>`).join('')}</div>
+    <p class="small muted">Trajanje: ${simDur()} min (nastavi na strani Pregled).</p></div>`;
+  $$('[data-y]', box).forEach(b => b.onclick = () => runSim(+b.dataset.y));
+}
+function simDur() { const v = parseInt(store.get('dur', ''), 10); return v > 0 ? v : 60; }
+function runSim(y) {
+  const box = $('#simBox'), tasks = QUIZ.filter(q => q.c.startsWith(y + '/'));
+  let left = simDur() * 60;
+  box.innerHTML = `<div class="card row" style="justify-content:space-between"><div><b>Kolokvij ${y}</b> · rešuj na papir, samo s formularjem</div><div class="timer" id="simT"></div></div>
+    ${tasks.map((q, i) => `<div class="ex"><div class="exhead">Naloga ${i + 1}</div><div class="task">${q.x}</div>
+      ${q.note ? `<p class="small muted">${q.note}</p>` : ''}
+      <div style="margin-top:8px"><input type="text" data-sim="${i}" placeholder="Moj rezultat (z enoto)" autocomplete="off" autocapitalize="off" spellcheck="false"></div><div class="simfb"></div></div>`).join('')}
+    <div class="row"><button class="primary" id="simDone">Oddaj in primerjaj</button><button id="simBack">Drugo leto</button></div>`;
+  renderMath(box);
+  const tick = () => {
+    const el = $('#simT'); if (!el) { clearInterval(simTimer); return; }
+    const a = Math.abs(left), s = `${left < 0 ? '−' : ''}${Math.floor(a / 60)}:${String(a % 60).padStart(2, '0')}`;
+    el.textContent = left < 0 ? s + ' (čas je potekel)' : s; el.classList.toggle('late', left < 0); left--;
+  };
+  tick(); simTimer = setInterval(tick, 1000);
+  $('#simBack').onclick = simStart;
+  $('#simDone').onclick = () => {
+    clearInterval(simTimer); let ok = 0;
+    tasks.forEach((q, i) => {
+      const inp = $(`[data-sim="${i}"]`, box), fb = inp.parentElement.nextElementSibling;
+      let msg, kind;
+      if (!inp.value.trim()) { msg = 'Ni odgovora.'; kind = 'bad'; }
+      else {
+        const m = parseQty(inp.value);
+        if (m.err) { msg = m.err; kind = 'bad'; }
+        else if (m.dim && m.dim !== q.d) { msg = 'Enota se ne ujema s tem, kar naloga sprašuje.'; kind = 'bad'; }
+        else {
+          const c = compare(m.v, q.v, { pm: q.pm }); msg = c.msg; kind = c.kind;
+          if (q.warn && c.kind === 'sign') { msg = 'Ujema se z uradno rešitvijo (−0,27 pJ), po pravilu \\(A=Q(V_A-V_B)\\) pa pride +0,27 pJ – preveri pri asistentu.'; kind = 'sign'; }
+          if (c.ok) ok++;
+        }
+      }
+      fb.innerHTML = `<div class="fb ${kind}">${msg}</div><p class="small">Pravilno: ${K(q.r)} · Tip ${q.t} (${TYPES[q.t].name}) · <a href="#tip${q.t}">odpri tip</a></p>`;
+    });
+    const res = document.createElement('div'); res.className = 'card big'; res.textContent = `Rezultat: ${ok}/5`;
+    $('#simDone').parentElement.before(res);
+    $('#simDone').disabled = true;
+    renderMath(box);
+  };
+}
+
+/* ================= PLAN ================= */
+const PLAN = [
+  { id: 1, t: R`Osnove (predpone, pretvorbe, \(Q,q,\sigma,\rho\)) + mini vaja pretvorb · <a href="#tip1">Tip 1 Naboj in tok</a> · vaje 2.1, 2.6, 3.2` },
+  { id: 2, t: R`<a href="#tip10">Tip 10 Coulomb/elektroskop</a> · vaje 1.4, 8.5` },
+  { id: 3, t: R`<a href="#tip2">Tip 2 Polja točke, premice, plošč</a> · vaje 8.1, 8.6, 8.11` },
+  { id: 4, t: R`<a href="#tip8">Tip 8 Dipol</a> + <a href="#tip5">Tip 5 Delo v homogenem polju</a> · vaje 10.1, 10.9, 12.1` },
+  { id: 5, t: R`20 min: <a href="#kviz">kviz »Prepoznaj tip«</a> (samo tipi 1, 2, 5, 8, 10). Ostalo matematika.` },
+  { id: 6, t: R`Samo matematika (OE: nič ali 10 min tabela tipov).` },
+  { id: 7, t: R`Kolokvij iz matematike, OE prosto.` },
+  { id: 8, t: R`<a href="#tip4">Tip 4 Obroč</a> (vključno s predznakom dela 2023/3) · vaja 8.7` },
+  { id: 9, t: R`<a href="#tip3">Tip 3 Krogelni oblak</a> · vaje 9.3, 9.5` },
+  { id: 10, t: R`<a href="#tip6">Tip 6 Koncentrični krogli</a> · vaja 10.10` },
+  { id: 11, t: R`<a href="#tip7">Tip 7 Koaksialni kabel</a> · vaja 10.12` },
+  { id: 12, t: R`<a href="#tip9">Tip 9 Zrcaljenje I</a> (en vodnik: 2023/2, 2022/5) · vaje 13.3, 13.8` },
+  { id: 13, t: R`<a href="#tip9">Tip 9 Zrcaljenje II</a> (dvovod: 2021/4, 2023/5) · vaje 13.6, 13.7` },
+  { id: 14, t: R`Generalka 1: <a href="#simulacija">kolokvij 2023</a> v celoti, s štoparico, samo s formularjem; nato primerjava.` },
+  { id: 15, t: R`Popravi napake iz generalke + celoten <a href="#kviz">kviz »Prepoznaj tip«</a>.` },
+  { id: 16, t: R`Generalka 2: <a href="#simulacija">kolokvij 2024</a> (ali 2025, če ga še nisem videl v celoti).` },
+  { id: 17, t: R`<b>Dan pred kolokvijem</b> – preleti <a href="#pregled">tabelo tipov</a> in za vsak tip na glas povej: kako ga prepoznaš, kateri okvir na formularju, prva vrstica postopka. Preberi <a href="#napake">»Najpogostejše napake«</a>.` }
+];
+const WD = ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob'];
+const PLAN_START = new Date(2026, 10, 19);
+const addD = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const dLab = d => `${WD[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.`;
+function drawPlan() {
+  const ul = $('#planList'), warn = $('#planWarn'); if (!ul) return;
+  const exam = parseDate(store.get('examDate', ''));
+  const checks = store.get('planChecks', {});
+  let items = PLAN.map(p => ({ ids: [p.id], t: p.t }));
+  let dates = [], w = '';
+  if (!exam) {
+    dates = items.map((_, i) => i < 16 ? dLab(addD(PLAN_START, i)) : 'dan pred kolokvijem');
+  } else {
+    const last = addD(exam, -1), avail = Math.round((last - PLAN_START) / 864e5) + 1;
+    if (avail >= 17) {
+      dates = items.slice(0, 16).map((_, i) => dLab(addD(PLAN_START, i)));
+      const extra = Math.min(2, avail - 17), ex = [];
+      if (extra >= 1) ex.push({ ids: ['r22'], t: R`Ponovitev: <a href="#simulacija">kolokvij 2022</a>` });
+      if (extra >= 2) ex.push({ ids: ['r21'], t: R`Ponovitev: <a href="#simulacija">kolokvij 2021</a>` });
+      ex.forEach((e, i) => dates.push(dLab(addD(last, -(ex.length - i)))));
+      items = items.slice(0, 16).concat(ex, [items[16]]);
+      dates.push(dLab(last));
+    } else {
+      const short = 17 - avail, M = [[14, 15], [16, 17], [9, 10]].slice(0, Math.max(0, short));
+      w = `<div class="warn"><b>Datum kolokvija je pred zadnjim dnem plana</b> (manjka ${short} ${short === 1 ? 'dan' : short === 2 ? 'dneva' : short <= 4 ? 'dnevi' : 'dni'}). Predlagam združitev: ${M.map(m => m.join(' + ')).join(', ')}.${short > 3 ? ' To še ni dovolj – združi še druge dneve ali skrajšaj generalki.' : ''}</div>`;
+      M.forEach(([a, b]) => {
+        const ia = items.findIndex(it => it.ids.includes(a)), ib = items.findIndex(it => it.ids.includes(b));
+        items[ia] = { ids: items[ia].ids.concat(items[ib].ids), t: items[ia].t + '<br>+ ' + items[ib].t, merged: true };
+        items.splice(ib, 1);
+      });
+      dates = items.map((_, i) => dLab(addD(PLAN_START, i)));
+      if (avail < 1) w = `<div class="warn">Datum kolokvija je pred začetkom plana (19. 11.).</div>`;
+    }
+  }
+  warn.innerHTML = w;
+  ul.innerHTML = items.map((it, i) => `<li><label><input type="checkbox" data-ids="${it.ids.join(',')}" ${it.ids.every(id => checks[id]) ? 'checked' : ''}>
+    <span class="d">${i + 1}. ${dates[i]}</span><span>${it.merged ? '<span class="merged">ZDRUŽENO</span><br>' : ''}${it.t}</span></label></li>`).join('');
+  $$('input', ul).forEach(cb => cb.onchange = () => { const c = store.get('planChecks', {}); cb.dataset.ids.split(',').forEach(id => c[id] = cb.checked); store.set('planChecks', c); });
+  renderMath(ul); renderMath(warn);
+}
+
+/* ================= TEMA, MENI, ZAGON ================= */
+function applyTheme() {
+  const t = store.get('theme', 'auto');
+  if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+  $('#themeLbl').textContent = { auto: 'Sistem', light: 'Svetla', dark: 'Temna' }[t];
+}
+function init() {
+  applyTheme();
+  $('#themeBtn').onclick = () => { const o = ['auto', 'light', 'dark'], t = store.get('theme', 'auto'); store.set('theme', o[(o.indexOf(t) + 1) % 3]); applyTheme(); };
+  $('#menuBtn').onclick = () => $('#side').classList.toggle('open');
+  buildNav(); setupTypePages(); setupSteps(); drawTypeTable(); drawErrors(); drawConst(); setupSettings();
+  $$('.calc[data-calc]').forEach(mountCalc);
+  newDrill(); $('#drillNew').onclick = newDrill;
+  quizStart(); simStart(); drawPlan();
+  window.addEventListener('hashchange', route);
+  route();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
